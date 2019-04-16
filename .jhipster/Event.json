@@ -82,7 +82,7 @@
         {
             "relationshipType": "many-to-many",
             "otherEntityName": "category",
-            "otherEntityRelationshipName": "categories",
+            "otherEntityRelationshipName": "events",
             "relationshipName": "categories",
             "otherEntityField": "id",
             "ownerSide": true

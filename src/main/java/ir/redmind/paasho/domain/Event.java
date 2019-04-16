@@ -354,13 +354,13 @@ public class Event implements Serializable {
 
     public Event addCategories(Category category) {
         this.categories.add(category);
-        category.getCategories().add(this);
+        category.getEvents().add(this);
         return this;
     }
 
     public Event removeCategories(Category category) {
         this.categories.remove(category);
-        category.getCategories().remove(this);
+        category.getEvents().remove(this);
         return this;
     }
 
