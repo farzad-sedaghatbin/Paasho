@@ -377,13 +377,13 @@ public class Event implements Serializable {
         return this;
     }
 
-    public Event addRate(Rating rating) {
+    public Event addRates(Rating rating) {
         this.rates.add(rating);
         rating.setEvent(this);
         return this;
     }
 
-    public Event removeRate(Rating rating) {
+    public Event removeRates(Rating rating) {
         this.rates.remove(rating);
         rating.setEvent(null);
         return this;
@@ -402,13 +402,13 @@ public class Event implements Serializable {
         return this;
     }
 
-    public Event addFactor(Factor factor) {
+    public Event addFactors(Factor factor) {
         this.factors.add(factor);
         factor.setEvent(this);
         return this;
     }
 
-    public Event removeFactor(Factor factor) {
+    public Event removeFactors(Factor factor) {
         this.factors.remove(factor);
         factor.setEvent(null);
         return this;

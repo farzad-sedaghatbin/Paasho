@@ -6,7 +6,7 @@ export interface ICategoryPaasho {
   icon?: string;
   name?: string;
   code?: string;
-  categories?: IUser1Paasho[];
+  users?: IUser1Paasho[];
   events?: IEventPaasho[];
 }
 

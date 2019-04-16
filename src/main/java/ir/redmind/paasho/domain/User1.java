@@ -224,13 +224,13 @@ public class User1 implements Serializable {
 
     public User1 addFavorits(Category category) {
         this.favorits.add(category);
-        category.getCategories().add(this);
+        category.getUsers().add(this);
         return this;
     }
 
     public User1 removeFavorits(Category category) {
         this.favorits.remove(category);
-        category.getCategories().remove(this);
+        category.getUsers().remove(this);
         return this;
     }
 
@@ -273,13 +273,13 @@ public class User1 implements Serializable {
         return this;
     }
 
-    public User1 addFactor(Factor factor) {
+    public User1 addFactors(Factor factor) {
         this.factors.add(factor);
         factor.setUser(this);
         return this;
     }
 
-    public User1 removeFactor(Factor factor) {
+    public User1 removeFactors(Factor factor) {
         this.factors.remove(factor);
         factor.setUser(null);
         return this;

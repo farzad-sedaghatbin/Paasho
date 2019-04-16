@@ -19,7 +19,7 @@
             "relationshipType": "many-to-many",
             "otherEntityName": "user1",
             "otherEntityRelationshipName": "favorits",
-            "relationshipName": "categories",
+            "relationshipName": "users",
             "otherEntityField": "id",
             "ownerSide": false
         },

@@ -95,9 +95,9 @@ relationship OneToMany{
 
 }
 relationship ManyToOne {
-	Rating {event} to Event{rate},   
-    Factor{event} to Event{factor},
-    Factor{user} to User1{factor}
+	Rating {event} to Event{rates},   
+    Factor{event} to Event{factors},
+    Factor{user} to User1{factors}
 
 }
 
@@ -106,7 +106,7 @@ relationship OneToOne{
 }
 relationship ManyToMany{
     Event {participants} to User1{events},
-	User1 {favorits} to Category{categories},
+	User1 {favorits} to Category{users},
     Event{categories} to Category{events},
 }
 // Set pagination options
