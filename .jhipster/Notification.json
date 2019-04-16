@@ -1,0 +1,37 @@
+{
+    "name": "Notification",
+    "fields": [
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "NotificationType",
+            "fieldValues": "NEWS"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "NotificationStatus",
+            "fieldValues": "READ"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "user1",
+            "otherEntityRelationshipName": "id",
+            "relationshipName": "notifications"
+        }
+    ],
+    "changelogDate": "20190416144505",
+    "entityTableName": "notification",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}

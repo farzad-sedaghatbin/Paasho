@@ -41,6 +41,27 @@ public class CacheConfiguration {
             cm.createCache(ir.redmind.paasho.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Event.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Event.class.getName() + ".participants", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Event.class.getName() + ".medias", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Event.class.getName() + ".categories", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Event.class.getName() + ".ids", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".contacts", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".rates", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".comments", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".favorits", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".ids", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Contact.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Category.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Category.class.getName() + ".ids", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Notification.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Notification.class.getName() + ".notifications", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Setting.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Factor.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Comment.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Media.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Rating.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
