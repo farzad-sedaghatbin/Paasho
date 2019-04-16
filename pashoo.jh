@@ -87,27 +87,27 @@ enum FactorStatus{
 	PAID, INIT
 }
 relationship OneToMany{
-	User1 {contacts} to Contact{id},
-    Event {participants} to User1{id},
-    Event {medias} to Media {id},
-    User1 {rates} to Rating {id},
-    Notification {notifications} to User1{id},
-    User1 {comments} to Comment{id},
+	User1 {contacts} to Contact{contact},
+    Event {participants} to User1{user},
+    Event {medias} to Media {media},
+    User1 {rates} to Rating {rating},
+    Notification {notifications} to User1{user},
+    User1 {comments} to Comment{comment},
 
 }
 relationship ManyToOne {
-	Rating {event} to Event{id},   
-    Factor{event} to Event{id},
-    Factor{user} to User1{id}
+	Rating {event} to Event{events},   
+    Factor{event} to Event{events},
+    Factor{user} to User1{users}
 
 }
 
 relationship OneToOne{
-    Event {creator} to User1{id},
+    Event {creator} to User1{user},
 }
 relationship ManyToMany{
-	User1 {favorits} to Category{id},
-    Event{categories} to Category{id},
+	User1 {favorits} to Category{categories},
+    Event{categories} to Category{categories},
 }
 // Set pagination options
 paginate Event with infinite-scroll
