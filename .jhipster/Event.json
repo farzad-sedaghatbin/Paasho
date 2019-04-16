@@ -91,13 +91,13 @@
             "relationshipType": "one-to-many",
             "otherEntityName": "rating",
             "otherEntityRelationshipName": "event",
-            "relationshipName": "rate"
+            "relationshipName": "rates"
         },
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "factor",
             "otherEntityRelationshipName": "event",
-            "relationshipName": "factor"
+            "relationshipName": "factors"
         }
     ],
     "changelogDate": "20190416144501",

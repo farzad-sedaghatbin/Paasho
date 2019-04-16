@@ -27,14 +27,14 @@
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "event",
-            "otherEntityRelationshipName": "factor",
+            "otherEntityRelationshipName": "factors",
             "relationshipName": "event",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "user1",
-            "otherEntityRelationshipName": "factor",
+            "otherEntityRelationshipName": "factors",
             "relationshipName": "user",
             "otherEntityField": "id"
         }

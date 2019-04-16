@@ -41,7 +41,7 @@
         {
             "relationshipType": "many-to-many",
             "otherEntityName": "category",
-            "otherEntityRelationshipName": "categories",
+            "otherEntityRelationshipName": "users",
             "relationshipName": "favorits",
             "otherEntityField": "id",
             "ownerSide": true
@@ -64,7 +64,7 @@
             "relationshipType": "one-to-many",
             "otherEntityName": "factor",
             "otherEntityRelationshipName": "user",
-            "relationshipName": "factor"
+            "relationshipName": "factors"
         },
         {
             "relationshipType": "many-to-many",
