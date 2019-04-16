@@ -6,8 +6,8 @@ export interface ICategoryMySuffix {
   icon?: string;
   name?: string;
   code?: string;
-  ids?: IUser1MySuffix[];
-  ids?: IEventMySuffix[];
+  categories?: IUser1MySuffix[];
+  categories?: IEventMySuffix[];
 }
 
 export const defaultValue: Readonly<ICategoryMySuffix> = {};

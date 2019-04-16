@@ -45,13 +45,13 @@ public class User1 implements Serializable {
     @Column(name = "birth_date")
     private String birthDate;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "contact")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Contact> contacts = new HashSet<>();
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "rating")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Rating> rates = new HashSet<>();
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "comment")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> comments = new HashSet<>();
     @ManyToMany
@@ -63,19 +63,19 @@ public class User1 implements Serializable {
 
     @OneToOne(mappedBy = "creator")
     @JsonIgnore
-    private Event id;
+    private Event user;
 
     @ManyToOne
     @JsonIgnoreProperties("participants")
-    private Event id;
+    private Event user;
 
     @ManyToOne
     @JsonIgnoreProperties("notifications")
-    private Notification id;
+    private Notification user;
 
     @OneToMany(mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Factor> ids = new HashSet<>();
+    private Set<Factor> users = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -148,13 +148,13 @@ public class User1 implements Serializable {
 
     public User1 addContacts(Contact contact) {
         this.contacts.add(contact);
-        contact.setId(this);
+        contact.setContact(this);
         return this;
     }
 
     public User1 removeContacts(Contact contact) {
         this.contacts.remove(contact);
-        contact.setId(null);
+        contact.setContact(null);
         return this;
     }
 
@@ -173,13 +173,13 @@ public class User1 implements Serializable {
 
     public User1 addRates(Rating rating) {
         this.rates.add(rating);
-        rating.setId(this);
+        rating.setRating(this);
         return this;
     }
 
     public User1 removeRates(Rating rating) {
         this.rates.remove(rating);
-        rating.setId(null);
+        rating.setRating(null);
         return this;
     }
 
@@ -198,13 +198,13 @@ public class User1 implements Serializable {
 
     public User1 addComments(Comment comment) {
         this.comments.add(comment);
-        comment.setId(this);
+        comment.setComment(this);
         return this;
     }
 
     public User1 removeComments(Comment comment) {
         this.comments.remove(comment);
-        comment.setId(null);
+        comment.setComment(null);
         return this;
     }
 
@@ -223,13 +223,13 @@ public class User1 implements Serializable {
 
     public User1 addFavorits(Category category) {
         this.favorits.add(category);
-        category.getIds().add(this);
+        category.getCategories().add(this);
         return this;
     }
 
     public User1 removeFavorits(Category category) {
         this.favorits.remove(category);
-        category.getIds().remove(this);
+        category.getCategories().remove(this);
         return this;
     }
 
@@ -237,68 +237,68 @@ public class User1 implements Serializable {
         this.favorits = categories;
     }
 
-    public Event getId() {
-        return id;
+    public Event getUser() {
+        return user;
     }
 
-    public User1 id(Event event) {
-        this.id = event;
+    public User1 user(Event event) {
+        this.user = event;
         return this;
     }
 
-    public void setId(Event event) {
-        this.id = event;
+    public void setUser(Event event) {
+        this.user = event;
     }
 
-    public Event getId() {
-        return id;
+    public Event getUser() {
+        return user;
     }
 
-    public User1 id(Event event) {
-        this.id = event;
+    public User1 user(Event event) {
+        this.user = event;
         return this;
     }
 
-    public void setId(Event event) {
-        this.id = event;
+    public void setUser(Event event) {
+        this.user = event;
     }
 
-    public Notification getId() {
-        return id;
+    public Notification getUser() {
+        return user;
     }
 
-    public User1 id(Notification notification) {
-        this.id = notification;
+    public User1 user(Notification notification) {
+        this.user = notification;
         return this;
     }
 
-    public void setId(Notification notification) {
-        this.id = notification;
+    public void setUser(Notification notification) {
+        this.user = notification;
     }
 
-    public Set<Factor> getIds() {
-        return ids;
+    public Set<Factor> getUsers() {
+        return users;
     }
 
-    public User1 ids(Set<Factor> factors) {
-        this.ids = factors;
+    public User1 users(Set<Factor> factors) {
+        this.users = factors;
         return this;
     }
 
-    public User1 addId(Factor factor) {
-        this.ids.add(factor);
+    public User1 addUsers(Factor factor) {
+        this.users.add(factor);
         factor.setUser(this);
         return this;
     }
 
-    public User1 removeId(Factor factor) {
-        this.ids.remove(factor);
+    public User1 removeUsers(Factor factor) {
+        this.users.remove(factor);
         factor.setUser(null);
         return this;
     }
 
-    public void setIds(Set<Factor> factors) {
-        this.ids = factors;
+    public void setUsers(Set<Factor> factors) {
+        this.users = factors;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -23,25 +23,25 @@
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "contact",
-            "otherEntityRelationshipName": "id",
+            "otherEntityRelationshipName": "contact",
             "relationshipName": "contacts"
         },
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "rating",
-            "otherEntityRelationshipName": "id",
+            "otherEntityRelationshipName": "rating",
             "relationshipName": "rates"
         },
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "comment",
-            "otherEntityRelationshipName": "id",
+            "otherEntityRelationshipName": "comment",
             "relationshipName": "comments"
         },
         {
             "relationshipType": "many-to-many",
             "otherEntityName": "category",
-            "otherEntityRelationshipName": "id",
+            "otherEntityRelationshipName": "categories",
             "relationshipName": "favorits",
             "otherEntityField": "id",
             "ownerSide": true
@@ -50,28 +50,28 @@
             "relationshipType": "one-to-one",
             "otherEntityName": "event",
             "otherEntityRelationshipName": "creator",
-            "relationshipName": "id",
+            "relationshipName": "user",
             "ownerSide": false
         },
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "event",
             "otherEntityRelationshipName": "participants",
-            "relationshipName": "id",
+            "relationshipName": "user",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "notification",
             "otherEntityRelationshipName": "notifications",
-            "relationshipName": "id",
+            "relationshipName": "user",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "factor",
             "otherEntityRelationshipName": "user",
-            "relationshipName": "id"
+            "relationshipName": "users"
         }
     ],
     "changelogDate": "20190416144502",

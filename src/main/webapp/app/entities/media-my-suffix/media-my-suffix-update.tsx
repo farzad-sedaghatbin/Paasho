@@ -20,14 +20,14 @@ export interface IMediaMySuffixUpdateProps extends StateProps, DispatchProps, Ro
 
 export interface IMediaMySuffixUpdateState {
   isNew: boolean;
-  idId: string;
+  mediaId: string;
 }
 
 export class MediaMySuffixUpdate extends React.Component<IMediaMySuffixUpdateProps, IMediaMySuffixUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      idId: '0',
+      mediaId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -112,8 +112,8 @@ export class MediaMySuffixUpdate extends React.Component<IMediaMySuffixUpdatePro
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="id.id">Id</Label>
-                  <AvInput id="media-my-suffix-id" type="select" className="form-control" name="idId">
+                  <Label for="media.id">Media</Label>
+                  <AvInput id="media-my-suffix-media" type="select" className="form-control" name="mediaId">
                     <option value="" key="0" />
                     {events
                       ? events.map(otherEntity => (

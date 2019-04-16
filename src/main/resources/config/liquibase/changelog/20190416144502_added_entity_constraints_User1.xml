@@ -19,15 +19,15 @@
                                  referencedColumnNames="id"
                                  referencedTableName="category"/>
         
-        <addForeignKeyConstraint baseColumnNames="id_id"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="user_1"
-                                 constraintName="fk_user_1_id_id"
+                                 constraintName="fk_user_1_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="event"/>
 
-        <addForeignKeyConstraint baseColumnNames="id_id"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="user_1"
-                                 constraintName="fk_user_1_id_id"
+                                 constraintName="fk_user_1_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="notification"/>
 

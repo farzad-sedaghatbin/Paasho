@@ -2,7 +2,7 @@ export interface IRatingMySuffix {
   id?: number;
   rate?: number;
   eventId?: number;
-  idId?: number;
+  ratingId?: number;
 }
 
 export const defaultValue: Readonly<IRatingMySuffix> = {};

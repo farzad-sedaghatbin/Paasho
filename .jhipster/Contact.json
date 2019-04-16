@@ -16,7 +16,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "user1",
             "otherEntityRelationshipName": "contacts",
-            "relationshipName": "id",
+            "relationshipName": "contact",
             "otherEntityField": "id"
         }
     ],

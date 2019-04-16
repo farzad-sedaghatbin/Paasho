@@ -41,12 +41,12 @@ public class Category implements Serializable {
     @ManyToMany(mappedBy = "favorits")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
-    private Set<User1> ids = new HashSet<>();
+    private Set<User1> categories = new HashSet<>();
 
     @ManyToMany(mappedBy = "categories")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
-    private Set<Event> ids = new HashSet<>();
+    private Set<Event> categories = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -96,54 +96,54 @@ public class Category implements Serializable {
         this.code = code;
     }
 
-    public Set<User1> getIds() {
-        return ids;
+    public Set<User1> getCategories() {
+        return categories;
     }
 
-    public Category ids(Set<User1> user1S) {
-        this.ids = user1S;
+    public Category categories(Set<User1> user1S) {
+        this.categories = user1S;
         return this;
     }
 
-    public Category addId(User1 user1) {
-        this.ids.add(user1);
+    public Category addCategories(User1 user1) {
+        this.categories.add(user1);
         user1.getFavorits().add(this);
         return this;
     }
 
-    public Category removeId(User1 user1) {
-        this.ids.remove(user1);
+    public Category removeCategories(User1 user1) {
+        this.categories.remove(user1);
         user1.getFavorits().remove(this);
         return this;
     }
 
-    public void setIds(Set<User1> user1S) {
-        this.ids = user1S;
+    public void setCategories(Set<User1> user1S) {
+        this.categories = user1S;
     }
 
-    public Set<Event> getIds() {
-        return ids;
+    public Set<Event> getCategories() {
+        return categories;
     }
 
-    public Category ids(Set<Event> events) {
-        this.ids = events;
+    public Category categories(Set<Event> events) {
+        this.categories = events;
         return this;
     }
 
-    public Category addId(Event event) {
-        this.ids.add(event);
+    public Category addCategories(Event event) {
+        this.categories.add(event);
         event.getCategories().add(this);
         return this;
     }
 
-    public Category removeId(Event event) {
-        this.ids.remove(event);
+    public Category removeCategories(Event event) {
+        this.categories.remove(event);
         event.getCategories().remove(this);
         return this;
     }
 
-    public void setIds(Set<Event> events) {
-        this.ids = events;
+    public void setCategories(Set<Event> events) {
+        this.categories = events;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

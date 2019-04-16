@@ -8,7 +8,7 @@ export interface IMediaMySuffix {
   id?: number;
   path?: string;
   type?: MediaType;
-  idId?: number;
+  mediaId?: number;
 }
 
 export const defaultValue: Readonly<IMediaMySuffix> = {};

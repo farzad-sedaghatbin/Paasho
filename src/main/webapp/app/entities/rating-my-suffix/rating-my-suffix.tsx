@@ -76,7 +76,7 @@ export class RatingMySuffix extends React.Component<IRatingMySuffixProps, IRatin
                 <th>ID</th>
                 <th>Rate</th>
                 <th>Event</th>
-                <th>Id</th>
+                <th>Rating</th>
                 <th />
               </tr>
             </thead>
@@ -90,7 +90,7 @@ export class RatingMySuffix extends React.Component<IRatingMySuffixProps, IRatin
                   </td>
                   <td>{rating.rate}</td>
                   <td>{rating.eventId ? <Link to={`event-my-suffix/${rating.eventId}`}>{rating.eventId}</Link> : ''}</td>
-                  <td>{rating.idId ? <Link to={`user-1-my-suffix/${rating.idId}`}>{rating.idId}</Link> : ''}</td>
+                  <td>{rating.ratingId ? <Link to={`user-1-my-suffix/${rating.ratingId}`}>{rating.ratingId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${rating.id}`} color="info" size="sm">

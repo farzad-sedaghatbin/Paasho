@@ -25,7 +25,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="id_id" type="bigint">
+            <column name="comment_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

@@ -55,10 +55,10 @@ export class User1MySuffixDetail extends React.Component<IUser1MySuffixDetailPro
                   ))
                 : null}
             </dd>
-            <dt>Id</dt>
-            <dd>{user1Entity.idId ? user1Entity.idId : ''}</dd>
-            <dt>Id</dt>
-            <dd>{user1Entity.idId ? user1Entity.idId : ''}</dd>
+            <dt>User</dt>
+            <dd>{user1Entity.userId ? user1Entity.userId : ''}</dd>
+            <dt>User</dt>
+            <dd>{user1Entity.userId ? user1Entity.userId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/user-1-my-suffix" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -20,14 +20,14 @@ export interface ICommentMySuffixUpdateProps extends StateProps, DispatchProps, 
 
 export interface ICommentMySuffixUpdateState {
   isNew: boolean;
-  idId: string;
+  commentId: string;
 }
 
 export class CommentMySuffixUpdate extends React.Component<ICommentMySuffixUpdateProps, ICommentMySuffixUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      idId: '0',
+      commentId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -98,8 +98,8 @@ export class CommentMySuffixUpdate extends React.Component<ICommentMySuffixUpdat
                   <AvField id="comment-my-suffix-description" type="text" name="description" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="id.id">Id</Label>
-                  <AvInput id="comment-my-suffix-id" type="select" className="form-control" name="idId">
+                  <Label for="comment.id">Comment</Label>
+                  <AvInput id="comment-my-suffix-comment" type="select" className="form-control" name="commentId">
                     <option value="" key="0" />
                     {user1S
                       ? user1S.map(otherEntity => (

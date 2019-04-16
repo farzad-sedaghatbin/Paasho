@@ -84,9 +84,9 @@ public class User1Resource {
      */
     @GetMapping("/user-1-s")
     public List<User1DTO> getAllUser1S(@RequestParam(required = false) String filter,@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
-        if ("id-is-null".equals(filter)) {
-            log.debug("REST request to get all User1s where id is null");
-            return user1Service.findAllWhereIdIsNull();
+        if ("user-is-null".equals(filter)) {
+            log.debug("REST request to get all User1s where user is null");
+            return user1Service.findAllWhereUserIsNull();
         }
         log.debug("REST request to get all User1S");
         return user1Service.findAll();

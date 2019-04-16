@@ -79,10 +79,10 @@ public class Event implements Serializable {
     @JoinColumn(unique = true)
     private User1 creator;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<User1> participants = new HashSet<>();
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "media")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Media> medias = new HashSet<>();
     @ManyToMany
@@ -94,10 +94,10 @@ public class Event implements Serializable {
 
     @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Rating> ids = new HashSet<>();
+    private Set<Rating> events = new HashSet<>();
     @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Factor> ids = new HashSet<>();
+    private Set<Factor> events = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -300,13 +300,13 @@ public class Event implements Serializable {
 
     public Event addParticipants(User1 user1) {
         this.participants.add(user1);
-        user1.setId(this);
+        user1.setUser(this);
         return this;
     }
 
     public Event removeParticipants(User1 user1) {
         this.participants.remove(user1);
-        user1.setId(null);
+        user1.setUser(null);
         return this;
     }
 
@@ -325,13 +325,13 @@ public class Event implements Serializable {
 
     public Event addMedias(Media media) {
         this.medias.add(media);
-        media.setId(this);
+        media.setMedia(this);
         return this;
     }
 
     public Event removeMedias(Media media) {
         this.medias.remove(media);
-        media.setId(null);
+        media.setMedia(null);
         return this;
     }
 
@@ -350,13 +350,13 @@ public class Event implements Serializable {
 
     public Event addCategories(Category category) {
         this.categories.add(category);
-        category.getIds().add(this);
+        category.getCategories().add(this);
         return this;
     }
 
     public Event removeCategories(Category category) {
         this.categories.remove(category);
-        category.getIds().remove(this);
+        category.getCategories().remove(this);
         return this;
     }
 
@@ -364,54 +364,54 @@ public class Event implements Serializable {
         this.categories = categories;
     }
 
-    public Set<Rating> getIds() {
-        return ids;
+    public Set<Rating> getEvents() {
+        return events;
     }
 
-    public Event ids(Set<Rating> ratings) {
-        this.ids = ratings;
+    public Event events(Set<Rating> ratings) {
+        this.events = ratings;
         return this;
     }
 
-    public Event addId(Rating rating) {
-        this.ids.add(rating);
+    public Event addEvents(Rating rating) {
+        this.events.add(rating);
         rating.setEvent(this);
         return this;
     }
 
-    public Event removeId(Rating rating) {
-        this.ids.remove(rating);
+    public Event removeEvents(Rating rating) {
+        this.events.remove(rating);
         rating.setEvent(null);
         return this;
     }
 
-    public void setIds(Set<Rating> ratings) {
-        this.ids = ratings;
+    public void setEvents(Set<Rating> ratings) {
+        this.events = ratings;
     }
 
-    public Set<Factor> getIds() {
-        return ids;
+    public Set<Factor> getEvents() {
+        return events;
     }
 
-    public Event ids(Set<Factor> factors) {
-        this.ids = factors;
+    public Event events(Set<Factor> factors) {
+        this.events = factors;
         return this;
     }
 
-    public Event addId(Factor factor) {
-        this.ids.add(factor);
+    public Event addEvents(Factor factor) {
+        this.events.add(factor);
         factor.setEvent(this);
         return this;
     }
 
-    public Event removeId(Factor factor) {
-        this.ids.remove(factor);
+    public Event removeEvents(Factor factor) {
+        this.events.remove(factor);
         factor.setEvent(null);
         return this;
     }
 
-    public void setIds(Set<Factor> factors) {
-        this.ids = factors;
+    public void setEvents(Set<Factor> factors) {
+        this.events = factors;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -36,8 +36,8 @@ export class ContactMySuffixDetail extends React.Component<IContactMySuffixDetai
               <span id="value">Value</span>
             </dt>
             <dd>{contactEntity.value}</dd>
-            <dt>Id</dt>
-            <dd>{contactEntity.idId ? contactEntity.idId : ''}</dd>
+            <dt>Contact</dt>
+            <dd>{contactEntity.contactId ? contactEntity.contactId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/contact-my-suffix" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

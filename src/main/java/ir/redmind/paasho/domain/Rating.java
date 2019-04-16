@@ -31,12 +31,12 @@ public class Rating implements Serializable {
     private Double rate;
 
     @ManyToOne
-    @JsonIgnoreProperties("ids")
+    @JsonIgnoreProperties("events")
     private Event event;
 
     @ManyToOne
     @JsonIgnoreProperties("rates")
-    private User1 id;
+    private User1 rating;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -73,17 +73,17 @@ public class Rating implements Serializable {
         this.event = event;
     }
 
-    public User1 getId() {
-        return id;
+    public User1 getRating() {
+        return rating;
     }
 
-    public Rating id(User1 user1) {
-        this.id = user1;
+    public Rating rating(User1 user1) {
+        this.rating = user1;
         return this;
     }
 
-    public void setId(User1 user1) {
-        this.id = user1;
+    public void setRating(User1 user1) {
+        this.rating = user1;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

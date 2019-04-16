@@ -20,7 +20,7 @@
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "user1",
-            "otherEntityRelationshipName": "id",
+            "otherEntityRelationshipName": "user",
             "relationshipName": "notifications"
         }
     ],

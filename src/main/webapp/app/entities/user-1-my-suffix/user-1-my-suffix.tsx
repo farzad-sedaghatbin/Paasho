@@ -79,8 +79,8 @@ export class User1MySuffix extends React.Component<IUser1MySuffixProps, IUser1My
                 <th>Gender</th>
                 <th>Birth Date</th>
                 <th>Favorits</th>
-                <th>Id</th>
-                <th>Id</th>
+                <th>User</th>
+                <th>User</th>
                 <th />
               </tr>
             </thead>
@@ -106,8 +106,8 @@ export class User1MySuffix extends React.Component<IUser1MySuffixProps, IUser1My
                         ))
                       : null}
                   </td>
-                  <td>{user1.idId ? <Link to={`event-my-suffix/${user1.idId}`}>{user1.idId}</Link> : ''}</td>
-                  <td>{user1.idId ? <Link to={`notification-my-suffix/${user1.idId}`}>{user1.idId}</Link> : ''}</td>
+                  <td>{user1.userId ? <Link to={`event-my-suffix/${user1.userId}`}>{user1.userId}</Link> : ''}</td>
+                  <td>{user1.userId ? <Link to={`notification-my-suffix/${user1.userId}`}>{user1.userId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${user1.id}`} color="info" size="sm">
