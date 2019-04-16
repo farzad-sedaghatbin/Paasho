@@ -43,6 +43,8 @@ public class EventDTO implements Serializable {
 
     private Long creatorId;
 
+    private Set<User1DTO> participants = new HashSet<>();
+
     private Set<CategoryDTO> categories = new HashSet<>();
 
     public Long getId() {
@@ -163,6 +165,14 @@ public class EventDTO implements Serializable {
 
     public void setCreatorId(Long user1Id) {
         this.creatorId = user1Id;
+    }
+
+    public Set<User1DTO> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Set<User1DTO> user1S) {
+        this.participants = user1S;
     }
 
     public Set<CategoryDTO> getCategories() {

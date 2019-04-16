@@ -67,15 +67,17 @@
         },
         {
             "relationshipType": "one-to-many",
-            "otherEntityName": "user1",
-            "otherEntityRelationshipName": "event",
-            "relationshipName": "participants"
-        },
-        {
-            "relationshipType": "one-to-many",
             "otherEntityName": "media",
             "otherEntityRelationshipName": "event",
             "relationshipName": "medias"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "user1",
+            "otherEntityRelationshipName": "events",
+            "relationshipName": "participants",
+            "otherEntityField": "id",
+            "ownerSide": true
         },
         {
             "relationshipType": "many-to-many",
@@ -107,5 +109,5 @@
     "fluentMethods": true,
     "clientRootFolder": "",
     "applications": "*",
-    "angularJSSuffix": "mySuffix"
+    "angularJSSuffix": "paasho"
 }

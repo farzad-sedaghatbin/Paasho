@@ -15,7 +15,6 @@ public interface EventMapper extends EntityMapper<EventDTO, Event> {
     EventDTO toDto(Event event);
 
     @Mapping(source = "creatorId", target = "creator")
-    @Mapping(target = "participants", ignore = true)
     @Mapping(target = "medias", ignore = true)
     @Mapping(target = "rates", ignore = true)
     @Mapping(target = "factors", ignore = true)

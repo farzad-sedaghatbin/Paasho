@@ -66,16 +66,17 @@ public class User1 implements Serializable {
     private Event event;
 
     @ManyToOne
-    @JsonIgnoreProperties("participants")
-    private Event event;
-
-    @ManyToOne
     @JsonIgnoreProperties("users")
     private Notification notification;
 
     @OneToMany(mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Factor> factors = new HashSet<>();
+    @ManyToMany(mappedBy = "participants")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
+    private Set<Event> events = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -250,19 +251,6 @@ public class User1 implements Serializable {
         this.event = event;
     }
 
-    public Event getEvent() {
-        return event;
-    }
-
-    public User1 event(Event event) {
-        this.event = event;
-        return this;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
     public Notification getNotification() {
         return notification;
     }
@@ -299,6 +287,31 @@ public class User1 implements Serializable {
 
     public void setFactors(Set<Factor> factors) {
         this.factors = factors;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public User1 events(Set<Event> events) {
+        this.events = events;
+        return this;
+    }
+
+    public User1 addEvents(Event event) {
+        this.events.add(event);
+        event.getParticipants().add(this);
+        return this;
+    }
+
+    public User1 removeEvents(Event event) {
+        this.events.remove(event);
+        event.getParticipants().remove(this);
+        return this;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

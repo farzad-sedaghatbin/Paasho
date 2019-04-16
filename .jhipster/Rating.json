@@ -31,5 +31,5 @@
     "fluentMethods": true,
     "clientRootFolder": "",
     "applications": "*",
-    "angularJSSuffix": "mySuffix"
+    "angularJSSuffix": "paasho"
 }

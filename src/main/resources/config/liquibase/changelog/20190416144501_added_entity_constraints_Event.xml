@@ -15,6 +15,17 @@
                                  referencedTableName="user_1"/>
 
         <addForeignKeyConstraint baseColumnNames="event_id"
+                                 baseTableName="event_participants"
+                                 constraintName="fk_event_participants_event_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="event"/>
+        <addForeignKeyConstraint baseColumnNames="participants_id"
+                                 baseTableName="event_participants"
+                                 constraintName="fk_event_participants_participants_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_1"/>
+        
+        <addForeignKeyConstraint baseColumnNames="event_id"
                                  baseTableName="event_categories"
                                  constraintName="fk_event_categories_event_id"
                                  referencedColumnNames="id"

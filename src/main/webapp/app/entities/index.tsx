@@ -14,6 +14,16 @@ import FactorMySuffix from './factor-my-suffix';
 import CommentMySuffix from './comment-my-suffix';
 import MediaMySuffix from './media-my-suffix';
 import RatingMySuffix from './rating-my-suffix';
+import EventPaasho from './event-paasho';
+import User1Paasho from './user-1-paasho';
+import ContactPaasho from './contact-paasho';
+import CategoryPaasho from './category-paasho';
+import NotificationPaasho from './notification-paasho';
+import SettingPaasho from './setting-paasho';
+import FactorPaasho from './factor-paasho';
+import CommentPaasho from './comment-paasho';
+import MediaPaasho from './media-paasho';
+import RatingPaasho from './rating-paasho';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -30,6 +40,16 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/comment-my-suffix`} component={CommentMySuffix} />
       <ErrorBoundaryRoute path={`${match.url}/media-my-suffix`} component={MediaMySuffix} />
       <ErrorBoundaryRoute path={`${match.url}/rating-my-suffix`} component={RatingMySuffix} />
+      <ErrorBoundaryRoute path={`${match.url}/event-paasho`} component={EventPaasho} />
+      <ErrorBoundaryRoute path={`${match.url}/user-1-paasho`} component={User1Paasho} />
+      <ErrorBoundaryRoute path={`${match.url}/contact-paasho`} component={ContactPaasho} />
+      <ErrorBoundaryRoute path={`${match.url}/category-paasho`} component={CategoryPaasho} />
+      <ErrorBoundaryRoute path={`${match.url}/notification-paasho`} component={NotificationPaasho} />
+      <ErrorBoundaryRoute path={`${match.url}/setting-paasho`} component={SettingPaasho} />
+      <ErrorBoundaryRoute path={`${match.url}/factor-paasho`} component={FactorPaasho} />
+      <ErrorBoundaryRoute path={`${match.url}/comment-paasho`} component={CommentPaasho} />
+      <ErrorBoundaryRoute path={`${match.url}/media-paasho`} component={MediaPaasho} />
+      <ErrorBoundaryRoute path={`${match.url}/rating-paasho`} component={RatingPaasho} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

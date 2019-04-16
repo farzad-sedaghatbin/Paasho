@@ -55,13 +55,6 @@
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "event",
-            "otherEntityRelationshipName": "participants",
-            "relationshipName": "event",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
             "otherEntityName": "notification",
             "otherEntityRelationshipName": "users",
             "relationshipName": "notification",
@@ -72,6 +65,14 @@
             "otherEntityName": "factor",
             "otherEntityRelationshipName": "user",
             "relationshipName": "factor"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "event",
+            "otherEntityRelationshipName": "participants",
+            "relationshipName": "events",
+            "otherEntityField": "id",
+            "ownerSide": false
         }
     ],
     "changelogDate": "20190416144502",
@@ -83,5 +84,5 @@
     "fluentMethods": true,
     "clientRootFolder": "",
     "applications": "*",
-    "angularJSSuffix": "mySuffix"
+    "angularJSSuffix": "paasho"
 }
