@@ -36,8 +36,8 @@ export class MediaMySuffixDetail extends React.Component<IMediaMySuffixDetailPro
               <span id="type">Type</span>
             </dt>
             <dd>{mediaEntity.type}</dd>
-            <dt>Media</dt>
-            <dd>{mediaEntity.mediaId ? mediaEntity.mediaId : ''}</dd>
+            <dt>Event</dt>
+            <dd>{mediaEntity.eventId ? mediaEntity.eventId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/media-my-suffix" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -38,7 +38,7 @@ public class Contact implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("contacts")
-    private User1 contact;
+    private User1 user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -75,17 +75,17 @@ public class Contact implements Serializable {
         this.value = value;
     }
 
-    public User1 getContact() {
-        return contact;
+    public User1 getUser() {
+        return user;
     }
 
-    public Contact contact(User1 user1) {
-        this.contact = user1;
+    public Contact user(User1 user1) {
+        this.user = user1;
         return this;
     }
 
-    public void setContact(User1 user1) {
-        this.contact = user1;
+    public void setUser(User1 user1) {
+        this.user = user1;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

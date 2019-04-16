@@ -14,9 +14,9 @@
                                  referencedColumnNames="id"
                                  referencedTableName="event"/>
 
-        <addForeignKeyConstraint baseColumnNames="rating_id"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="rating"
-                                 constraintName="fk_rating_rating_id"
+                                 constraintName="fk_rating_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_1"/>
 

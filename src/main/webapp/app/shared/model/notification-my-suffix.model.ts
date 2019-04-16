@@ -13,7 +13,7 @@ export interface INotificationMySuffix {
   description?: string;
   type?: NotificationType;
   status?: NotificationStatus;
-  notifications?: IUser1MySuffix[];
+  users?: IUser1MySuffix[];
 }
 
 export const defaultValue: Readonly<INotificationMySuffix> = {};

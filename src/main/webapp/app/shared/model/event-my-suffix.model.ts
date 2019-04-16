@@ -35,8 +35,8 @@ export interface IEventMySuffix {
   participants?: IUser1MySuffix[];
   medias?: IMediaMySuffix[];
   categories?: ICategoryMySuffix[];
-  events?: IRatingMySuffix[];
-  events?: IFactorMySuffix[];
+  rates?: IRatingMySuffix[];
+  factors?: IFactorMySuffix[];
 }
 
 export const defaultValue: Readonly<IEventMySuffix> = {};

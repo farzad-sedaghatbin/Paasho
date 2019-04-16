@@ -9,7 +9,7 @@ export interface IContactMySuffix {
   id?: number;
   type?: ContactType;
   value?: string;
-  contactId?: number;
+  userId?: number;
 }
 
 export const defaultValue: Readonly<IContactMySuffix> = {};

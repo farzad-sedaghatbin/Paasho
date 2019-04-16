@@ -1,7 +1,7 @@
 export interface ICommentMySuffix {
   id?: number;
   description?: string;
-  commentId?: number;
+  userId?: number;
 }
 
 export const defaultValue: Readonly<ICommentMySuffix> = {};

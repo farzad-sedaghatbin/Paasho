@@ -79,10 +79,10 @@ public class Event implements Serializable {
     @JoinColumn(unique = true)
     private User1 creator;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<User1> participants = new HashSet<>();
-    @OneToMany(mappedBy = "media")
+    @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Media> medias = new HashSet<>();
     @ManyToMany
@@ -94,10 +94,10 @@ public class Event implements Serializable {
 
     @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Rating> events = new HashSet<>();
+    private Set<Rating> rates = new HashSet<>();
     @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Factor> events = new HashSet<>();
+    private Set<Factor> factors = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -300,13 +300,13 @@ public class Event implements Serializable {
 
     public Event addParticipants(User1 user1) {
         this.participants.add(user1);
-        user1.setUser(this);
+        user1.setEvent(this);
         return this;
     }
 
     public Event removeParticipants(User1 user1) {
         this.participants.remove(user1);
-        user1.setUser(null);
+        user1.setEvent(null);
         return this;
     }
 
@@ -325,13 +325,13 @@ public class Event implements Serializable {
 
     public Event addMedias(Media media) {
         this.medias.add(media);
-        media.setMedia(this);
+        media.setEvent(this);
         return this;
     }
 
     public Event removeMedias(Media media) {
         this.medias.remove(media);
-        media.setMedia(null);
+        media.setEvent(null);
         return this;
     }
 
@@ -364,54 +364,54 @@ public class Event implements Serializable {
         this.categories = categories;
     }
 
-    public Set<Rating> getEvents() {
-        return events;
+    public Set<Rating> getRates() {
+        return rates;
     }
 
-    public Event events(Set<Rating> ratings) {
-        this.events = ratings;
+    public Event rates(Set<Rating> ratings) {
+        this.rates = ratings;
         return this;
     }
 
-    public Event addEvents(Rating rating) {
-        this.events.add(rating);
+    public Event addRate(Rating rating) {
+        this.rates.add(rating);
         rating.setEvent(this);
         return this;
     }
 
-    public Event removeEvents(Rating rating) {
-        this.events.remove(rating);
+    public Event removeRate(Rating rating) {
+        this.rates.remove(rating);
         rating.setEvent(null);
         return this;
     }
 
-    public void setEvents(Set<Rating> ratings) {
-        this.events = ratings;
+    public void setRates(Set<Rating> ratings) {
+        this.rates = ratings;
     }
 
-    public Set<Factor> getEvents() {
-        return events;
+    public Set<Factor> getFactors() {
+        return factors;
     }
 
-    public Event events(Set<Factor> factors) {
-        this.events = factors;
+    public Event factors(Set<Factor> factors) {
+        this.factors = factors;
         return this;
     }
 
-    public Event addEvents(Factor factor) {
-        this.events.add(factor);
+    public Event addFactor(Factor factor) {
+        this.factors.add(factor);
         factor.setEvent(this);
         return this;
     }
 
-    public Event removeEvents(Factor factor) {
-        this.events.remove(factor);
+    public Event removeFactor(Factor factor) {
+        this.factors.remove(factor);
         factor.setEvent(null);
         return this;
     }
 
-    public void setEvents(Set<Factor> factors) {
-        this.events = factors;
+    public void setFactors(Set<Factor> factors) {
+        this.factors = factors;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

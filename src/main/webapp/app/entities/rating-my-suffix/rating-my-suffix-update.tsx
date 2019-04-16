@@ -23,7 +23,7 @@ export interface IRatingMySuffixUpdateProps extends StateProps, DispatchProps, R
 export interface IRatingMySuffixUpdateState {
   isNew: boolean;
   eventId: string;
-  ratingId: string;
+  userId: string;
 }
 
 export class RatingMySuffixUpdate extends React.Component<IRatingMySuffixUpdateProps, IRatingMySuffixUpdateState> {
@@ -31,7 +31,7 @@ export class RatingMySuffixUpdate extends React.Component<IRatingMySuffixUpdateP
     super(props);
     this.state = {
       eventId: '0',
-      ratingId: '0',
+      userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -116,8 +116,8 @@ export class RatingMySuffixUpdate extends React.Component<IRatingMySuffixUpdateP
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="rating.id">Rating</Label>
-                  <AvInput id="rating-my-suffix-rating" type="select" className="form-control" name="ratingId">
+                  <Label for="user.id">User</Label>
+                  <AvInput id="rating-my-suffix-user" type="select" className="form-control" name="userId">
                     <option value="" key="0" />
                     {user1S
                       ? user1S.map(otherEntity => (

@@ -23,9 +23,9 @@ public class User1DTO implements Serializable {
 
     private Set<CategoryDTO> favorits = new HashSet<>();
 
-    private Long userId;
+    private Long eventId;
 
-    private Long userId;
+    private Long notificationId;
 
     public Long getId() {
         return id;
@@ -75,20 +75,20 @@ public class User1DTO implements Serializable {
         this.favorits = categories;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getEventId() {
+        return eventId;
     }
 
-    public void setUserId(Long eventId) {
-        this.userId = eventId;
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getNotificationId() {
+        return notificationId;
     }
 
-    public void setUserId(Long notificationId) {
-        this.userId = notificationId;
+    public void setNotificationId(Long notificationId) {
+        this.notificationId = notificationId;
     }
 
     @Override
@@ -120,8 +120,8 @@ public class User1DTO implements Serializable {
             ", lastName='" + getLastName() + "'" +
             ", gender='" + getGender() + "'" +
             ", birthDate='" + getBirthDate() + "'" +
-            ", user=" + getUserId() +
-            ", user=" + getUserId() +
+            ", event=" + getEventId() +
+            ", notification=" + getNotificationId() +
             "}";
     }
 }
