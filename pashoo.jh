@@ -88,7 +88,6 @@ enum FactorStatus{
 }
 relationship OneToMany{
 	User1 {contacts} to Contact{user},
-    Event {participants} to User1{event},
     Event {medias} to Media {event},
     User1 {rates} to Rating {user},
     Notification {users} to User1{notification},
@@ -106,6 +105,7 @@ relationship OneToOne{
     Event {creator} to User1{event},
 }
 relationship ManyToMany{
+    Event {participants} to User1{events},
 	User1 {favorits} to Category{categories},
     Event{categories} to Category{categories},
 }
@@ -117,4 +117,4 @@ dto * with mapstruct
 // Set service options to all except few
 service all with serviceImpl 
 // Set an angular suffix
-angularSuffix * with mySuffix
+angularSuffix * with paasho

@@ -19,12 +19,6 @@
                                  referencedColumnNames="id"
                                  referencedTableName="category"/>
         
-        <addForeignKeyConstraint baseColumnNames="event_id"
-                                 baseTableName="user_1"
-                                 constraintName="fk_user_1_event_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="event"/>
-
         <addForeignKeyConstraint baseColumnNames="notification_id"
                                  baseTableName="user_1"
                                  constraintName="fk_user_1_notification_id"

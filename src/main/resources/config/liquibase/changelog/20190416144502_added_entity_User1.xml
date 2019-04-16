@@ -37,10 +37,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="event_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="notification_id" type="bigint">
                 <constraints nullable="true" />
             </column>

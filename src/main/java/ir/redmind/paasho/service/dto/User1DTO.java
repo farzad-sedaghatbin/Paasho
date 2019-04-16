@@ -23,8 +23,6 @@ public class User1DTO implements Serializable {
 
     private Set<CategoryDTO> favorits = new HashSet<>();
 
-    private Long eventId;
-
     private Long notificationId;
 
     public Long getId() {
@@ -75,14 +73,6 @@ public class User1DTO implements Serializable {
         this.favorits = categories;
     }
 
-    public Long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
-    }
-
     public Long getNotificationId() {
         return notificationId;
     }
@@ -120,7 +110,6 @@ public class User1DTO implements Serializable {
             ", lastName='" + getLastName() + "'" +
             ", gender='" + getGender() + "'" +
             ", birthDate='" + getBirthDate() + "'" +
-            ", event=" + getEventId() +
             ", notification=" + getNotificationId() +
             "}";
     }

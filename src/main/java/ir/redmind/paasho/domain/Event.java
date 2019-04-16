@@ -81,10 +81,14 @@ public class Event implements Serializable {
 
     @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<User1> participants = new HashSet<>();
-    @OneToMany(mappedBy = "event")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Media> medias = new HashSet<>();
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "event_participants",
+               joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "participants_id", referencedColumnName = "id"))
+    private Set<User1> participants = new HashSet<>();
+
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "event_categories",
@@ -289,31 +293,6 @@ public class Event implements Serializable {
         this.creator = user1;
     }
 
-    public Set<User1> getParticipants() {
-        return participants;
-    }
-
-    public Event participants(Set<User1> user1S) {
-        this.participants = user1S;
-        return this;
-    }
-
-    public Event addParticipants(User1 user1) {
-        this.participants.add(user1);
-        user1.setEvent(this);
-        return this;
-    }
-
-    public Event removeParticipants(User1 user1) {
-        this.participants.remove(user1);
-        user1.setEvent(null);
-        return this;
-    }
-
-    public void setParticipants(Set<User1> user1S) {
-        this.participants = user1S;
-    }
-
     public Set<Media> getMedias() {
         return medias;
     }
@@ -337,6 +316,31 @@ public class Event implements Serializable {
 
     public void setMedias(Set<Media> media) {
         this.medias = media;
+    }
+
+    public Set<User1> getParticipants() {
+        return participants;
+    }
+
+    public Event participants(Set<User1> user1S) {
+        this.participants = user1S;
+        return this;
+    }
+
+    public Event addParticipants(User1 user1) {
+        this.participants.add(user1);
+        user1.getEvents().add(this);
+        return this;
+    }
+
+    public Event removeParticipants(User1 user1) {
+        this.participants.remove(user1);
+        user1.getEvents().remove(this);
+        return this;
+    }
+
+    public void setParticipants(Set<User1> user1S) {
+        this.participants = user1S;
     }
 
     public Set<Category> getCategories() {

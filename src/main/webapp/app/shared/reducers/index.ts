@@ -51,6 +51,46 @@ import media, {
 import rating, {
   RatingMySuffixState
 } from 'app/entities/rating-my-suffix/rating-my-suffix.reducer';
+// prettier-ignore
+import event, {
+  EventPaashoState
+} from 'app/entities/event-paasho/event-paasho.reducer';
+// prettier-ignore
+import user1, {
+  User1PaashoState
+} from 'app/entities/user-1-paasho/user-1-paasho.reducer';
+// prettier-ignore
+import contact, {
+  ContactPaashoState
+} from 'app/entities/contact-paasho/contact-paasho.reducer';
+// prettier-ignore
+import category, {
+  CategoryPaashoState
+} from 'app/entities/category-paasho/category-paasho.reducer';
+// prettier-ignore
+import notification, {
+  NotificationPaashoState
+} from 'app/entities/notification-paasho/notification-paasho.reducer';
+// prettier-ignore
+import setting, {
+  SettingPaashoState
+} from 'app/entities/setting-paasho/setting-paasho.reducer';
+// prettier-ignore
+import factor, {
+  FactorPaashoState
+} from 'app/entities/factor-paasho/factor-paasho.reducer';
+// prettier-ignore
+import comment, {
+  CommentPaashoState
+} from 'app/entities/comment-paasho/comment-paasho.reducer';
+// prettier-ignore
+import media, {
+  MediaPaashoState
+} from 'app/entities/media-paasho/media-paasho.reducer';
+// prettier-ignore
+import rating, {
+  RatingPaashoState
+} from 'app/entities/rating-paasho/rating-paasho.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -73,6 +113,16 @@ export interface IRootState {
   readonly comment: CommentMySuffixState;
   readonly media: MediaMySuffixState;
   readonly rating: RatingMySuffixState;
+  readonly event: EventPaashoState;
+  readonly user1: User1PaashoState;
+  readonly contact: ContactPaashoState;
+  readonly category: CategoryPaashoState;
+  readonly notification: NotificationPaashoState;
+  readonly setting: SettingPaashoState;
+  readonly factor: FactorPaashoState;
+  readonly comment: CommentPaashoState;
+  readonly media: MediaPaashoState;
+  readonly rating: RatingPaashoState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
