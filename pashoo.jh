@@ -107,7 +107,7 @@ relationship OneToOne{
 relationship ManyToMany{
     Event {participants} to User1{events},
 	User1 {favorits} to Category{categories},
-    Event{categories} to Category{categories},
+    Event{categories} to Category{events},
 }
 // Set pagination options
 paginate Event with infinite-scroll
