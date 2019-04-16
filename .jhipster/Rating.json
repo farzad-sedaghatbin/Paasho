@@ -10,7 +10,7 @@
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "event",
-            "otherEntityRelationshipName": "id",
+            "otherEntityRelationshipName": "events",
             "relationshipName": "event",
             "otherEntityField": "id"
         },
@@ -18,7 +18,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "user1",
             "otherEntityRelationshipName": "rates",
-            "relationshipName": "id",
+            "relationshipName": "rating",
             "otherEntityField": "id"
         }
     ],

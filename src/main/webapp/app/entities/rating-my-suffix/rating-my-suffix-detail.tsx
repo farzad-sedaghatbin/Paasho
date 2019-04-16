@@ -34,8 +34,8 @@ export class RatingMySuffixDetail extends React.Component<IRatingMySuffixDetailP
             <dd>{ratingEntity.rate}</dd>
             <dt>Event</dt>
             <dd>{ratingEntity.eventId ? ratingEntity.eventId : ''}</dd>
-            <dt>Id</dt>
-            <dd>{ratingEntity.idId ? ratingEntity.idId : ''}</dd>
+            <dt>Rating</dt>
+            <dd>{ratingEntity.ratingId ? ratingEntity.ratingId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/rating-my-suffix" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

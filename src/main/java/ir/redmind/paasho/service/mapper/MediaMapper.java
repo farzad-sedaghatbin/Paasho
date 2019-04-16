@@ -11,10 +11,10 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {EventMapper.class})
 public interface MediaMapper extends EntityMapper<MediaDTO, Media> {
 
-    @Mapping(source = "id.id", target = "idId")
+    @Mapping(source = "media.id", target = "mediaId")
     MediaDTO toDto(Media media);
 
-    @Mapping(source = "idId", target = "id")
+    @Mapping(source = "mediaId", target = "media")
     Media toEntity(MediaDTO mediaDTO);
 
     default Media fromId(Long id) {

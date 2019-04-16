@@ -16,7 +16,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "event",
             "otherEntityRelationshipName": "medias",
-            "relationshipName": "id",
+            "relationshipName": "media",
             "otherEntityField": "id"
         }
     ],

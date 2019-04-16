@@ -85,15 +85,15 @@ public class User1ServiceImpl implements User1Service {
 
 
     /**
-     *  get all the user1S where Id is null.
+     *  get all the user1S where User is null.
      *  @return the list of entities
      */
     @Transactional(readOnly = true) 
-    public List<User1DTO> findAllWhereIdIsNull() {
-        log.debug("Request to get all user1S where Id is null");
+    public List<User1DTO> findAllWhereUserIsNull() {
+        log.debug("Request to get all user1S where User is null");
         return StreamSupport
             .stream(user1Repository.findAll().spliterator(), false)
-            .filter(user1 -> user1.getId() == null)
+            .filter(user1 -> user1.getUser() == null)
             .map(user1Mapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }

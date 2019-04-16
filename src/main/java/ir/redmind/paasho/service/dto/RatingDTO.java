@@ -14,7 +14,7 @@ public class RatingDTO implements Serializable {
 
     private Long eventId;
 
-    private Long idId;
+    private Long ratingId;
 
     public Long getId() {
         return id;
@@ -40,12 +40,12 @@ public class RatingDTO implements Serializable {
         this.eventId = eventId;
     }
 
-    public Long getIdId() {
-        return idId;
+    public Long getRatingId() {
+        return ratingId;
     }
 
-    public void setIdId(Long user1Id) {
-        this.idId = user1Id;
+    public void setRatingId(Long user1Id) {
+        this.ratingId = user1Id;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class RatingDTO implements Serializable {
             "id=" + getId() +
             ", rate=" + getRate() +
             ", event=" + getEventId() +
-            ", id=" + getIdId() +
+            ", rating=" + getRatingId() +
             "}";
     }
 }

@@ -60,7 +60,7 @@
         {
             "relationshipType": "one-to-one",
             "otherEntityName": "user1",
-            "otherEntityRelationshipName": "id",
+            "otherEntityRelationshipName": "user",
             "relationshipName": "creator",
             "otherEntityField": "id",
             "ownerSide": true
@@ -68,19 +68,19 @@
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "user1",
-            "otherEntityRelationshipName": "id",
+            "otherEntityRelationshipName": "user",
             "relationshipName": "participants"
         },
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "media",
-            "otherEntityRelationshipName": "id",
+            "otherEntityRelationshipName": "media",
             "relationshipName": "medias"
         },
         {
             "relationshipType": "many-to-many",
             "otherEntityName": "category",
-            "otherEntityRelationshipName": "id",
+            "otherEntityRelationshipName": "categories",
             "relationshipName": "categories",
             "otherEntityField": "id",
             "ownerSide": true
@@ -89,13 +89,13 @@
             "relationshipType": "one-to-many",
             "otherEntityName": "rating",
             "otherEntityRelationshipName": "event",
-            "relationshipName": "id"
+            "relationshipName": "events"
         },
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "factor",
             "otherEntityRelationshipName": "event",
-            "relationshipName": "id"
+            "relationshipName": "events"
         }
     ],
     "changelogDate": "20190416144501",

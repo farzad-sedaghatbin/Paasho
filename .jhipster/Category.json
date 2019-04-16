@@ -19,7 +19,7 @@
             "relationshipType": "many-to-many",
             "otherEntityName": "user1",
             "otherEntityRelationshipName": "favorits",
-            "relationshipName": "id",
+            "relationshipName": "categories",
             "otherEntityField": "id",
             "ownerSide": false
         },
@@ -27,7 +27,7 @@
             "relationshipType": "many-to-many",
             "otherEntityName": "event",
             "otherEntityRelationshipName": "categories",
-            "relationshipName": "id",
+            "relationshipName": "categories",
             "otherEntityField": "id",
             "ownerSide": false
         }

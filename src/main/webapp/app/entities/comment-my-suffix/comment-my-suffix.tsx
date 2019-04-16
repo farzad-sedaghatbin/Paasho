@@ -75,7 +75,7 @@ export class CommentMySuffix extends React.Component<ICommentMySuffixProps, ICom
               <tr>
                 <th>ID</th>
                 <th>Description</th>
-                <th>Id</th>
+                <th>Comment</th>
                 <th />
               </tr>
             </thead>
@@ -88,7 +88,7 @@ export class CommentMySuffix extends React.Component<ICommentMySuffixProps, ICom
                     </Button>
                   </td>
                   <td>{comment.description}</td>
-                  <td>{comment.idId ? <Link to={`user-1-my-suffix/${comment.idId}`}>{comment.idId}</Link> : ''}</td>
+                  <td>{comment.commentId ? <Link to={`user-1-my-suffix/${comment.commentId}`}>{comment.commentId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${comment.id}`} color="info" size="sm">

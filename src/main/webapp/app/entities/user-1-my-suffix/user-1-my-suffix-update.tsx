@@ -25,9 +25,9 @@ export interface IUser1MySuffixUpdateProps extends StateProps, DispatchProps, Ro
 export interface IUser1MySuffixUpdateState {
   isNew: boolean;
   idsfavorits: any[];
-  idId: string;
-  idId: string;
-  idId: string;
+  userId: string;
+  userId: string;
+  userId: string;
 }
 
 export class User1MySuffixUpdate extends React.Component<IUser1MySuffixUpdateProps, IUser1MySuffixUpdateState> {
@@ -35,9 +35,9 @@ export class User1MySuffixUpdate extends React.Component<IUser1MySuffixUpdatePro
     super(props);
     this.state = {
       idsfavorits: [],
-      idId: '0',
-      idId: '0',
-      idId: '0',
+      userId: '0',
+      userId: '0',
+      userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -156,8 +156,8 @@ export class User1MySuffixUpdate extends React.Component<IUser1MySuffixUpdatePro
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="id.id">Id</Label>
-                  <AvInput id="user-1-my-suffix-id" type="select" className="form-control" name="idId">
+                  <Label for="user.id">User</Label>
+                  <AvInput id="user-1-my-suffix-user" type="select" className="form-control" name="userId">
                     <option value="" key="0" />
                     {events
                       ? events.map(otherEntity => (
@@ -169,8 +169,8 @@ export class User1MySuffixUpdate extends React.Component<IUser1MySuffixUpdatePro
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="id.id">Id</Label>
-                  <AvInput id="user-1-my-suffix-id" type="select" className="form-control" name="idId">
+                  <Label for="user.id">User</Label>
+                  <AvInput id="user-1-my-suffix-user" type="select" className="form-control" name="userId">
                     <option value="" key="0" />
                     {notifications
                       ? notifications.map(otherEntity => (

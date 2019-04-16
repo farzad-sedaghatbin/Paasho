@@ -22,16 +22,16 @@ export interface ICategoryMySuffixUpdateProps extends StateProps, DispatchProps,
 
 export interface ICategoryMySuffixUpdateState {
   isNew: boolean;
-  idId: string;
-  idId: string;
+  categoriesId: string;
+  categoriesId: string;
 }
 
 export class CategoryMySuffixUpdate extends React.Component<ICategoryMySuffixUpdateProps, ICategoryMySuffixUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      idId: '0',
-      idId: '0',
+      categoriesId: '0',
+      categoriesId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }

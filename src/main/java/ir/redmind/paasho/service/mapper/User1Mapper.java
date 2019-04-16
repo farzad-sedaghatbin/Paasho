@@ -11,17 +11,17 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {CategoryMapper.class, EventMapper.class, NotificationMapper.class})
 public interface User1Mapper extends EntityMapper<User1DTO, User1> {
 
-    @Mapping(source = "id.id", target = "idId")
-    @Mapping(source = "id.id", target = "idId")
+    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.id", target = "userId")
     User1DTO toDto(User1 user1);
 
     @Mapping(target = "contacts", ignore = true)
     @Mapping(target = "rates", ignore = true)
     @Mapping(target = "comments", ignore = true)
-    @Mapping(target = "id", ignore = true)
-    @Mapping(source = "idId", target = "id")
-    @Mapping(source = "idId", target = "id")
-    @Mapping(target = "ids", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(source = "userId", target = "user")
+    @Mapping(source = "userId", target = "user")
+    @Mapping(target = "users", ignore = true)
     User1 toEntity(User1DTO user1DTO);
 
     default User1 fromId(Long id) {

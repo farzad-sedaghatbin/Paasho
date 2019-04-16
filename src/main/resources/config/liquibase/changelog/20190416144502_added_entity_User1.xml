@@ -37,11 +37,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="id_id" type="bigint">
+            <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="id_id" type="bigint">
+            <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

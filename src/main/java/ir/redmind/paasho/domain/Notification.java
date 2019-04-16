@@ -44,7 +44,7 @@ public class Notification implements Serializable {
     @Column(name = "status")
     private NotificationStatus status;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<User1> notifications = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -106,13 +106,13 @@ public class Notification implements Serializable {
 
     public Notification addNotifications(User1 user1) {
         this.notifications.add(user1);
-        user1.setId(this);
+        user1.setUser(this);
         return this;
     }
 
     public Notification removeNotifications(User1 user1) {
         this.notifications.remove(user1);
-        user1.setId(null);
+        user1.setUser(null);
         return this;
     }
 

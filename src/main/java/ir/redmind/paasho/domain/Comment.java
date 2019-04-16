@@ -32,7 +32,7 @@ public class Comment implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("comments")
-    private User1 id;
+    private User1 comment;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -56,17 +56,17 @@ public class Comment implements Serializable {
         this.description = description;
     }
 
-    public User1 getId() {
-        return id;
+    public User1 getComment() {
+        return comment;
     }
 
-    public Comment id(User1 user1) {
-        this.id = user1;
+    public Comment comment(User1 user1) {
+        this.comment = user1;
         return this;
     }
 
-    public void setId(User1 user1) {
-        this.id = user1;
+    public void setComment(User1 user1) {
+        this.comment = user1;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
