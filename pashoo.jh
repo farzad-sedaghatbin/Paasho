@@ -12,7 +12,8 @@ entity Event {
     visitCount Integer,
     latitude Double,
     longitude Double,
-    likes Integer
+    likes Integer,
+    files ImageBlob
 }
 
 entity User1 {

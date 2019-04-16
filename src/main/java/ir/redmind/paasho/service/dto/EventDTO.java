@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
+import javax.persistence.Lob;
 import ir.redmind.paasho.domain.enumeration.PriceType;
 import ir.redmind.paasho.domain.enumeration.EventStatus;
 
@@ -40,6 +41,10 @@ public class EventDTO implements Serializable {
 
     private Integer likes;
 
+    @Lob
+    private byte[] files;
+
+    private String filesContentType;
 
     private Long creatorId;
 
@@ -159,6 +164,22 @@ public class EventDTO implements Serializable {
         this.likes = likes;
     }
 
+    public byte[] getFiles() {
+        return files;
+    }
+
+    public void setFiles(byte[] files) {
+        this.files = files;
+    }
+
+    public String getFilesContentType() {
+        return filesContentType;
+    }
+
+    public void setFilesContentType(String filesContentType) {
+        this.filesContentType = filesContentType;
+    }
+
     public Long getCreatorId() {
         return creatorId;
     }
@@ -221,6 +242,7 @@ public class EventDTO implements Serializable {
             ", latitude=" + getLatitude() +
             ", longitude=" + getLongitude() +
             ", likes=" + getLikes() +
+            ", files='" + getFiles() + "'" +
             ", creator=" + getCreatorId() +
             "}";
     }

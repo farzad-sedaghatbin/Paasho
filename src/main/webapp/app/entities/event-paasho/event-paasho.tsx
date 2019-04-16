@@ -5,7 +5,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudSearchAction, ICrudGetAllAction, TextFormat, getSortState, IPaginationBaseState } from 'react-jhipster';
+import { openFile, byteSize, ICrudSearchAction, ICrudGetAllAction, TextFormat, getSortState, IPaginationBaseState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -171,6 +171,9 @@ export class EventPaasho extends React.Component<IEventPaashoProps, IEventPaasho
                   <th className="hand" onClick={this.sort('likes')}>
                     Likes <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={this.sort('files')}>
+                    Files <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th>
                     Creator <FontAwesomeIcon icon="sort" />
                   </th>
@@ -200,6 +203,19 @@ export class EventPaasho extends React.Component<IEventPaashoProps, IEventPaasho
                     <td>{event.latitude}</td>
                     <td>{event.longitude}</td>
                     <td>{event.likes}</td>
+                    <td>
+                      {event.files ? (
+                        <div>
+                          <a onClick={openFile(event.filesContentType, event.files)}>
+                            <img src={`data:${event.filesContentType};base64,${event.files}`} style={{ maxHeight: '30px' }} />
+                            &nbsp;
+                          </a>
+                          <span>
+                            {event.filesContentType}, {byteSize(event.files)}
+                          </span>
+                        </div>
+                      ) : null}
+                    </td>
                     <td>{event.creatorId ? <Link to={`user-1-paasho/${event.creatorId}`}>{event.creatorId}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">

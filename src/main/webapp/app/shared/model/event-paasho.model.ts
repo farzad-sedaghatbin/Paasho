@@ -31,6 +31,8 @@ export interface IEventPaasho {
   latitude?: number;
   longitude?: number;
   likes?: number;
+  filesContentType?: string;
+  files?: any;
   creatorId?: number;
   medias?: IMediaPaasho[];
   participants?: IUser1Paasho[];

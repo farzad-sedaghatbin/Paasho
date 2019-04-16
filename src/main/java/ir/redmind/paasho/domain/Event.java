@@ -75,6 +75,13 @@ public class Event implements Serializable {
     @Column(name = "likes")
     private Integer likes;
 
+    @Lob
+    @Column(name = "files")
+    private byte[] files;
+
+    @Column(name = "files_content_type")
+    private String filesContentType;
+
     @OneToOne
     @JoinColumn(unique = true)
     private User1 creator;
@@ -280,6 +287,32 @@ public class Event implements Serializable {
         this.likes = likes;
     }
 
+    public byte[] getFiles() {
+        return files;
+    }
+
+    public Event files(byte[] files) {
+        this.files = files;
+        return this;
+    }
+
+    public void setFiles(byte[] files) {
+        this.files = files;
+    }
+
+    public String getFilesContentType() {
+        return filesContentType;
+    }
+
+    public Event filesContentType(String filesContentType) {
+        this.filesContentType = filesContentType;
+        return this;
+    }
+
+    public void setFilesContentType(String filesContentType) {
+        this.filesContentType = filesContentType;
+    }
+
     public User1 getCreator() {
         return creator;
     }
@@ -456,6 +489,8 @@ public class Event implements Serializable {
             ", latitude=" + getLatitude() +
             ", longitude=" + getLongitude() +
             ", likes=" + getLikes() +
+            ", files='" + getFiles() + "'" +
+            ", filesContentType='" + getFilesContentType() + "'" +
             "}";
     }
 }

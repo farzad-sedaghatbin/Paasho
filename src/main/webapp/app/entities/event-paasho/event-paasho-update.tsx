@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, setFileData, openFile, byteSize, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -12,7 +12,7 @@ import { IUser1Paasho } from 'app/shared/model/user-1-paasho.model';
 import { getEntities as getUser1S } from 'app/entities/user-1-paasho/user-1-paasho.reducer';
 import { ICategoryPaasho } from 'app/shared/model/category-paasho.model';
 import { getEntities as getCategories } from 'app/entities/category-paasho/category-paasho.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './event-paasho.reducer';
+import { getEntity, updateEntity, createEntity, setBlob, reset } from './event-paasho.reducer';
 import { IEventPaasho } from 'app/shared/model/event-paasho.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
@@ -53,6 +53,14 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
     this.props.getCategories();
   }
 
+  onBlobChange = (isAnImage, name) => event => {
+    setFileData(event, (contentType, data) => this.props.setBlob(name, data, contentType), isAnImage);
+  };
+
+  clearBlob = name => () => {
+    this.props.setBlob(name, undefined, undefined);
+  };
+
   saveEntity = (event, errors, values) => {
     values.eventTime = convertDateTimeToServer(values.eventTime);
 
@@ -80,6 +88,8 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
   render() {
     const { eventEntity, user1S, categories, loading, updating } = this.props;
     const { isNew } = this.state;
+
+    const { files, filesContentType } = eventEntity;
 
     return (
       <div>
@@ -201,6 +211,36 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                   <AvField id="event-paasho-likes" type="string" className="form-control" name="likes" />
                 </AvGroup>
                 <AvGroup>
+                  <AvGroup>
+                    <Label id="filesLabel" for="files">
+                      Files
+                    </Label>
+                    <br />
+                    {files ? (
+                      <div>
+                        <a onClick={openFile(filesContentType, files)}>
+                          <img src={`data:${filesContentType};base64,${files}`} style={{ maxHeight: '100px' }} />
+                        </a>
+                        <br />
+                        <Row>
+                          <Col md="11">
+                            <span>
+                              {filesContentType}, {byteSize(files)}
+                            </span>
+                          </Col>
+                          <Col md="1">
+                            <Button color="danger" onClick={this.clearBlob('files')}>
+                              <FontAwesomeIcon icon="times-circle" />
+                            </Button>
+                          </Col>
+                        </Row>
+                      </div>
+                    ) : null}
+                    <input id="file_files" type="file" onChange={this.onBlobChange(true, 'files')} accept="image/*" />
+                    <AvInput type="hidden" name="files" value={files} />
+                  </AvGroup>
+                </AvGroup>
+                <AvGroup>
                   <Label for="creator.id">Creator</Label>
                   <AvInput id="event-paasho-creator" type="select" className="form-control" name="creatorId">
                     <option value="" key="0" />
@@ -284,6 +324,7 @@ const mapDispatchToProps = {
   getCategories,
   getEntity,
   updateEntity,
+  setBlob,
   createEntity,
   reset
 };
