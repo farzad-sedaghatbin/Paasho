@@ -1,0 +1,25 @@
+{
+    "name": "Setting",
+    "fields": [
+        {
+            "fieldName": "key",
+            "fieldType": "SettingKey",
+            "fieldValues": "APP_VERSION"
+        },
+        {
+            "fieldName": "value",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190416144506",
+    "entityTableName": "setting",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}

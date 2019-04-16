@@ -1,0 +1,28 @@
+{
+    "name": "Comment",
+    "fields": [
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user1",
+            "otherEntityRelationshipName": "comments",
+            "relationshipName": "id",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190416144508",
+    "entityTableName": "comment",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}

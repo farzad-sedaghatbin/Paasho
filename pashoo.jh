@@ -1,0 +1,120 @@
+
+entity Event {
+    eventTime ZonedDateTime,
+    description String,
+    code String,
+    title String,
+    maxAge Integer,
+    minAge Integer,
+    priceType PriceType,
+    status EventStatus,
+    address String,
+    visitCount Integer,
+    latitude Double,
+    longitude Double,
+    likes Integer
+}
+
+entity User1 {
+	name String,
+    lastName String,
+    gender GenderType,
+    birthDate String,
+}
+
+entity Contact {
+	type ContactType,
+    value String
+}
+
+entity Category {
+	icon String,
+    name String,
+    code String
+}
+entity Notification {
+	description String,
+    type NotificationType,
+    status NotificationStatus    
+}
+entity Setting {
+	key SettingKey,
+    value String
+}
+entity Factor {
+	price BigDecimal,
+    code String,
+    status FactorStatus,
+    completeDate ZonedDateTime,
+    issueDate ZonedDateTime
+}
+entity Comment {
+	description String
+}
+entity Media {
+	path String,
+    type MediaType
+}
+entity Rating {
+	rate Double
+}
+enum NotificationType {
+	NEWS
+}
+enum NotificationStatus {
+	READ
+}
+enum GenderType {
+	FEMALE, MALE
+}
+enum PriceType{
+	FREE, DUTCH, MONETARY
+}
+enum ContactType {
+	TELEGRAM, INSTAGRAM, WHATSAPP, EMAIL
+}
+enum EventStatus {
+  OPEN, CLOSE  
+}
+enum MediaType{
+	VIDEO, PHOTO, AUDIO
+}
+enum SettingKey{
+APP_VERSION
+
+}
+enum FactorStatus{
+	PAID, INIT
+}
+relationship OneToMany{
+	User1 {contacts} to Contact{id},
+    Event {participants} to User1{id},
+    Event {medias} to Media {id},
+    User1 {rates} to Rating {id},
+    Notification {notifications} to User1{id},
+    User1 {comments} to Comment{id},
+
+}
+relationship ManyToOne {
+	Rating {event} to Event{id},   
+    Factor{event} to Event{id},
+    Factor{user} to User1{id}
+
+}
+
+relationship OneToOne{
+    Event {creator} to User1{id},
+}
+relationship ManyToMany{
+	User1 {favorits} to Category{id},
+    Event{categories} to Category{id},
+}
+// Set pagination options
+paginate Event with infinite-scroll
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl 
+// Set an angular suffix
+angularSuffix * with mySuffix

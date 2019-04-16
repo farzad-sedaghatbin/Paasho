@@ -1,0 +1,33 @@
+{
+    "name": "Media",
+    "fields": [
+        {
+            "fieldName": "path",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "MediaType",
+            "fieldValues": "VIDEO,PHOTO,AUDIO"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "event",
+            "otherEntityRelationshipName": "medias",
+            "relationshipName": "id",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190416144509",
+    "entityTableName": "media",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}

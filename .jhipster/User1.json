@@ -1,0 +1,87 @@
+{
+    "name": "User1",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "gender",
+            "fieldType": "GenderType",
+            "fieldValues": "FEMALE,MALE"
+        },
+        {
+            "fieldName": "birthDate",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "contact",
+            "otherEntityRelationshipName": "id",
+            "relationshipName": "contacts"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "rating",
+            "otherEntityRelationshipName": "id",
+            "relationshipName": "rates"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "comment",
+            "otherEntityRelationshipName": "id",
+            "relationshipName": "comments"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "category",
+            "otherEntityRelationshipName": "id",
+            "relationshipName": "favorits",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "event",
+            "otherEntityRelationshipName": "creator",
+            "relationshipName": "id",
+            "ownerSide": false
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "event",
+            "otherEntityRelationshipName": "participants",
+            "relationshipName": "id",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "notification",
+            "otherEntityRelationshipName": "notifications",
+            "relationshipName": "id",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "factor",
+            "otherEntityRelationshipName": "user",
+            "relationshipName": "id"
+        }
+    ],
+    "changelogDate": "20190416144502",
+    "entityTableName": "user_1",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}

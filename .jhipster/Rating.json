@@ -1,0 +1,35 @@
+{
+    "name": "Rating",
+    "fields": [
+        {
+            "fieldName": "rate",
+            "fieldType": "Double"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "event",
+            "otherEntityRelationshipName": "id",
+            "relationshipName": "event",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user1",
+            "otherEntityRelationshipName": "rates",
+            "relationshipName": "id",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190416144510",
+    "entityTableName": "rating",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}
