@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction, TextFormat } from 'react-jhipster';
+import { ICrudGetAction, openFile, byteSize, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -82,6 +82,21 @@ export class EventPaashoDetail extends React.Component<IEventPaashoDetailProps> 
               <span id="likes">Likes</span>
             </dt>
             <dd>{eventEntity.likes}</dd>
+            <dt>
+              <span id="files">Files</span>
+            </dt>
+            <dd>
+              {eventEntity.files ? (
+                <div>
+                  <a onClick={openFile(eventEntity.filesContentType, eventEntity.files)}>
+                    <img src={`data:${eventEntity.filesContentType};base64,${eventEntity.files}`} style={{ maxHeight: '30px' }} />
+                  </a>
+                  <span>
+                    {eventEntity.filesContentType}, {byteSize(eventEntity.files)}
+                  </span>
+                </div>
+              ) : null}
+            </dd>
             <dt>Creator</dt>
             <dd>{eventEntity.creatorId ? eventEntity.creatorId : ''}</dd>
             <dt>Participants</dt>

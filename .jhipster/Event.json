@@ -54,6 +54,11 @@
         {
             "fieldName": "likes",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "files",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
         }
     ],
     "relationships": [

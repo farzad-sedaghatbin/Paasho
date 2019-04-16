@@ -26,6 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
@@ -96,6 +97,11 @@ public class EventResourceIntTest {
 
     private static final Integer DEFAULT_LIKES = 1;
     private static final Integer UPDATED_LIKES = 2;
+
+    private static final byte[] DEFAULT_FILES = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_FILES = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_FILES_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_FILES_CONTENT_TYPE = "image/png";
 
     @Autowired
     private EventRepository eventRepository;
@@ -171,7 +177,9 @@ public class EventResourceIntTest {
             .visitCount(DEFAULT_VISIT_COUNT)
             .latitude(DEFAULT_LATITUDE)
             .longitude(DEFAULT_LONGITUDE)
-            .likes(DEFAULT_LIKES);
+            .likes(DEFAULT_LIKES)
+            .files(DEFAULT_FILES)
+            .filesContentType(DEFAULT_FILES_CONTENT_TYPE);
         return event;
     }
 
@@ -209,6 +217,8 @@ public class EventResourceIntTest {
         assertThat(testEvent.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
         assertThat(testEvent.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
         assertThat(testEvent.getLikes()).isEqualTo(DEFAULT_LIKES);
+        assertThat(testEvent.getFiles()).isEqualTo(DEFAULT_FILES);
+        assertThat(testEvent.getFilesContentType()).isEqualTo(DEFAULT_FILES_CONTENT_TYPE);
 
         // Validate the Event in Elasticsearch
         verify(mockEventSearchRepository, times(1)).save(testEvent);
@@ -260,7 +270,9 @@ public class EventResourceIntTest {
             .andExpect(jsonPath("$.[*].visitCount").value(hasItem(DEFAULT_VISIT_COUNT)))
             .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
             .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
-            .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES)));
+            .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES)))
+            .andExpect(jsonPath("$.[*].filesContentType").value(hasItem(DEFAULT_FILES_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].files").value(hasItem(Base64Utils.encodeToString(DEFAULT_FILES))));
     }
     
     @SuppressWarnings({"unchecked"})
@@ -319,7 +331,9 @@ public class EventResourceIntTest {
             .andExpect(jsonPath("$.visitCount").value(DEFAULT_VISIT_COUNT))
             .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.doubleValue()))
             .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()))
-            .andExpect(jsonPath("$.likes").value(DEFAULT_LIKES));
+            .andExpect(jsonPath("$.likes").value(DEFAULT_LIKES))
+            .andExpect(jsonPath("$.filesContentType").value(DEFAULT_FILES_CONTENT_TYPE))
+            .andExpect(jsonPath("$.files").value(Base64Utils.encodeToString(DEFAULT_FILES)));
     }
 
     @Test
@@ -355,7 +369,9 @@ public class EventResourceIntTest {
             .visitCount(UPDATED_VISIT_COUNT)
             .latitude(UPDATED_LATITUDE)
             .longitude(UPDATED_LONGITUDE)
-            .likes(UPDATED_LIKES);
+            .likes(UPDATED_LIKES)
+            .files(UPDATED_FILES)
+            .filesContentType(UPDATED_FILES_CONTENT_TYPE);
         EventDTO eventDTO = eventMapper.toDto(updatedEvent);
 
         restEventMockMvc.perform(put("/api/events")
@@ -380,6 +396,8 @@ public class EventResourceIntTest {
         assertThat(testEvent.getLatitude()).isEqualTo(UPDATED_LATITUDE);
         assertThat(testEvent.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
         assertThat(testEvent.getLikes()).isEqualTo(UPDATED_LIKES);
+        assertThat(testEvent.getFiles()).isEqualTo(UPDATED_FILES);
+        assertThat(testEvent.getFilesContentType()).isEqualTo(UPDATED_FILES_CONTENT_TYPE);
 
         // Validate the Event in Elasticsearch
         verify(mockEventSearchRepository, times(1)).save(testEvent);
@@ -452,7 +470,9 @@ public class EventResourceIntTest {
             .andExpect(jsonPath("$.[*].visitCount").value(hasItem(DEFAULT_VISIT_COUNT)))
             .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
             .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
-            .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES)));
+            .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES)))
+            .andExpect(jsonPath("$.[*].filesContentType").value(hasItem(DEFAULT_FILES_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].files").value(hasItem(Base64Utils.encodeToString(DEFAULT_FILES))));
     }
 
     @Test
