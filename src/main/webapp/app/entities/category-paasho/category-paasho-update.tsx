@@ -23,7 +23,7 @@ export interface ICategoryPaashoUpdateProps extends StateProps, DispatchProps, R
 export interface ICategoryPaashoUpdateState {
   isNew: boolean;
   categoriesId: string;
-  categoriesId: string;
+  eventsId: string;
 }
 
 export class CategoryPaashoUpdate extends React.Component<ICategoryPaashoUpdateProps, ICategoryPaashoUpdateState> {
@@ -31,7 +31,7 @@ export class CategoryPaashoUpdate extends React.Component<ICategoryPaashoUpdateP
     super(props);
     this.state = {
       categoriesId: '0',
-      categoriesId: '0',
+      eventsId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }

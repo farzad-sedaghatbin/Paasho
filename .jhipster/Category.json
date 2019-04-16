@@ -27,7 +27,7 @@
             "relationshipType": "many-to-many",
             "otherEntityName": "event",
             "otherEntityRelationshipName": "categories",
-            "relationshipName": "categories",
+            "relationshipName": "events",
             "otherEntityField": "id",
             "ownerSide": false
         }

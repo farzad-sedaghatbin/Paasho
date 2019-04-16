@@ -46,7 +46,7 @@ public class Category implements Serializable {
     @ManyToMany(mappedBy = "categories")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
-    private Set<Event> categories = new HashSet<>();
+    private Set<Event> events = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -121,29 +121,29 @@ public class Category implements Serializable {
         this.categories = user1S;
     }
 
-    public Set<Event> getCategories() {
-        return categories;
+    public Set<Event> getEvents() {
+        return events;
     }
 
-    public Category categories(Set<Event> events) {
-        this.categories = events;
+    public Category events(Set<Event> events) {
+        this.events = events;
         return this;
     }
 
-    public Category addCategories(Event event) {
-        this.categories.add(event);
+    public Category addEvents(Event event) {
+        this.events.add(event);
         event.getCategories().add(this);
         return this;
     }
 
-    public Category removeCategories(Event event) {
-        this.categories.remove(event);
+    public Category removeEvents(Event event) {
+        this.events.remove(event);
         event.getCategories().remove(this);
         return this;
     }
 
-    public void setCategories(Set<Event> events) {
-        this.categories = events;
+    public void setEvents(Set<Event> events) {
+        this.events = events;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

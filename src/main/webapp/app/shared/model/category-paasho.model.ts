@@ -7,7 +7,7 @@ export interface ICategoryPaasho {
   name?: string;
   code?: string;
   categories?: IUser1Paasho[];
-  categories?: IEventPaasho[];
+  events?: IEventPaasho[];
 }
 
 export const defaultValue: Readonly<ICategoryPaasho> = {};
