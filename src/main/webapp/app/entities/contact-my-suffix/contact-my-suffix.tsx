@@ -76,7 +76,7 @@ export class ContactMySuffix extends React.Component<IContactMySuffixProps, ICon
                 <th>ID</th>
                 <th>Type</th>
                 <th>Value</th>
-                <th>Contact</th>
+                <th>User</th>
                 <th />
               </tr>
             </thead>
@@ -90,7 +90,7 @@ export class ContactMySuffix extends React.Component<IContactMySuffixProps, ICon
                   </td>
                   <td>{contact.type}</td>
                   <td>{contact.value}</td>
-                  <td>{contact.contactId ? <Link to={`user-1-my-suffix/${contact.contactId}`}>{contact.contactId}</Link> : ''}</td>
+                  <td>{contact.userId ? <Link to={`user-1-my-suffix/${contact.userId}`}>{contact.userId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${contact.id}`} color="info" size="sm">

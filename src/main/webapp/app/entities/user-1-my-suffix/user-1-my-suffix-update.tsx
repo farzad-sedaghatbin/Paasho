@@ -25,9 +25,9 @@ export interface IUser1MySuffixUpdateProps extends StateProps, DispatchProps, Ro
 export interface IUser1MySuffixUpdateState {
   isNew: boolean;
   idsfavorits: any[];
-  userId: string;
-  userId: string;
-  userId: string;
+  eventId: string;
+  eventId: string;
+  notificationId: string;
 }
 
 export class User1MySuffixUpdate extends React.Component<IUser1MySuffixUpdateProps, IUser1MySuffixUpdateState> {
@@ -35,9 +35,9 @@ export class User1MySuffixUpdate extends React.Component<IUser1MySuffixUpdatePro
     super(props);
     this.state = {
       idsfavorits: [],
-      userId: '0',
-      userId: '0',
-      userId: '0',
+      eventId: '0',
+      eventId: '0',
+      notificationId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -156,8 +156,8 @@ export class User1MySuffixUpdate extends React.Component<IUser1MySuffixUpdatePro
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="user.id">User</Label>
-                  <AvInput id="user-1-my-suffix-user" type="select" className="form-control" name="userId">
+                  <Label for="event.id">Event</Label>
+                  <AvInput id="user-1-my-suffix-event" type="select" className="form-control" name="eventId">
                     <option value="" key="0" />
                     {events
                       ? events.map(otherEntity => (
@@ -169,8 +169,8 @@ export class User1MySuffixUpdate extends React.Component<IUser1MySuffixUpdatePro
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="user.id">User</Label>
-                  <AvInput id="user-1-my-suffix-user" type="select" className="form-control" name="userId">
+                  <Label for="notification.id">Notification</Label>
+                  <AvInput id="user-1-my-suffix-notification" type="select" className="form-control" name="notificationId">
                     <option value="" key="0" />
                     {notifications
                       ? notifications.map(otherEntity => (

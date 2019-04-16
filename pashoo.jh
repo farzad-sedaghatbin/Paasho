@@ -87,23 +87,23 @@ enum FactorStatus{
 	PAID, INIT
 }
 relationship OneToMany{
-	User1 {contacts} to Contact{contact},
-    Event {participants} to User1{user},
-    Event {medias} to Media {media},
-    User1 {rates} to Rating {rating},
-    Notification {notifications} to User1{user},
-    User1 {comments} to Comment{comment},
+	User1 {contacts} to Contact{user},
+    Event {participants} to User1{event},
+    Event {medias} to Media {event},
+    User1 {rates} to Rating {user},
+    Notification {users} to User1{notification},
+    User1 {comments} to Comment{user},
 
 }
 relationship ManyToOne {
-	Rating {event} to Event{events},   
-    Factor{event} to Event{events},
-    Factor{user} to User1{users}
+	Rating {event} to Event{rate},   
+    Factor{event} to Event{factor},
+    Factor{user} to User1{factor}
 
 }
 
 relationship OneToOne{
-    Event {creator} to User1{user},
+    Event {creator} to User1{event},
 }
 relationship ManyToMany{
 	User1 {favorits} to Category{categories},

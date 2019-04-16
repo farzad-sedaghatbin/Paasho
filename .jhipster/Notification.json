@@ -20,8 +20,8 @@
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "user1",
-            "otherEntityRelationshipName": "user",
-            "relationshipName": "notifications"
+            "otherEntityRelationshipName": "notification",
+            "relationshipName": "users"
         }
     ],
     "changelogDate": "20190416144505",

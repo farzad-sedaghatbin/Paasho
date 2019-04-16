@@ -37,11 +37,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="user_id" type="bigint">
+            <column name="event_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="user_id" type="bigint">
+            <column name="notification_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

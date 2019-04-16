@@ -38,7 +38,7 @@ public class Media implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("medias")
-    private Event media;
+    private Event event;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -75,17 +75,17 @@ public class Media implements Serializable {
         this.type = type;
     }
 
-    public Event getMedia() {
-        return media;
+    public Event getEvent() {
+        return event;
     }
 
-    public Media media(Event event) {
-        this.media = event;
+    public Media event(Event event) {
+        this.event = event;
         return this;
     }
 
-    public void setMedia(Event event) {
-        this.media = event;
+    public void setEvent(Event event) {
+        this.event = event;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -48,11 +48,11 @@ public class Factor implements Serializable {
     private ZonedDateTime issueDate;
 
     @ManyToOne
-    @JsonIgnoreProperties("events")
+    @JsonIgnoreProperties("factors")
     private Event event;
 
     @ManyToOne
-    @JsonIgnoreProperties("users")
+    @JsonIgnoreProperties("factors")
     private User1 user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

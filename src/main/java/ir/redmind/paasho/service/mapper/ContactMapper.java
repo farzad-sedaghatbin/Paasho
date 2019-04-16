@@ -11,10 +11,10 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {User1Mapper.class})
 public interface ContactMapper extends EntityMapper<ContactDTO, Contact> {
 
-    @Mapping(source = "contact.id", target = "contactId")
+    @Mapping(source = "user.id", target = "userId")
     ContactDTO toDto(Contact contact);
 
-    @Mapping(source = "contactId", target = "contact")
+    @Mapping(source = "userId", target = "user")
     Contact toEntity(ContactDTO contactDTO);
 
     default Contact fromId(Long id) {

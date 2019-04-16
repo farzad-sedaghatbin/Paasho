@@ -20,14 +20,14 @@ export interface IContactMySuffixUpdateProps extends StateProps, DispatchProps, 
 
 export interface IContactMySuffixUpdateState {
   isNew: boolean;
-  contactId: string;
+  userId: string;
 }
 
 export class ContactMySuffixUpdate extends React.Component<IContactMySuffixUpdateProps, IContactMySuffixUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      contactId: '0',
+      userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -113,8 +113,8 @@ export class ContactMySuffixUpdate extends React.Component<IContactMySuffixUpdat
                   <AvField id="contact-my-suffix-value" type="text" name="value" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="contact.id">Contact</Label>
-                  <AvInput id="contact-my-suffix-contact" type="select" className="form-control" name="contactId">
+                  <Label for="user.id">User</Label>
+                  <AvInput id="contact-my-suffix-user" type="select" className="form-control" name="userId">
                     <option value="" key="0" />
                     {user1S
                       ? user1S.map(otherEntity => (

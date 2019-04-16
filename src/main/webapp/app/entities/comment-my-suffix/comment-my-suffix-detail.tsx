@@ -32,8 +32,8 @@ export class CommentMySuffixDetail extends React.Component<ICommentMySuffixDetai
               <span id="description">Description</span>
             </dt>
             <dd>{commentEntity.description}</dd>
-            <dt>Comment</dt>
-            <dd>{commentEntity.commentId ? commentEntity.commentId : ''}</dd>
+            <dt>User</dt>
+            <dd>{commentEntity.userId ? commentEntity.userId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/comment-my-suffix" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

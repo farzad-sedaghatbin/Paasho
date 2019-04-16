@@ -23,19 +23,19 @@
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "contact",
-            "otherEntityRelationshipName": "contact",
+            "otherEntityRelationshipName": "user",
             "relationshipName": "contacts"
         },
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "rating",
-            "otherEntityRelationshipName": "rating",
+            "otherEntityRelationshipName": "user",
             "relationshipName": "rates"
         },
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "comment",
-            "otherEntityRelationshipName": "comment",
+            "otherEntityRelationshipName": "user",
             "relationshipName": "comments"
         },
         {
@@ -50,28 +50,28 @@
             "relationshipType": "one-to-one",
             "otherEntityName": "event",
             "otherEntityRelationshipName": "creator",
-            "relationshipName": "user",
+            "relationshipName": "event",
             "ownerSide": false
         },
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "event",
             "otherEntityRelationshipName": "participants",
-            "relationshipName": "user",
+            "relationshipName": "event",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "notification",
-            "otherEntityRelationshipName": "notifications",
-            "relationshipName": "user",
+            "otherEntityRelationshipName": "users",
+            "relationshipName": "notification",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "one-to-many",
             "otherEntityName": "factor",
             "otherEntityRelationshipName": "user",
-            "relationshipName": "users"
+            "relationshipName": "factor"
         }
     ],
     "changelogDate": "20190416144502",

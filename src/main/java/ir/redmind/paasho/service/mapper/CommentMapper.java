@@ -11,10 +11,10 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {User1Mapper.class})
 public interface CommentMapper extends EntityMapper<CommentDTO, Comment> {
 
-    @Mapping(source = "comment.id", target = "commentId")
+    @Mapping(source = "user.id", target = "userId")
     CommentDTO toDto(Comment comment);
 
-    @Mapping(source = "commentId", target = "comment")
+    @Mapping(source = "userId", target = "user")
     Comment toEntity(CommentDTO commentDTO);
 
     default Comment fromId(Long id) {

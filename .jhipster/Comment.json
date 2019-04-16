@@ -11,7 +11,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "user1",
             "otherEntityRelationshipName": "comments",
-            "relationshipName": "comment",
+            "relationshipName": "user",
             "otherEntityField": "id"
         }
     ],

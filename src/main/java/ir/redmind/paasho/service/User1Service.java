@@ -28,11 +28,11 @@ public interface User1Service {
      */
     List<User1DTO> findAll();
     /**
-     * Get all the User1DTO where User is null.
+     * Get all the User1DTO where Event is null.
      *
      * @return the list of entities
      */
-    List<User1DTO> findAllWhereUserIsNull();
+    List<User1DTO> findAllWhereEventIsNull();
 
     /**
      * Get all the User1 with eager load of many-to-many relationships.

@@ -76,7 +76,7 @@ export class MediaMySuffix extends React.Component<IMediaMySuffixProps, IMediaMy
                 <th>ID</th>
                 <th>Path</th>
                 <th>Type</th>
-                <th>Media</th>
+                <th>Event</th>
                 <th />
               </tr>
             </thead>
@@ -90,7 +90,7 @@ export class MediaMySuffix extends React.Component<IMediaMySuffixProps, IMediaMy
                   </td>
                   <td>{media.path}</td>
                   <td>{media.type}</td>
-                  <td>{media.mediaId ? <Link to={`event-my-suffix/${media.mediaId}`}>{media.mediaId}</Link> : ''}</td>
+                  <td>{media.eventId ? <Link to={`event-my-suffix/${media.eventId}`}>{media.eventId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${media.id}`} color="info" size="sm">

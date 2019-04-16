@@ -19,10 +19,10 @@ export interface IUser1MySuffix {
   rates?: IRatingMySuffix[];
   comments?: ICommentMySuffix[];
   favorits?: ICategoryMySuffix[];
-  userId?: number;
-  userId?: number;
-  userId?: number;
-  users?: IFactorMySuffix[];
+  eventId?: number;
+  eventId?: number;
+  notificationId?: number;
+  factors?: IFactorMySuffix[];
 }
 
 export const defaultValue: Readonly<IUser1MySuffix> = {};

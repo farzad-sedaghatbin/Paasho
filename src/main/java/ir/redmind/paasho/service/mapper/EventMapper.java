@@ -17,8 +17,8 @@ public interface EventMapper extends EntityMapper<EventDTO, Event> {
     @Mapping(source = "creatorId", target = "creator")
     @Mapping(target = "participants", ignore = true)
     @Mapping(target = "medias", ignore = true)
-    @Mapping(target = "events", ignore = true)
-    @Mapping(target = "events", ignore = true)
+    @Mapping(target = "rates", ignore = true)
+    @Mapping(target = "factors", ignore = true)
     Event toEntity(EventDTO eventDTO);
 
     default Event fromId(Long id) {

@@ -12,7 +12,7 @@ import org.mapstruct.*;
 public interface NotificationMapper extends EntityMapper<NotificationDTO, Notification> {
 
 
-    @Mapping(target = "notifications", ignore = true)
+    @Mapping(target = "users", ignore = true)
     Notification toEntity(NotificationDTO notificationDTO);
 
     default Notification fromId(Long id) {
