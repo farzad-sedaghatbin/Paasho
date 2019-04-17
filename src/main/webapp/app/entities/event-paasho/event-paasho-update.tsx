@@ -241,6 +241,24 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                   </AvGroup>
                 </AvGroup>
                 <AvGroup>
+                  <Label id="telLabel" for="tel">
+                    Tel
+                  </Label>
+                  <AvField id="event-paasho-tel" type="text" name="tel" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="instagramLabel" for="instagram">
+                    Instagram
+                  </Label>
+                  <AvField id="event-paasho-instagram" type="text" name="instagram" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="telegramLabel" for="telegram">
+                    Telegram
+                  </Label>
+                  <AvField id="event-paasho-telegram" type="text" name="telegram" />
+                </AvGroup>
+                <AvGroup>
                   <Label for="creator.id">Creator</Label>
                   <AvInput id="event-paasho-creator" type="select" className="form-control" name="creatorId">
                     <option value="" key="0" />

@@ -97,6 +97,18 @@ export class EventPaashoDetail extends React.Component<IEventPaashoDetailProps> 
                 </div>
               ) : null}
             </dd>
+            <dt>
+              <span id="tel">Tel</span>
+            </dt>
+            <dd>{eventEntity.tel}</dd>
+            <dt>
+              <span id="instagram">Instagram</span>
+            </dt>
+            <dd>{eventEntity.instagram}</dd>
+            <dt>
+              <span id="telegram">Telegram</span>
+            </dt>
+            <dd>{eventEntity.telegram}</dd>
             <dt>Creator</dt>
             <dd>{eventEntity.creatorId ? eventEntity.creatorId : ''}</dd>
             <dt>Participants</dt>

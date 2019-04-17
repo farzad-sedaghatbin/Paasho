@@ -174,6 +174,15 @@ export class EventPaasho extends React.Component<IEventPaashoProps, IEventPaasho
                   <th className="hand" onClick={this.sort('files')}>
                     Files <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={this.sort('tel')}>
+                    Tel <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={this.sort('instagram')}>
+                    Instagram <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={this.sort('telegram')}>
+                    Telegram <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th>
                     Creator <FontAwesomeIcon icon="sort" />
                   </th>
@@ -216,6 +225,9 @@ export class EventPaasho extends React.Component<IEventPaashoProps, IEventPaasho
                         </div>
                       ) : null}
                     </td>
+                    <td>{event.tel}</td>
+                    <td>{event.instagram}</td>
+                    <td>{event.telegram}</td>
                     <td>{event.creatorId ? <Link to={`user-1-paasho/${event.creatorId}`}>{event.creatorId}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">

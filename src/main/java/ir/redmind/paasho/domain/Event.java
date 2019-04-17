@@ -82,6 +82,15 @@ public class Event implements Serializable {
     @Column(name = "files_content_type")
     private String filesContentType;
 
+    @Column(name = "tel")
+    private String tel;
+
+    @Column(name = "instagram")
+    private String instagram;
+
+    @Column(name = "telegram")
+    private String telegram;
+
     @OneToOne
     @JoinColumn(unique = true)
     private User1 creator;
@@ -313,6 +322,45 @@ public class Event implements Serializable {
         this.filesContentType = filesContentType;
     }
 
+    public String getTel() {
+        return tel;
+    }
+
+    public Event tel(String tel) {
+        this.tel = tel;
+        return this;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public Event instagram(String instagram) {
+        this.instagram = instagram;
+        return this;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getTelegram() {
+        return telegram;
+    }
+
+    public Event telegram(String telegram) {
+        this.telegram = telegram;
+        return this;
+    }
+
+    public void setTelegram(String telegram) {
+        this.telegram = telegram;
+    }
+
     public User1 getCreator() {
         return creator;
     }
@@ -491,6 +539,9 @@ public class Event implements Serializable {
             ", likes=" + getLikes() +
             ", files='" + getFiles() + "'" +
             ", filesContentType='" + getFilesContentType() + "'" +
+            ", tel='" + getTel() + "'" +
+            ", instagram='" + getInstagram() + "'" +
+            ", telegram='" + getTelegram() + "'" +
             "}";
     }
 }

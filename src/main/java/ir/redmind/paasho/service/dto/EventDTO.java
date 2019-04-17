@@ -45,6 +45,12 @@ public class EventDTO implements Serializable {
     private byte[] files;
 
     private String filesContentType;
+    private String tel;
+
+    private String instagram;
+
+    private String telegram;
+
 
     private Long creatorId;
 
@@ -180,6 +186,30 @@ public class EventDTO implements Serializable {
         this.filesContentType = filesContentType;
     }
 
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getTelegram() {
+        return telegram;
+    }
+
+    public void setTelegram(String telegram) {
+        this.telegram = telegram;
+    }
+
     public Long getCreatorId() {
         return creatorId;
     }
@@ -243,6 +273,9 @@ public class EventDTO implements Serializable {
             ", longitude=" + getLongitude() +
             ", likes=" + getLikes() +
             ", files='" + getFiles() + "'" +
+            ", tel='" + getTel() + "'" +
+            ", instagram='" + getInstagram() + "'" +
+            ", telegram='" + getTelegram() + "'" +
             ", creator=" + getCreatorId() +
             "}";
     }

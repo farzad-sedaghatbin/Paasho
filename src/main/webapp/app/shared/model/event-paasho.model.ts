@@ -33,6 +33,9 @@ export interface IEventPaasho {
   likes?: number;
   filesContentType?: string;
   files?: any;
+  tel?: string;
+  instagram?: string;
+  telegram?: string;
   creatorId?: number;
   medias?: IMediaPaasho[];
   participants?: IUser1Paasho[];
