@@ -13,7 +13,10 @@ entity Event {
     latitude Double,
     longitude Double,
     likes Integer,
-    files ImageBlob
+    files ImageBlob,
+    tel String,
+    instagram String,
+    telegram String
 }
 
 entity User1 {

@@ -59,6 +59,18 @@
             "fieldName": "files",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "tel",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "instagram",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "telegram",
+            "fieldType": "String"
         }
     ],
     "relationships": [
