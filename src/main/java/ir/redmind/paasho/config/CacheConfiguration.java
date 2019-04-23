@@ -46,12 +46,11 @@ public class CacheConfiguration {
             cm.createCache(ir.redmind.paasho.domain.Event.class.getName() + ".medias", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Event.class.getName() + ".categories", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Event.class.getName() + ".ids", jcacheConfiguration);
-            cm.createCache(ir.redmind.paasho.domain.User1.class.getName(), jcacheConfiguration);
-            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".contacts", jcacheConfiguration);
-            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".rates", jcacheConfiguration);
-            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".comments", jcacheConfiguration);
-            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".favorits", jcacheConfiguration);
-            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".ids", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User.class.getName() + ".contacts", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User.class.getName() + ".rates", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User.class.getName() + ".comments", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User.class.getName() + ".favorits", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User.class.getName() + ".ids", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Contact.class.getName(), jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Category.class.getName(), jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Category.class.getName() + ".ids", jcacheConfiguration);
@@ -63,13 +62,13 @@ public class CacheConfiguration {
             cm.createCache(ir.redmind.paasho.domain.Media.class.getName(), jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Rating.class.getName(), jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Event.class.getName() + ".events", jcacheConfiguration);
-            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".users", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User.class.getName() + ".users", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Category.class.getName() + ".categories", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Event.class.getName() + ".rates", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Event.class.getName() + ".factors", jcacheConfiguration);
-            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".factors", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User.class.getName() + ".factors", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Notification.class.getName() + ".users", jcacheConfiguration);
-            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".events", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User.class.getName() + ".events", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Category.class.getName() + ".events", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Category.class.getName() + ".users", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry

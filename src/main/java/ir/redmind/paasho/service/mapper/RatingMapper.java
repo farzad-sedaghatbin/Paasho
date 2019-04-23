@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Rating and its DTO RatingDTO.
  */
-@Mapper(componentModel = "spring", uses = {EventMapper.class, User1Mapper.class})
+@Mapper(componentModel = "spring", uses = {EventMapper.class, UserMapper.class})
 public interface RatingMapper extends EntityMapper<RatingDTO, Rating> {
 
     @Mapping(source = "event.id", target = "eventId")

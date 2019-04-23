@@ -115,10 +115,10 @@ public class AccountResource {
         if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
             throw new EmailAlreadyUsedException();
         }
-        Optional<User> user = userRepository.findOneByLogin(userLogin);
-        if (!user.isPresent()) {
-            throw new InternalServerErrorException("User could not be found");
-        }
+//        Optional<User> user = userRepository.findOneByLogin(userLogin);
+//        if (!user.isPresent()) {
+//            throw new InternalServerErrorException("User could not be found");
+//        }
         userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
             userDTO.getLangKey(), userDTO.getImageUrl());
     }

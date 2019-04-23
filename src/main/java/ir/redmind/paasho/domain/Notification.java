@@ -46,7 +46,7 @@ public class Notification implements Serializable {
 
     @OneToMany(mappedBy = "notification")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<User1> users = new HashSet<>();
+    private Set<User> users = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -95,28 +95,28 @@ public class Notification implements Serializable {
         this.status = status;
     }
 
-    public Set<User1> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public Notification users(Set<User1> user1S) {
+    public Notification users(Set<User> user1S) {
         this.users = user1S;
         return this;
     }
 
-    public Notification addUsers(User1 user1) {
+    public Notification addUsers(User user1) {
         this.users.add(user1);
         user1.setNotification(this);
         return this;
     }
 
-    public Notification removeUsers(User1 user1) {
+    public Notification removeUsers(User user1) {
         this.users.remove(user1);
         user1.setNotification(null);
         return this;
     }
 
-    public void setUsers(Set<User1> user1S) {
+    public void setUsers(Set<User> user1S) {
         this.users = user1S;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove

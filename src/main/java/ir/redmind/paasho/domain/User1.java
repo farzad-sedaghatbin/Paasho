@@ -19,14 +19,13 @@ import ir.redmind.paasho.domain.enumeration.GenderType;
 /**
  * A User1.
  */
-@Entity
 @Table(name = "user_1")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName = "user1")
 public class User1 implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -149,7 +148,6 @@ public class User1 implements Serializable {
 
     public User1 addContacts(Contact contact) {
         this.contacts.add(contact);
-        contact.setUser(this);
         return this;
     }
 
@@ -174,7 +172,6 @@ public class User1 implements Serializable {
 
     public User1 addRates(Rating rating) {
         this.rates.add(rating);
-        rating.setUser(this);
         return this;
     }
 
@@ -199,7 +196,6 @@ public class User1 implements Serializable {
 
     public User1 addComments(Comment comment) {
         this.comments.add(comment);
-        comment.setUser(this);
         return this;
     }
 
@@ -224,13 +220,11 @@ public class User1 implements Serializable {
 
     public User1 addFavorits(Category category) {
         this.favorits.add(category);
-        category.getUsers().add(this);
         return this;
     }
 
     public User1 removeFavorits(Category category) {
         this.favorits.remove(category);
-        category.getUsers().remove(this);
         return this;
     }
 
@@ -275,7 +269,6 @@ public class User1 implements Serializable {
 
     public User1 addFactors(Factor factor) {
         this.factors.add(factor);
-        factor.setUser(this);
         return this;
     }
 
@@ -300,13 +293,11 @@ public class User1 implements Serializable {
 
     public User1 addEvents(Event event) {
         this.events.add(event);
-        event.getParticipants().add(this);
         return this;
     }
 
     public User1 removeEvents(Event event) {
         this.events.remove(event);
-        event.getParticipants().remove(this);
         return this;
     }
 

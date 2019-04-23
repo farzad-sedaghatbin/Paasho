@@ -41,7 +41,7 @@ public class Category implements Serializable {
     @ManyToMany(mappedBy = "favorits")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
-    private Set<User1> users = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     @ManyToMany(mappedBy = "categories")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -96,29 +96,29 @@ public class Category implements Serializable {
         this.code = code;
     }
 
-    public Set<User1> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public Category users(Set<User1> user1S) {
-        this.users = user1S;
+    public Category users(Set<User> UserS) {
+        this.users = UserS;
         return this;
     }
 
-    public Category addUsers(User1 user1) {
-        this.users.add(user1);
-        user1.getFavorits().add(this);
+    public Category addUsers(User User) {
+        this.users.add(User);
+        User.getFavorits().add(this);
         return this;
     }
 
-    public Category removeUsers(User1 user1) {
-        this.users.remove(user1);
-        user1.getFavorits().remove(this);
+    public Category removeUsers(User User) {
+        this.users.remove(User);
+        User.getFavorits().remove(this);
         return this;
     }
 
-    public void setUsers(Set<User1> user1S) {
-        this.users = user1S;
+    public void setUsers(Set<User> UserS) {
+        this.users = UserS;
     }
 
     public Set<Event> getEvents() {

@@ -93,7 +93,7 @@ public class Event implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private User1 creator;
+    private User creator;
 
     @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -103,7 +103,7 @@ public class Event implements Serializable {
     @JoinTable(name = "event_participants",
                joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "participants_id", referencedColumnName = "id"))
-    private Set<User1> participants = new HashSet<>();
+    private Set<User> participants = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -361,16 +361,16 @@ public class Event implements Serializable {
         this.telegram = telegram;
     }
 
-    public User1 getCreator() {
+    public User getCreator() {
         return creator;
     }
 
-    public Event creator(User1 user1) {
+    public Event creator(User user1) {
         this.creator = user1;
         return this;
     }
 
-    public void setCreator(User1 user1) {
+    public void setCreator(User user1) {
         this.creator = user1;
     }
 
@@ -399,28 +399,28 @@ public class Event implements Serializable {
         this.medias = media;
     }
 
-    public Set<User1> getParticipants() {
+    public Set<User> getParticipants() {
         return participants;
     }
 
-    public Event participants(Set<User1> user1S) {
+    public Event participants(Set<User> user1S) {
         this.participants = user1S;
         return this;
     }
 
-    public Event addParticipants(User1 user1) {
+    public Event addParticipants(User user1) {
         this.participants.add(user1);
         user1.getEvents().add(this);
         return this;
     }
 
-    public Event removeParticipants(User1 user1) {
+    public Event removeParticipants(User user1) {
         this.participants.remove(user1);
         user1.getEvents().remove(this);
         return this;
     }
 
-    public void setParticipants(Set<User1> user1S) {
+    public void setParticipants(Set<User> user1S) {
         this.participants = user1S;
     }
 

@@ -1,12 +1,16 @@
 package ir.redmind.paasho.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ir.redmind.paasho.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import ir.redmind.paasho.domain.enumeration.GenderType;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.elasticsearch.annotations.Document;
+
 import javax.validation.constraints.Email;
 
 import javax.persistence.*;
@@ -26,7 +30,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "jhi_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "user")
+@Document(indexName = "user")
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -95,6 +99,48 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender")
+    private GenderType gender;
+
+    @Column(name = "birth_date")
+    private String birthDate;
+
+    @OneToMany(mappedBy = "user")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Contact> contacts = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Rating> rates = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Comment> comments = new HashSet<>();
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "user_1_favorits",
+        joinColumns = @JoinColumn(name = "user1_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "favorits_id", referencedColumnName = "id"))
+    private Set<Category> favorits = new HashSet<>();
+
+    @OneToOne(mappedBy = "creator")
+    @JsonIgnore
+    private Event event;
+
+    @ManyToOne
+    @JsonIgnoreProperties("users")
+    private Notification notification;
+
+    @OneToMany(mappedBy = "user")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Factor> factors = new HashSet<>();
+    @ManyToMany(mappedBy = "participants")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
+    private Set<Event> events = new HashSet<>();
+    private String avatar;
+    private Double score;
+
 
     public Long getId() {
         return id;
@@ -214,6 +260,90 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return !(user.getId() == null || getId() == null) && Objects.equals(getId(), user.getId());
     }
 
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public GenderType getGender() {
+        return gender;
+    }
+
+    public void setGender(GenderType gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Set<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(Set<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
+    public Set<Rating> getRates() {
+        return rates;
+    }
+
+    public void setRates(Set<Rating> rates) {
+        this.rates = rates;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Category> getFavorits() {
+        return favorits;
+    }
+
+    public void setFavorits(Set<Category> favorits) {
+        this.favorits = favorits;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public Notification getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Notification notification) {
+        this.notification = notification;
+    }
+
+    public Set<Factor> getFactors() {
+        return factors;
+    }
+
+    public void setFactors(Set<Factor> factors) {
+        this.factors = factors;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
@@ -231,5 +361,21 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
             "}";
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public Double getScore() {
+        return rates.stream().mapToDouble(Rating::getRate).average().getAsDouble();
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 }

@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Factor and its DTO FactorDTO.
  */
-@Mapper(componentModel = "spring", uses = {EventMapper.class, User1Mapper.class})
+@Mapper(componentModel = "spring", uses = {EventMapper.class, UserMapper.class})
 public interface FactorMapper extends EntityMapper<FactorDTO, Factor> {
 
     @Mapping(source = "event.id", target = "eventId")

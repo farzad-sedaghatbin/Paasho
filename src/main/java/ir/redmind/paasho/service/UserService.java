@@ -93,12 +93,12 @@ public class UserService {
     }
 
     public User registerUser(UserDTO userDTO, String password) {
-        userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
-            boolean removed = removeNonActivatedUser(existingUser);
-            if (!removed) {
-                throw new LoginAlreadyUsedException();
-            }
-        });
+//        userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
+//            boolean removed = removeNonActivatedUser(existingUser);
+//            if (!removed) {
+//                throw new LoginAlreadyUsedException();
+//            }
+//        });
         userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser);
             if (!removed) {
@@ -181,18 +181,18 @@ public class UserService {
      * @param imageUrl image URL of user
      */
     public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
-        SecurityUtils.getCurrentUserLogin()
-            .flatMap(userRepository::findOneByLogin)
-            .ifPresent(user -> {
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setEmail(email.toLowerCase());
-                user.setLangKey(langKey);
-                user.setImageUrl(imageUrl);
-                userSearchRepository.save(user);
-                this.clearUserCaches(user);
-                log.debug("Changed Information for User: {}", user);
-            });
+//        SecurityUtils.getCurrentUserLogin()
+//            .flatMap(userRepository::findOneByLogin)
+//            .ifPresent(user -> {
+//                user.setFirstName(firstName);
+//                user.setLastName(lastName);
+//                user.setEmail(email.toLowerCase());
+//                user.setLangKey(langKey);
+//                user.setImageUrl(imageUrl);
+//                userSearchRepository.save(user);
+//                this.clearUserCaches(user);
+//                log.debug("Changed Information for User: {}", user);
+//            });
     }
 
     /**
@@ -231,27 +231,27 @@ public class UserService {
     }
 
     public void deleteUser(String login) {
-        userRepository.findOneByLogin(login).ifPresent(user -> {
-            userRepository.delete(user);
-            userSearchRepository.delete(user);
-            this.clearUserCaches(user);
-            log.debug("Deleted User: {}", user);
-        });
+//        userRepository.findOneByLogin(login).ifPresent(user -> {
+//            userRepository.delete(user);
+//            userSearchRepository.delete(user);
+//            this.clearUserCaches(user);
+//            log.debug("Deleted User: {}", user);
+//        });
     }
 
     public void changePassword(String currentClearTextPassword, String newPassword) {
-        SecurityUtils.getCurrentUserLogin()
-            .flatMap(userRepository::findOneByLogin)
-            .ifPresent(user -> {
-                String currentEncryptedPassword = user.getPassword();
-                if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
-                    throw new InvalidPasswordException();
-                }
-                String encryptedPassword = passwordEncoder.encode(newPassword);
-                user.setPassword(encryptedPassword);
-                this.clearUserCaches(user);
-                log.debug("Changed password for User: {}", user);
-            });
+//        SecurityUtils.getCurrentUserLogin()
+//            .flatMap(userRepository::findOneByLogin)
+//            .ifPresent(user -> {
+//                String currentEncryptedPassword = user.getPassword();
+//                if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
+//                    throw new InvalidPasswordException();
+//                }
+//                String encryptedPassword = passwordEncoder.encode(newPassword);
+//                user.setPassword(encryptedPassword);
+//                this.clearUserCaches(user);
+//                log.debug("Changed password for User: {}", user);
+//            });
     }
 
     @Transactional(readOnly = true)

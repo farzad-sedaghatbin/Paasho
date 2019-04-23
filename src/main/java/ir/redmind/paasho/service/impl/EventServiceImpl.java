@@ -6,6 +6,7 @@ import ir.redmind.paasho.repository.EventRepository;
 import ir.redmind.paasho.repository.search.EventSearchRepository;
 import ir.redmind.paasho.service.dto.EventDTO;
 import ir.redmind.paasho.service.mapper.EventMapper;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,7 +78,7 @@ public class EventServiceImpl implements EventService {
     public Page<EventDTO> findAllWithEagerRelationships(Pageable pageable) {
         return eventRepository.findAllWithEagerRelationships(pageable).map(eventMapper::toDto);
     }
-    
+
 
     /**
      * Get one event by id.
@@ -108,7 +109,7 @@ public class EventServiceImpl implements EventService {
     /**
      * Search for the event corresponding to the query.
      *
-     * @param query the query of the search
+     * @param query    the query of the search
      * @param pageable the pagination information
      * @return the list of entities
      */
@@ -118,5 +119,15 @@ public class EventServiceImpl implements EventService {
         log.debug("Request to search for a page of Events for query {}", query);
         return eventSearchRepository.search(queryStringQuery(query), pageable)
             .map(eventMapper::toDto);
+    }
+
+    @Override
+    public Page<EventDTO> searchByBuilder(QueryBuilder query, Pageable pageable) {
+        return eventSearchRepository.search(query, pageable).map(eventMapper::toDto);
+    }
+
+    @Override
+    public Event findByCode(String code) {
+        return eventSearchRepository.findByCode(code);
     }
 }
