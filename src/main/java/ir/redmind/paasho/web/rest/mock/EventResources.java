@@ -7,9 +7,11 @@ import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.domain.enumeration.ContactType;
 import ir.redmind.paasho.domain.enumeration.PriceType;
 import ir.redmind.paasho.security.SecurityUtils;
+import ir.redmind.paasho.service.CategoryService;
 import ir.redmind.paasho.service.EventService;
 import ir.redmind.paasho.service.UserService;
 import ir.redmind.paasho.service.dto.mock.*;
+import ir.redmind.paasho.service.mapper.CategoryMapper;
 import ir.redmind.paasho.service.mapper.EventMapper;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
@@ -30,6 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 import static org.elasticsearch.index.query.QueryBuilders.multiMatchQuery;
 
@@ -39,12 +43,16 @@ public class EventResources {
 
     private final EventService eventService;
     private final UserService userService;
+    private final CategoryService categoryService;
     private final EventMapper eventMapper;
+    private final CategoryMapper categoryMapper;
 
-    public EventResources(EventService eventService, UserService userService, EventMapper eventMapper) {
+    public EventResources(EventService eventService, UserService userService, CategoryService categoryService, EventMapper eventMapper, CategoryMapper categoryMapper) {
         this.eventService = eventService;
         this.userService = userService;
+        this.categoryService = categoryService;
         this.eventMapper = eventMapper;
+        this.categoryMapper = categoryMapper;
     }
 
     @GetMapping(value = "{code}/detail")
@@ -77,6 +85,13 @@ public class EventResources {
         eventDTO.setView(event.getVisitCount());
         eventDTO.setLatitude(event.getLatitude());
         eventDTO.setLongitude(event.getLongitude());
+
+        eventDTO.setAgeLimitFrom(10);
+        eventDTO.setAgeLimitTo(40);
+        eventDTO.setJoinStatus(JoinStatus.values()[new Random().nextInt(3)]);
+        eventDTO.setLatitude(35.714558);
+        eventDTO.setLongitude(51.414440);
+        eventDTO.setCreator("فرزاد صداقت بین");
         return eventDTO;
     }
 
@@ -206,22 +221,23 @@ public class EventResources {
     @PostMapping(value = "")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<CreateEventDTO> createEvent(@RequestBody CreateEventDTO createEventDTO) {
+    public ResponseEntity<ir.redmind.paasho.service.dto.EventDTO> createEvent(@RequestBody CreateEventDTO createEventDTO) {
 
-        createEventDTO.setId(10l);
         Event event = new Event();
         event.setAddress(createEventDTO.getAddress());
-        event.setCode(createEventDTO.getCode());
-//        event.setDescription(createEventDTO.get);
+        event.setCode(UUID.randomUUID().toString());
+        event.setDescription(createEventDTO.getDescription());
         event.setTitle(createEventDTO.getTitle());
         event.setTel(createEventDTO.getTel());
         event.setLatitude(createEventDTO.getLatitude());
         event.setLongitude(createEventDTO.getLongitude());
-        event.setMinAge(createEventDTO.getAgeLimit());
-//        event.setTelegram(createEventDTO.);
+        event.setMinAge(createEventDTO.getAgeLimitFrom());
+        event.setMaxAge(createEventDTO.getAgeLimitTo());
+        event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId()).get()));
+//        event.setTelegram(createEventDTO.gett);
         event.setCreator(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
         eventService.save(eventMapper.toDto(event));
-        return ResponseEntity.ok(createEventDTO);
+        return ResponseEntity.ok(eventMapper.toDto(event));
     }
 
     @PostMapping(value = "/{code}/upload")
@@ -313,4 +329,15 @@ public class EventResources {
         return ResponseEntity.ok(eventDTOS);
 
     }
+
+
+    @PutMapping(value = "{code}/view")
+    @Timed
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<HttpStatus> view(@PathVariable("code") String code) {
+
+        return ResponseEntity.ok(HttpStatus.OK);
+
+    }
+
 }

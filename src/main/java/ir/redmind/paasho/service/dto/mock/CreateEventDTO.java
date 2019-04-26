@@ -1,12 +1,13 @@
 package ir.redmind.paasho.service.dto.mock;
 
+
 import ir.redmind.paasho.domain.enumeration.GenderType;
 import ir.redmind.paasho.domain.enumeration.PriceType;
-import org.springframework.web.multipart.MultipartFile;
 
 public class CreateEventDTO {
     private String code;
     private String title;
+    private String description;
     private PriceType pricing;
     private float score;
     private String date;
@@ -14,7 +15,8 @@ public class CreateEventDTO {
     private double latitude;
     private double longitude;
     private int categoryId;
-    private int ageLimit;
+    private int ageLimitFrom;
+    private int ageLimitTo;
     private GenderType gender;
     private String address;
     private String tel;
@@ -117,19 +119,35 @@ public class CreateEventDTO {
         this.id = id;
     }
 
-    public int getAgeLimit() {
-        return ageLimit;
-    }
-
-    public void setAgeLimit(int ageLimit) {
-        this.ageLimit = ageLimit;
-    }
-
     public GenderType getGender() {
         return gender;
     }
 
     public void setGender(GenderType gender) {
         this.gender = gender;
+    }
+
+    public int getAgeLimitFrom() {
+        return ageLimitFrom;
+    }
+
+    public void setAgeLimitFrom(int ageLimitFrom) {
+        this.ageLimitFrom = ageLimitFrom;
+    }
+
+    public int getAgeLimitTo() {
+        return ageLimitTo;
+    }
+
+    public void setAgeLimitTo(int ageLimitTo) {
+        this.ageLimitTo = ageLimitTo;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

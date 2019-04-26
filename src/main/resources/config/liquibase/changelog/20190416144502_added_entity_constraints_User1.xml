@@ -12,7 +12,7 @@
                                  baseTableName="user_1_favorits"
                                  constraintName="fk_user_1_favorits_user_1_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="user_1"/>
+                                 referencedTableName="jhi_user"/>
         <addForeignKeyConstraint baseColumnNames="favorits_id"
                                  baseTableName="user_1_favorits"
                                  constraintName="fk_user_1_favorits_favorits_id"

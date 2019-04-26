@@ -18,10 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.time.Instant;
 
 /**
@@ -372,7 +369,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     public Double getScore() {
-        return rates.stream().mapToDouble(Rating::getRate).average().getAsDouble();
+        OptionalDouble average = rates.stream().mapToDouble(Rating::getRate).average();
+        if(average.isPresent()){
+            return average.getAsDouble();
+        }else {
+            return 5d;
+        }
     }
 
     public void setScore(Double score) {

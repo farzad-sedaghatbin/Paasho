@@ -18,7 +18,7 @@
                                  baseTableName="rating"
                                  constraintName="fk_rating_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="user_1"/>
+                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

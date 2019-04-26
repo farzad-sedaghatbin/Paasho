@@ -18,7 +18,7 @@
                                  baseTableName="factor"
                                  constraintName="fk_factor_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="user_1"/>
+                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

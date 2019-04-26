@@ -64,7 +64,7 @@ public class Event implements Serializable {
     private String address;
 
     @Column(name = "visit_count")
-    private Integer visitCount;
+    private Integer visitCount=0;
 
     @Column(name = "latitude")
     private Double latitude;
@@ -245,6 +245,8 @@ public class Event implements Serializable {
     }
 
     public Integer getVisitCount() {
+        if(visitCount==null)
+            return 0;
         return visitCount;
     }
 

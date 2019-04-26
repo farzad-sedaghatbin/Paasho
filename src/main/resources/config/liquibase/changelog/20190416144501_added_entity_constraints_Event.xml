@@ -12,7 +12,7 @@
                                  baseTableName="event"
                                  constraintName="fk_event_creator_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="user_1"/>
+                                 referencedTableName="jhi_user"/>
 
         <addForeignKeyConstraint baseColumnNames="event_id"
                                  baseTableName="event_participants"
@@ -23,7 +23,7 @@
                                  baseTableName="event_participants"
                                  constraintName="fk_event_participants_participants_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="user_1"/>
+                                 referencedTableName="jhi_user"/>
         
         <addForeignKeyConstraint baseColumnNames="event_id"
                                  baseTableName="event_categories"

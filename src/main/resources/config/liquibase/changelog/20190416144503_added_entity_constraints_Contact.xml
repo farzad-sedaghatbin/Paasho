@@ -12,7 +12,7 @@
                                  baseTableName="contact"
                                  constraintName="fk_contact_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="user_1"/>
+                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

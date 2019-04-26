@@ -109,10 +109,13 @@ public class FarzadUserService {
             user.setActivated(true);
             user.setCreatedBy("system");
             user.setPassword(passwordEncoder.encode("123"));
-            List<Authority> authorities = new ArrayList<>();
+            userRepository.save(user);
+
+            Set<Authority> authorities = new HashSet<>();
             Authority authority = new Authority();
             authority.setName(AuthoritiesConstants.USER);
             authorities.add(authorityRepository.findOne(Example.of(authority)).get());
+            user.setAuthorities(authorities);
             userRepository.save(user);
 
         }
@@ -240,7 +243,7 @@ public class FarzadUserService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = tokenProvider.createToken(authentication, true);
             response.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-
+            System.out.println(jwt);
             user1.setPassword(passwordEncoder.encode("123"));
             user1.setResetDate(ZonedDateTime.now().toInstant());
             userRepository.save(user1);
@@ -343,12 +346,12 @@ public class FarzadUserService {
     }
 
     private void userToProfile(ProfileDTO profileDTO, User user) {
-        profileDTO.setBirthYear(Integer.parseInt(user.getBirthDate()));
+//        profileDTO.setBirthYear(Integer.parseInt(user.getBirthDate()));
         profileDTO.setEmail(user.getEmail());
         profileDTO.setFirstName(user.getFirstName());
         profileDTO.setGender(user.getGender());
-        profileDTO.setTelegram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).findFirst().get().getValue());
-        profileDTO.setInstagram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).findFirst().get().getValue());
+//        profileDTO.setTelegram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).findFirst().get().getValue());
+//        profileDTO.setInstagram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).findFirst().get().getValue());
         profileDTO.setLastName(user.getLastName());
     }
 
