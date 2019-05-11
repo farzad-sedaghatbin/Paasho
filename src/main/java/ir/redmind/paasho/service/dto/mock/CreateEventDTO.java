@@ -7,6 +7,7 @@ import ir.redmind.paasho.domain.enumeration.PriceType;
 public class CreateEventDTO {
     private String code;
     private String title;
+    private String customTitle;
     private String description;
     private PriceType pricing;
     private float score;
@@ -21,7 +22,15 @@ public class CreateEventDTO {
     private String address;
     private String tel;
     private Long id;
+    private Long capacity;
 
+    public String getCustomTitle() {
+        return customTitle;
+    }
+
+    public void setCustomTitle(String customTitle) {
+        this.customTitle = customTitle;
+    }
 
     public String getDate() {
         return date;
@@ -149,5 +158,13 @@ public class CreateEventDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Long capacity) {
+        this.capacity = capacity;
     }
 }

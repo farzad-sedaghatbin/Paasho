@@ -71,6 +71,14 @@ public class CacheConfiguration {
             cm.createCache(ir.redmind.paasho.domain.User.class.getName() + ".events", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Category.class.getName() + ".events", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Category.class.getName() + ".users", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Titles.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".contacts", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".rates", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".comments", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".favorits", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".factors", jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.User1.class.getName() + ".events", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

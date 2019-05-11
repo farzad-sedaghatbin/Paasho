@@ -28,6 +28,7 @@ public class DetailEventDTO {
     private int view;
     private JoinStatus joinStatus;
     private String creator;
+    private int capacity;
 
 
     public String getCode() {
@@ -204,5 +205,14 @@ public class DetailEventDTO {
 
     public String getCreator() {
         return creator;
+    }
+
+    public void setCapacity(int capacity) {
+
+        this.capacity = capacity;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 }

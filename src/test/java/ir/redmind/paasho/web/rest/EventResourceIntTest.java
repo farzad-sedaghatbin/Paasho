@@ -112,6 +112,12 @@ public class EventResourceIntTest {
     private static final String DEFAULT_TELEGRAM = "AAAAAAAAAA";
     private static final String UPDATED_TELEGRAM = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_CAPACITY = 1L;
+    private static final Long UPDATED_CAPACITY = 2L;
+
+    private static final String DEFAULT_CUSTOM_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_CUSTOM_TITLE = "BBBBBBBBBB";
+
     @Autowired
     private EventRepository eventRepository;
 
@@ -191,7 +197,9 @@ public class EventResourceIntTest {
             .filesContentType(DEFAULT_FILES_CONTENT_TYPE)
             .tel(DEFAULT_TEL)
             .instagram(DEFAULT_INSTAGRAM)
-            .telegram(DEFAULT_TELEGRAM);
+            .telegram(DEFAULT_TELEGRAM)
+            .capacity(DEFAULT_CAPACITY)
+            .customTitle(DEFAULT_CUSTOM_TITLE);
         return event;
     }
 
@@ -234,6 +242,8 @@ public class EventResourceIntTest {
         assertThat(testEvent.getTel()).isEqualTo(DEFAULT_TEL);
         assertThat(testEvent.getInstagram()).isEqualTo(DEFAULT_INSTAGRAM);
         assertThat(testEvent.getTelegram()).isEqualTo(DEFAULT_TELEGRAM);
+        assertThat(testEvent.getCapacity()).isEqualTo(DEFAULT_CAPACITY);
+        assertThat(testEvent.getCustomTitle()).isEqualTo(DEFAULT_CUSTOM_TITLE);
 
         // Validate the Event in Elasticsearch
         verify(mockEventSearchRepository, times(1)).save(testEvent);
@@ -290,7 +300,9 @@ public class EventResourceIntTest {
             .andExpect(jsonPath("$.[*].files").value(hasItem(Base64Utils.encodeToString(DEFAULT_FILES))))
             .andExpect(jsonPath("$.[*].tel").value(hasItem(DEFAULT_TEL.toString())))
             .andExpect(jsonPath("$.[*].instagram").value(hasItem(DEFAULT_INSTAGRAM.toString())))
-            .andExpect(jsonPath("$.[*].telegram").value(hasItem(DEFAULT_TELEGRAM.toString())));
+            .andExpect(jsonPath("$.[*].telegram").value(hasItem(DEFAULT_TELEGRAM.toString())))
+            .andExpect(jsonPath("$.[*].capacity").value(hasItem(DEFAULT_CAPACITY.intValue())))
+            .andExpect(jsonPath("$.[*].customTitle").value(hasItem(DEFAULT_CUSTOM_TITLE.toString())));
     }
     
     @SuppressWarnings({"unchecked"})
@@ -354,7 +366,9 @@ public class EventResourceIntTest {
             .andExpect(jsonPath("$.files").value(Base64Utils.encodeToString(DEFAULT_FILES)))
             .andExpect(jsonPath("$.tel").value(DEFAULT_TEL.toString()))
             .andExpect(jsonPath("$.instagram").value(DEFAULT_INSTAGRAM.toString()))
-            .andExpect(jsonPath("$.telegram").value(DEFAULT_TELEGRAM.toString()));
+            .andExpect(jsonPath("$.telegram").value(DEFAULT_TELEGRAM.toString()))
+            .andExpect(jsonPath("$.capacity").value(DEFAULT_CAPACITY.intValue()))
+            .andExpect(jsonPath("$.customTitle").value(DEFAULT_CUSTOM_TITLE.toString()));
     }
 
     @Test
@@ -395,7 +409,9 @@ public class EventResourceIntTest {
             .filesContentType(UPDATED_FILES_CONTENT_TYPE)
             .tel(UPDATED_TEL)
             .instagram(UPDATED_INSTAGRAM)
-            .telegram(UPDATED_TELEGRAM);
+            .telegram(UPDATED_TELEGRAM)
+            .capacity(UPDATED_CAPACITY)
+            .customTitle(UPDATED_CUSTOM_TITLE);
         EventDTO eventDTO = eventMapper.toDto(updatedEvent);
 
         restEventMockMvc.perform(put("/api/events")
@@ -425,6 +441,8 @@ public class EventResourceIntTest {
         assertThat(testEvent.getTel()).isEqualTo(UPDATED_TEL);
         assertThat(testEvent.getInstagram()).isEqualTo(UPDATED_INSTAGRAM);
         assertThat(testEvent.getTelegram()).isEqualTo(UPDATED_TELEGRAM);
+        assertThat(testEvent.getCapacity()).isEqualTo(UPDATED_CAPACITY);
+        assertThat(testEvent.getCustomTitle()).isEqualTo(UPDATED_CUSTOM_TITLE);
 
         // Validate the Event in Elasticsearch
         verify(mockEventSearchRepository, times(1)).save(testEvent);
@@ -502,7 +520,9 @@ public class EventResourceIntTest {
             .andExpect(jsonPath("$.[*].files").value(hasItem(Base64Utils.encodeToString(DEFAULT_FILES))))
             .andExpect(jsonPath("$.[*].tel").value(hasItem(DEFAULT_TEL)))
             .andExpect(jsonPath("$.[*].instagram").value(hasItem(DEFAULT_INSTAGRAM)))
-            .andExpect(jsonPath("$.[*].telegram").value(hasItem(DEFAULT_TELEGRAM)));
+            .andExpect(jsonPath("$.[*].telegram").value(hasItem(DEFAULT_TELEGRAM)))
+            .andExpect(jsonPath("$.[*].capacity").value(hasItem(DEFAULT_CAPACITY.intValue())))
+            .andExpect(jsonPath("$.[*].customTitle").value(hasItem(DEFAULT_CUSTOM_TITLE)));
     }
 
     @Test

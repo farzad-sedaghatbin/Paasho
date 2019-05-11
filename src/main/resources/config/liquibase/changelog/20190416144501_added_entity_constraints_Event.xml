@@ -36,5 +36,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="category"/>
         
+        <addForeignKeyConstraint baseColumnNames="titles_id"
+                                 baseTableName="event"
+                                 constraintName="fk_event_titles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="titles"/>
+
     </changeSet>
 </databaseChangeLog>

@@ -51,12 +51,18 @@ public class EventDTO implements Serializable {
 
     private String telegram;
 
+    private Long capacity;
+
+    private String customTitle;
+
 
     private Long creatorId;
 
     private Set<User1DTO> participants = new HashSet<>();
 
     private Set<CategoryDTO> categories = new HashSet<>();
+
+    private Long titlesId;
 
     public Long getId() {
         return id;
@@ -210,6 +216,22 @@ public class EventDTO implements Serializable {
         this.telegram = telegram;
     }
 
+    public Long getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Long capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getCustomTitle() {
+        return customTitle;
+    }
+
+    public void setCustomTitle(String customTitle) {
+        this.customTitle = customTitle;
+    }
+
     public Long getCreatorId() {
         return creatorId;
     }
@@ -232,6 +254,14 @@ public class EventDTO implements Serializable {
 
     public void setCategories(Set<CategoryDTO> categories) {
         this.categories = categories;
+    }
+
+    public Long getTitlesId() {
+        return titlesId;
+    }
+
+    public void setTitlesId(Long titlesId) {
+        this.titlesId = titlesId;
     }
 
     @Override
@@ -276,7 +306,10 @@ public class EventDTO implements Serializable {
             ", tel='" + getTel() + "'" +
             ", instagram='" + getInstagram() + "'" +
             ", telegram='" + getTelegram() + "'" +
+            ", capacity=" + getCapacity() +
+            ", customTitle='" + getCustomTitle() + "'" +
             ", creator=" + getCreatorId() +
+            ", titles=" + getTitlesId() +
             "}";
     }
 }

@@ -2,6 +2,7 @@ package ir.redmind.paasho.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -91,6 +92,12 @@ public class Event implements Serializable {
     @Column(name = "telegram")
     private String telegram;
 
+    @Column(name = "capacity")
+    private Long capacity;
+
+    @Column(name = "custom_title")
+    private String customTitle;
+
     @OneToOne
     @JoinColumn(unique = true)
     private User creator;
@@ -118,6 +125,10 @@ public class Event implements Serializable {
     @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Factor> factors = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties("events")
+    private Titles titles;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -245,8 +256,6 @@ public class Event implements Serializable {
     }
 
     public Integer getVisitCount() {
-        if(visitCount==null)
-            return 0;
         return visitCount;
     }
 
@@ -363,17 +372,43 @@ public class Event implements Serializable {
         this.telegram = telegram;
     }
 
+    public Long getCapacity() {
+        return capacity;
+    }
+
+    public Event capacity(Long capacity) {
+        this.capacity = capacity;
+        return this;
+    }
+
+    public void setCapacity(Long capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getCustomTitle() {
+        return customTitle;
+    }
+
+    public Event customTitle(String customTitle) {
+        this.customTitle = customTitle;
+        return this;
+    }
+
+    public void setCustomTitle(String customTitle) {
+        this.customTitle = customTitle;
+    }
+
     public User getCreator() {
         return creator;
     }
 
-    public Event creator(User user1) {
-        this.creator = user1;
+    public Event creator(User User) {
+        this.creator = User;
         return this;
     }
 
-    public void setCreator(User user1) {
-        this.creator = user1;
+    public void setCreator(User User) {
+        this.creator = User;
     }
 
     public Set<Media> getMedias() {
@@ -405,25 +440,25 @@ public class Event implements Serializable {
         return participants;
     }
 
-    public Event participants(Set<User> user1S) {
-        this.participants = user1S;
+    public Event participants(Set<User> UserS) {
+        this.participants = UserS;
         return this;
     }
 
-    public Event addParticipants(User user1) {
-        this.participants.add(user1);
-        user1.getEvents().add(this);
+    public Event addParticipants(User User) {
+        this.participants.add(User);
+        User.getEvents().add(this);
         return this;
     }
 
-    public Event removeParticipants(User user1) {
-        this.participants.remove(user1);
-        user1.getEvents().remove(this);
+    public Event removeParticipants(User User) {
+        this.participants.remove(User);
+        User.getEvents().remove(this);
         return this;
     }
 
-    public void setParticipants(Set<User> user1S) {
-        this.participants = user1S;
+    public void setParticipants(Set<User> UserS) {
+        this.participants = UserS;
     }
 
     public Set<Category> getCategories() {
@@ -500,6 +535,19 @@ public class Event implements Serializable {
     public void setFactors(Set<Factor> factors) {
         this.factors = factors;
     }
+
+    public Titles getTitles() {
+        return titles;
+    }
+
+    public Event titles(Titles titles) {
+        this.titles = titles;
+        return this;
+    }
+
+    public void setTitles(Titles titles) {
+        this.titles = titles;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -544,6 +592,8 @@ public class Event implements Serializable {
             ", tel='" + getTel() + "'" +
             ", instagram='" + getInstagram() + "'" +
             ", telegram='" + getTelegram() + "'" +
+            ", capacity=" + getCapacity() +
+            ", customTitle='" + getCustomTitle() + "'" +
             "}";
     }
 }

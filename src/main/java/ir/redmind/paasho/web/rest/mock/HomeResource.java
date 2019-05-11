@@ -65,6 +65,9 @@ public class HomeResource {
             event1.setCategoryId(event.getCategories().iterator().next().getId().intValue());
             event1.setCreator(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
             event1.setEditable(event.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
+            event1.setView(event.getVisitCount());
+            event1.setView(event.getVisitCount());
+            event1.setEditable(event.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
             eventDTOS.add(event1);
         });
         return ResponseEntity.ok(eventDTOS);

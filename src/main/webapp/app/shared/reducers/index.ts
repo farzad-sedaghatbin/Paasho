@@ -91,6 +91,22 @@ import media, {
 import rating, {
   RatingPaashoState
 } from 'app/entities/rating-paasho/rating-paasho.reducer';
+// prettier-ignore
+import event, {
+  EventPaashoState
+} from 'app/entities/event-paasho/event-paasho.reducer';
+// prettier-ignore
+import titles, {
+  TitlesState
+} from 'app/entities/titles/titles.reducer';
+// prettier-ignore
+import event, {
+  EventPaashoState
+} from 'app/entities/event-paasho/event-paasho.reducer';
+// prettier-ignore
+import user1, {
+  User1PaashoState
+} from 'app/entities/user-1-paasho/user-1-paasho.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -123,6 +139,7 @@ export interface IRootState {
   readonly comment: CommentPaashoState;
   readonly media: MediaPaashoState;
   readonly rating: RatingPaashoState;
+  readonly titles: TitlesState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -147,6 +164,7 @@ const rootReducer = combineReducers<IRootState>({
   comment,
   media,
   rating,
+  titles,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

@@ -24,6 +24,7 @@ import FactorPaasho from './factor-paasho';
 import CommentPaasho from './comment-paasho';
 import MediaPaasho from './media-paasho';
 import RatingPaasho from './rating-paasho';
+import Titles from './titles';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -50,6 +51,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/comment-paasho`} component={CommentPaasho} />
       <ErrorBoundaryRoute path={`${match.url}/media-paasho`} component={MediaPaasho} />
       <ErrorBoundaryRoute path={`${match.url}/rating-paasho`} component={RatingPaasho} />
+      <ErrorBoundaryRoute path={`${match.url}/titles`} component={Titles} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

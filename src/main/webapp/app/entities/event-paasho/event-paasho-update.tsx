@@ -12,6 +12,8 @@ import { IUser1Paasho } from 'app/shared/model/user-1-paasho.model';
 import { getEntities as getUser1S } from 'app/entities/user-1-paasho/user-1-paasho.reducer';
 import { ICategoryPaasho } from 'app/shared/model/category-paasho.model';
 import { getEntities as getCategories } from 'app/entities/category-paasho/category-paasho.reducer';
+import { ITitles } from 'app/shared/model/titles.model';
+import { getEntities as getTitles } from 'app/entities/titles/titles.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './event-paasho.reducer';
 import { IEventPaasho } from 'app/shared/model/event-paasho.model';
 // tslint:disable-next-line:no-unused-variable
@@ -25,6 +27,7 @@ export interface IEventPaashoUpdateState {
   idsparticipants: any[];
   idscategories: any[];
   creatorId: string;
+  titlesId: string;
 }
 
 export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, IEventPaashoUpdateState> {
@@ -34,6 +37,7 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
       idsparticipants: [],
       idscategories: [],
       creatorId: '0',
+      titlesId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -51,6 +55,7 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
 
     this.props.getUser1S();
     this.props.getCategories();
+    this.props.getTitles();
   }
 
   onBlobChange = (isAnImage, name) => event => {
@@ -86,7 +91,7 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
   };
 
   render() {
-    const { eventEntity, user1S, categories, loading, updating } = this.props;
+    const { eventEntity, user1S, categories, titles, loading, updating } = this.props;
     const { isNew } = this.state;
 
     const { files, filesContentType } = eventEntity;
@@ -259,6 +264,18 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                   <AvField id="event-paasho-telegram" type="text" name="telegram" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="capacityLabel" for="capacity">
+                    Capacity
+                  </Label>
+                  <AvField id="event-paasho-capacity" type="string" className="form-control" name="capacity" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="customTitleLabel" for="customTitle">
+                    Custom Title
+                  </Label>
+                  <AvField id="event-paasho-customTitle" type="text" name="customTitle" />
+                </AvGroup>
+                <AvGroup>
                   <Label for="creator.id">Creator</Label>
                   <AvInput id="event-paasho-creator" type="select" className="form-control" name="creatorId">
                     <option value="" key="0" />
@@ -311,6 +328,19 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="titles.id">Titles</Label>
+                  <AvInput id="event-paasho-titles" type="select" className="form-control" name="titlesId">
+                    <option value="" key="0" />
+                    {titles
+                      ? titles.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/event-paasho" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -331,6 +361,7 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
 const mapStateToProps = (storeState: IRootState) => ({
   user1S: storeState.user1.entities,
   categories: storeState.category.entities,
+  titles: storeState.titles.entities,
   eventEntity: storeState.event.entity,
   loading: storeState.event.loading,
   updating: storeState.event.updating,
@@ -340,6 +371,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getUser1S,
   getCategories,
+  getTitles,
   getEntity,
   updateEntity,
   setBlob,

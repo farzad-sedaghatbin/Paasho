@@ -36,12 +36,15 @@ export interface IEventPaasho {
   tel?: string;
   instagram?: string;
   telegram?: string;
+  capacity?: number;
+  customTitle?: string;
   creatorId?: number;
   medias?: IMediaPaasho[];
   participants?: IUser1Paasho[];
   categories?: ICategoryPaasho[];
   rates?: IRatingPaasho[];
   factors?: IFactorPaasho[];
+  titlesId?: number;
 }
 
 export const defaultValue: Readonly<IEventPaasho> = {};

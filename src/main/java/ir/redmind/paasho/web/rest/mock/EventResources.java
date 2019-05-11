@@ -85,13 +85,16 @@ public class EventResources {
         eventDTO.setView(event.getVisitCount());
         eventDTO.setLatitude(event.getLatitude());
         eventDTO.setLongitude(event.getLongitude());
+        eventDTO.setCapacity(Math.toIntExact(event.getCapacity()));
 
-        eventDTO.setAgeLimitFrom(10);
-        eventDTO.setAgeLimitTo(40);
-        eventDTO.setJoinStatus(JoinStatus.values()[new Random().nextInt(3)]);
-        eventDTO.setLatitude(35.714558);
-        eventDTO.setLongitude(51.414440);
-        eventDTO.setCreator("فرزاد صداقت بین");
+        eventDTO.setAgeLimitFrom(event.getMinAge());
+        eventDTO.setAgeLimitTo(event.getMaxAge());
+        if(event.getParticipants().stream().anyMatch(u->u.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get())))
+            eventDTO.setJoinStatus(JoinStatus.JOINED);
+        else eventDTO.setJoinStatus(JoinStatus.NOT_JOINED);
+        eventDTO.setLatitude(event.getLatitude());
+        eventDTO.setLongitude(event.getLongitude());
+        eventDTO.setCreator(event.getCreator().getFirstName() +" "+ event.getCreator().getLastName());
         return eventDTO;
     }
 
@@ -132,14 +135,14 @@ public class EventResources {
     @GetMapping(value = "{category}/titles")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<List<String>> getTitles(@PathVariable("category") String category) {
-        List<String> titles = new ArrayList<>();
-        titles.add("پایه ای بریم فوتبال");
-        titles.add("پایه ای بریم دورهمی");
-        titles.add("پایه ای بریم سینما");
-        titles.add("پایه ای بریم کوه");
+    public ResponseEntity<List<titleDTO>> getTitles(@PathVariable("category") String category) {
+        List<titleDTO> titles = new ArrayList<>();
+        titles.add(new titleDTO("پایه ای بریم فوتبال",1l));
+        titles.add(new titleDTO("پایه ای بریم دورهمی",2l));
+        titles.add(new titleDTO("پایه ای بریم سینما",3l));
+        titles.add(new titleDTO("پایه ای بریم کوه",4l));
         return ResponseEntity.ok(titles);
-//TODO : create opbjects in jhipster
+
     }
 
     @GetMapping(value = "{code}/participants")
@@ -154,7 +157,7 @@ public class EventResources {
             ProfileDTO profileDTO = getProfileDTO(p);
             profileDTOS.add(profileDTO);
         });
-        Page<ProfileDTO> page = new PageImpl(profileDTOS, new PageRequest(pageable.getPageNumber() + 1, profileDTOS.size()), 20);
+        Page<ProfileDTO> page = new PageImpl(profileDTOS, PageRequest.of(pageable.getPageNumber() + 1, profileDTOS.size()+1), 20);
         return ResponseEntity.ok(page);
 
     }
@@ -233,9 +236,11 @@ public class EventResources {
         event.setLongitude(createEventDTO.getLongitude());
         event.setMinAge(createEventDTO.getAgeLimitFrom());
         event.setMaxAge(createEventDTO.getAgeLimitTo());
+        event.setPriceType(createEventDTO.getPricing());
         event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId()).get()));
 //        event.setTelegram(createEventDTO.gett);
         event.setCreator(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
+        event.setCapacity(createEventDTO.getCapacity());
         eventService.save(eventMapper.toDto(event));
         return ResponseEntity.ok(eventMapper.toDto(event));
     }
