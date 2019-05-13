@@ -18,13 +18,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/comments")
-public class CommentResource {
+public class FarzadCommentResource {
 
     private final CommentService commentService;
     private final EventService eventService;
     private final UserService userService;
 
-    public CommentResource(CommentService commentService, EventService eventService, UserService userService) {
+    public FarzadCommentResource(CommentService commentService, EventService eventService, UserService userService) {
         this.commentService = commentService;
         this.eventService = eventService;
         this.userService = userService;
