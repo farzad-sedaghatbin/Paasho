@@ -1,5 +1,6 @@
 package ir.redmind.paasho.service;
 
+import ir.redmind.paasho.domain.Comment;
 import ir.redmind.paasho.service.dto.CommentDTO;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public interface CommentService {
      * @return the list of entities
      */
     List<CommentDTO> findAll();
+
+
+    List<Comment> findAllByCode(String code);
 
 
     /**

@@ -13,6 +13,7 @@ public class CommentDTO implements Serializable {
 
 
     private Long userId;
+    private Long eventId;
 
     public Long getId() {
         return id;
@@ -52,6 +53,14 @@ public class CommentDTO implements Serializable {
             return false;
         }
         return Objects.equals(getId(), commentDTO.getId());
+    }
+
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 
     @Override

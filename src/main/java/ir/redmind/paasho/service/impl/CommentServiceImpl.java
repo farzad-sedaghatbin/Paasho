@@ -71,6 +71,11 @@ public class CommentServiceImpl implements CommentService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Override
+    public List<Comment> findAllByCode(String code) {
+        return commentRepository.findAllByEvent_Code(code);
+    }
+
 
     /**
      * Get one comment by id.

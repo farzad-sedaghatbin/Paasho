@@ -34,6 +34,10 @@ public class Comment implements Serializable {
     @JsonIgnoreProperties("comments")
     private User user;
 
+    @ManyToOne
+    @JsonIgnoreProperties("comments")
+    private Event event;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -83,6 +87,14 @@ public class Comment implements Serializable {
             return false;
         }
         return Objects.equals(getId(), comment.getId());
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     @Override
