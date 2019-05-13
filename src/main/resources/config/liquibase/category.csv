@@ -1,10 +1,10 @@
 id;name
-1;ROLE_ADMIN
-2;ROLE_USER
-3;ROLE_ADMIN
-4;ROLE_USER
-5;ROLE_USER
-6;ROLE_USER
-7;ROLE_USER
-8;ROLE_USER
-9;ROLE_USER
+1, آموزشي
+  2,ورزشي
+ 3,دورهمي
+ 4,كسب و كار
+ 5,سلامت و خانواده
+ 6,فرهنگي و هنري
+ 7,مد و زيبايي
+ 8,خيريه و افتتاحيه
+ 9,رستوران و كافي شاپ

@@ -46,7 +46,13 @@ public class EventResources {
     private final CategoryService categoryService;
     private final EventMapper eventMapper;
     private final CategoryMapper categoryMapper;
-
+    static List<titleDTO>  titles = new ArrayList<>();
+    static {
+        titles.add(new titleDTO("پایه ای بریم فوتبال", 1l));
+        titles.add(new titleDTO("پایه ای بریم دورهمی", 2l));
+        titles.add(new titleDTO("پایه ای بریم سینما", 3l));
+        titles.add(new titleDTO("پایه ای بریم کوه", 4l));
+    }
     public EventResources(EventService eventService, UserService userService, CategoryService categoryService, EventMapper eventMapper, CategoryMapper categoryMapper) {
         this.eventService = eventService;
         this.userService = userService;
@@ -70,11 +76,11 @@ public class EventResources {
         DetailEventDTO eventDTO = new DetailEventDTO();
         eventDTO.setCode(code);
 //        eventDTO.setPic("");
-        eventDTO.setTitle(event.getTitle());
+        eventDTO.setTitle(titles.get(Integer.parseInt(event.getTitle()+1)).getTitle());
         eventDTO.setPricing(event.getPriceType());
         eventDTO.setScore(event.getCreator().getScore().floatValue());
-//        eventDTO.setTime("07:00");
-//        eventDTO.setDate("1397/11/28");
+        eventDTO.setTime(event.getTimeString());
+        eventDTO.setDate(event.getDateString());
         eventDTO.setAddress(event.getAddress());
         eventDTO.setCategory(event.getCategories().iterator().next().getName());
         eventDTO.setDescription(event.getDescription());
@@ -120,9 +126,9 @@ public class EventResources {
         EventDTO event = new EventDTO();
         event.setCode(e.getCode());
 //            event.setPic(e.);
-        event.setTitle(e.getTitle());
+        event.setTitle(titles.get(Integer.parseInt(event.getTitle()+1)).getTitle());
         event.setPricing(PriceType.FREE);
-//            event.setTime("07:00");
+//            event.setTime(e.get);
 //            event.setDate("1397/11/28");
         event.setCategoryId(Math.toIntExact(e.getCategories().iterator().next().getId()));
         User creator = userService.getUserWithAuthorities(e.getCreatorId()).get();
@@ -184,7 +190,7 @@ public class EventResources {
 
         ShareDTO shareDto = new ShareDTO();
         shareDto.setUser(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
-        shareDto.setContent("میخواد با شما رویداد" + event.getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
+        shareDto.setContent("میخواد با شما رویداد" + titles.get(Integer.parseInt(event.getTitle()+1)).getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
         shareDto.setAndroidMarketURL("https://cafebazaar.ir");
         shareDto.setIosMarketURL("https://sibapp.com");
         return ResponseEntity.ok(shareDto);
@@ -230,13 +236,15 @@ public class EventResources {
         event.setAddress(createEventDTO.getAddress());
         event.setCode(UUID.randomUUID().toString());
         event.setDescription(createEventDTO.getDescription());
-        event.setTitle(createEventDTO.getTitle());
+        event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle()+1)).getTitle());
         event.setTel(createEventDTO.getTel());
         event.setLatitude(createEventDTO.getLatitude());
         event.setLongitude(createEventDTO.getLongitude());
         event.setMinAge(createEventDTO.getAgeLimitFrom());
         event.setMaxAge(createEventDTO.getAgeLimitTo());
         event.setPriceType(createEventDTO.getPricing());
+        event.setDateString(createEventDTO.getDate());
+        event.setTimeString(createEventDTO.getTime());
         event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId()).get()));
 //        event.setTelegram(createEventDTO.gett);
         event.setCreator(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());

@@ -41,6 +41,13 @@ public class Event implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "dateString")
+    private String dateString;
+
+
+    @Column(name = "timeString")
+    private String timeString;
+
     @Column(name = "code")
     private String code;
 
@@ -543,6 +550,22 @@ public class Event implements Serializable {
     public Event titles(Titles titles) {
         this.titles = titles;
         return this;
+    }
+
+    public String getDateString() {
+        return dateString;
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+
+    public String getTimeString() {
+        return timeString;
+    }
+
+    public void setTimeString(String timeString) {
+        this.timeString = timeString;
     }
 
     public void setTitles(Titles titles) {
