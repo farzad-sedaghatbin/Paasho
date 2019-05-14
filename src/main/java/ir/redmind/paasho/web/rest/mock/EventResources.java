@@ -236,7 +236,11 @@ public class EventResources {
         event.setAddress(createEventDTO.getAddress());
         event.setCode(UUID.randomUUID().toString());
         event.setDescription(createEventDTO.getDescription());
-        event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle()+1)).getTitle());
+        if(createEventDTO.getCustomTitle()==null || createEventDTO.getCustomTitle().length()==0)
+        event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle())+1).getTitle());
+        else{
+            event.setTitle(createEventDTO.getCustomTitle());
+        }
         event.setTel(createEventDTO.getTel());
         event.setLatitude(createEventDTO.getLatitude());
         event.setLongitude(createEventDTO.getLongitude());
