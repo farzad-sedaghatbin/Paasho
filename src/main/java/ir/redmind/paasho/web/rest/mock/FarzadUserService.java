@@ -202,7 +202,7 @@ public ResponseEntity<RecordDTO> ranks() {
     @Timed
     @CrossOrigin(origins = "*")
 
-    public ResponseEntity<?> changeAvatar(@Valid @RequestBody String data) {
+    public ResponseEntity<?> changeAvatar(@Valid @RequestParam("avatar") String data) {
 
 //        String[] s = data.split(",");
         User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
