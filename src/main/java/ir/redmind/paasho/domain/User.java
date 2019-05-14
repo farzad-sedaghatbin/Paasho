@@ -135,6 +135,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
     private Set<Event> events = new HashSet<>();
+    @Lob
     private String avatar;
     private Double score;
 
