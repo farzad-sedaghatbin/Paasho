@@ -154,6 +154,7 @@ public ResponseEntity<RecordDTO> ranks() {
             user.setCreatedBy("system");
             user.setFirstName("کاربر");
             user.setLastName("جدید");
+            user.setBirthDate("0");
             user.setPassword(passwordEncoder.encode("123"));
             userRepository.save(user);
 
