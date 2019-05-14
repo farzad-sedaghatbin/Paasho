@@ -106,7 +106,6 @@ public class Event implements Serializable {
     private String customTitle;
 
     @OneToOne
-    @JoinColumn(unique = true)
     private User creator;
 
     @OneToMany(mappedBy = "event")
