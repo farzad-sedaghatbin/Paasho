@@ -76,7 +76,7 @@ public class EventResources {
         DetailEventDTO eventDTO = new DetailEventDTO();
         eventDTO.setCode(code);
 //        eventDTO.setPic("");
-        eventDTO.setTitle(titles.get(Integer.parseInt(event.getTitle()+1)).getTitle());
+        eventDTO.setTitle(titles.get(Integer.parseInt(event.getTitle())+1).getTitle());
         eventDTO.setPricing(event.getPriceType());
         eventDTO.setScore(event.getCreator().getScore().floatValue());
         eventDTO.setTime(event.getTimeString());
@@ -126,7 +126,7 @@ public class EventResources {
         EventDTO event = new EventDTO();
         event.setCode(e.getCode());
 //            event.setPic(e.);
-        event.setTitle(titles.get(Integer.parseInt(event.getTitle()+1)).getTitle());
+        event.setTitle(titles.get(Integer.parseInt(event.getTitle())+1).getTitle());
         event.setPricing(PriceType.FREE);
 //            event.setTime(e.get);
 //            event.setDate("1397/11/28");
@@ -190,7 +190,7 @@ public class EventResources {
 
         ShareDTO shareDto = new ShareDTO();
         shareDto.setUser(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
-        shareDto.setContent("میخواد با شما رویداد" + titles.get(Integer.parseInt(event.getTitle()+1)).getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
+        shareDto.setContent("میخواد با شما رویداد" + titles.get(Integer.parseInt(event.getTitle())+1).getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
         shareDto.setAndroidMarketURL("https://cafebazaar.ir");
         shareDto.setIosMarketURL("https://sibapp.com");
         return ResponseEntity.ok(shareDto);
