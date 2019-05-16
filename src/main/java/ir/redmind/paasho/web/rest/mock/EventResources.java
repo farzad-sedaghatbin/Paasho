@@ -254,9 +254,7 @@ public class EventResources {
         event.setCreator(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
         event.setCapacity(createEventDTO.getCapacity());
         eventService.save(eventMapper.toDto(event));
-        ir.redmind.paasho.service.dto.EventDTO e = eventMapper.toDto(event);
-        e.setId(event.getId());
-        return ResponseEntity.ok(e);
+        return ResponseEntity.ok(eventMapper.toDto(event));
     }
 
     @PostMapping(value = "/{code}/upload")
