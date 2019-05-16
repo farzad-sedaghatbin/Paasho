@@ -33,12 +33,12 @@ public class MediaServiceImpl implements MediaService {
 
     private final MediaMapper mediaMapper;
 
-//    private final MediaSearchRepository mediaSearchRepository;
+    private final MediaSearchRepository mediaSearchRepository;
 
-    public MediaServiceImpl(MediaRepository mediaRepository, MediaMapper mediaMapper) {
+    public MediaServiceImpl(MediaRepository mediaRepository, MediaMapper mediaMapper, MediaSearchRepository mediaSearchRepository) {
         this.mediaRepository = mediaRepository;
         this.mediaMapper = mediaMapper;
-//        this.mediaSearchRepository = mediaSearchRepository;
+        this.mediaSearchRepository = mediaSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class MediaServiceImpl implements MediaService {
         Media media = mediaMapper.toEntity(mediaDTO);
         media = mediaRepository.save(media);
         MediaDTO result = mediaMapper.toDto(media);
-//        mediaSearchRepository.save(media);
+        mediaSearchRepository.save(media);
         return result;
     }
 
@@ -89,13 +89,13 @@ public class MediaServiceImpl implements MediaService {
     /**
      * Delete the media by id.
      *
-//     * @param id the id of the entity
+     * @param id the id of the entity
      */
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Media : {}", id);
         mediaRepository.deleteById(id);
-//        mediaSearchRepository.deleteById(id);
+        mediaSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,9 @@ public class MediaServiceImpl implements MediaService {
     @Transactional(readOnly = true)
     public List<MediaDTO> search(String query) {
         log.debug("Request to search Media for query {}", query);
-        return null;
-//            .stream(/mediaSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-//            .map(mediaMapper::toDto)
-//            .collect(Collectors.toList());
+        return StreamSupport
+            .stream(mediaSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .map(mediaMapper::toDto)
+            .collect(Collectors.toList());
     }
 }

@@ -33,11 +33,12 @@ public class TitlesServiceImpl implements TitlesService {
 
     private final TitlesMapper titlesMapper;
 
-//    private final TitlesSearchRepository titlesSearchRepository;
+    private final TitlesSearchRepository titlesSearchRepository;
 
-    public TitlesServiceImpl(TitlesRepository titlesRepository, TitlesMapper titlesMapper) {
+    public TitlesServiceImpl(TitlesRepository titlesRepository, TitlesMapper titlesMapper, TitlesSearchRepository titlesSearchRepository) {
         this.titlesRepository = titlesRepository;
         this.titlesMapper = titlesMapper;
+        this.titlesSearchRepository = titlesSearchRepository;
     }
 
     /**
@@ -52,6 +53,7 @@ public class TitlesServiceImpl implements TitlesService {
         Titles titles = titlesMapper.toEntity(titlesDTO);
         titles = titlesRepository.save(titles);
         TitlesDTO result = titlesMapper.toDto(titles);
+        titlesSearchRepository.save(titles);
         return result;
     }
 
@@ -93,6 +95,7 @@ public class TitlesServiceImpl implements TitlesService {
     public void delete(Long id) {
         log.debug("Request to delete Titles : {}", id);
         titlesRepository.deleteById(id);
+        titlesSearchRepository.deleteById(id);
     }
 
     /**
@@ -105,6 +108,9 @@ public class TitlesServiceImpl implements TitlesService {
     @Transactional(readOnly = true)
     public List<TitlesDTO> search(String query) {
         log.debug("Request to search Titles for query {}", query);
-        return null;
+        return StreamSupport
+            .stream(titlesSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .map(titlesMapper::toDto)
+            .collect(Collectors.toList());
     }
 }

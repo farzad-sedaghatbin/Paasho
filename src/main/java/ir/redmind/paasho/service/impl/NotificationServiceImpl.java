@@ -33,12 +33,12 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationMapper notificationMapper;
 
-//    private final NotificationSearchRepository notificationSearchRepository;
+    private final NotificationSearchRepository notificationSearchRepository;
 
-    public NotificationServiceImpl(NotificationRepository notificationRepository, NotificationMapper notificationMapper/*, NotificationSearchRepository notificationSearchRepository*/) {
+    public NotificationServiceImpl(NotificationRepository notificationRepository, NotificationMapper notificationMapper, NotificationSearchRepository notificationSearchRepository) {
         this.notificationRepository = notificationRepository;
         this.notificationMapper = notificationMapper;
-//        this.notificationSearchRepository = notificationSearchRepository;
+        this.notificationSearchRepository = notificationSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class NotificationServiceImpl implements NotificationService {
         Notification notification = notificationMapper.toEntity(notificationDTO);
         notification = notificationRepository.save(notification);
         NotificationDTO result = notificationMapper.toDto(notification);
-//        notificationSearchRepository.save(notification);
+        notificationSearchRepository.save(notification);
         return result;
     }
 
@@ -89,13 +89,13 @@ public class NotificationServiceImpl implements NotificationService {
     /**
      * Delete the notification by id.
      *
-//     * @param id the id of the entity
+     * @param id the id of the entity
      */
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Notification : {}", id);
         notificationRepository.deleteById(id);
-//        notificationSearchRepository.deleteById(id);
+        notificationSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,10 +108,9 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional(readOnly = true)
     public List<NotificationDTO> search(String query) {
         log.debug("Request to search Notifications for query {}", query);
-//        return StreamSupport
-//            .stream(notificationSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-//            .map(notificationMapper::toDto)
-//            .collect(Collectors.toList());
-        return null;
+        return StreamSupport
+            .stream(notificationSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .map(notificationMapper::toDto)
+            .collect(Collectors.toList());
     }
 }

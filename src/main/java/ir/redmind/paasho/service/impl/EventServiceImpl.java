@@ -32,12 +32,12 @@ public class EventServiceImpl implements EventService {
 
     private final EventMapper eventMapper;
 
-//    private final EventSearchRepository eventSearchRepository;
+    private final EventSearchRepository eventSearchRepository;
 
-    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper/*, EventSearchRepository eventSearchRepository*/) {
+    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EventSearchRepository eventSearchRepository) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
-//        this.eventSearchRepository = eventSearchRepository;
+        this.eventSearchRepository = eventSearchRepository;
     }
 
     /**
@@ -52,7 +52,7 @@ public class EventServiceImpl implements EventService {
         Event event = eventMapper.toEntity(eventDTO);
         event = eventRepository.save(event);
         EventDTO result = eventMapper.toDto(event);
-//        eventSearchRepository.save(event);
+        eventSearchRepository.save(event);
         return result;
     }
 
@@ -103,7 +103,7 @@ public class EventServiceImpl implements EventService {
     public void delete(Long id) {
         log.debug("Request to delete Event : {}", id);
         eventRepository.deleteById(id);
-//        eventSearchRepository.deleteById(id);
+        eventSearchRepository.deleteById(id);
     }
 
     /**
@@ -117,20 +117,17 @@ public class EventServiceImpl implements EventService {
     @Transactional(readOnly = true)
     public Page<EventDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Events for query {}", query);
-//        return eventSearchRepository.search(queryStringQuery(query), pageable)
-//            .map(eventMapper::toDto);
-        return null;
+        return eventSearchRepository.search(queryStringQuery(query), pageable)
+            .map(eventMapper::toDto);
     }
 
     @Override
     public Page<EventDTO> searchByBuilder(QueryBuilder query, Pageable pageable) {
-//        return eventSearchRepository.search(query, pageable).map(eventMapper::toDto);
-    return null;
+        return eventSearchRepository.search(query, pageable).map(eventMapper::toDto);
     }
 
     @Override
     public Event findByCode(String code) {
-        return null;
-//        return eventSearchRepository.findByCode(code);
+        return eventSearchRepository.findByCode(code);
     }
 }
