@@ -8,18 +8,19 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Event and its DTO EventDTO.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, CategoryMapper.class, TitlesMapper.class})
+@Mapper(componentModel = "spring", uses = {User1Mapper.class, CategoryMapper.class, TitlesMapper.class, UserMapper.class})
 public interface EventMapper extends EntityMapper<EventDTO, Event> {
 
-    @Mapping(source = "creator.id", target = "creatorId")
     @Mapping(source = "titles.id", target = "titlesId")
+    @Mapping(source = "creator.id", target = "creatorId")
+    @Mapping(source = "creator.login", target = "creatorLogin")
     EventDTO toDto(Event event);
 
-    @Mapping(source = "creatorId", target = "creator")
     @Mapping(target = "medias", ignore = true)
     @Mapping(target = "rates", ignore = true)
     @Mapping(target = "factors", ignore = true)
     @Mapping(source = "titlesId", target = "titles")
+    @Mapping(source = "creatorId", target = "creator")
     Event toEntity(EventDTO eventDTO);
 
     default Event fromId(Long id) {

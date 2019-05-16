@@ -41,13 +41,6 @@ public class Event implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "dateString")
-    private String dateString;
-
-
-    @Column(name = "timeString")
-    private String timeString;
-
     @Column(name = "code")
     private String code;
 
@@ -72,7 +65,7 @@ public class Event implements Serializable {
     private String address;
 
     @Column(name = "visit_count")
-    private Integer visitCount=0;
+    private Integer visitCount;
 
     @Column(name = "latitude")
     private Double latitude;
@@ -105,9 +98,11 @@ public class Event implements Serializable {
     @Column(name = "custom_title")
     private String customTitle;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private User creator;
+    @Column(name = "date_string")
+    private String dateString;
+
+    @Column(name = "time_string")
+    private String timeString;
 
     @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -117,7 +112,7 @@ public class Event implements Serializable {
     @JoinTable(name = "event_participants",
                joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "participants_id", referencedColumnName = "id"))
-    private Set<User> participants = new HashSet<>();
+    private Set<User1> participants = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -135,6 +130,10 @@ public class Event implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("events")
     private Titles titles;
+
+    @ManyToOne
+    @JsonIgnoreProperties("events")
+    private User creator;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -405,17 +404,30 @@ public class Event implements Serializable {
         this.customTitle = customTitle;
     }
 
-    public User getCreator() {
-        return creator;
+    public String getDateString() {
+        return dateString;
     }
 
-    public Event creator(User User) {
-        this.creator = User;
+    public Event dateString(String dateString) {
+        this.dateString = dateString;
         return this;
     }
 
-    public void setCreator(User User) {
-        this.creator = User;
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+
+    public String getTimeString() {
+        return timeString;
+    }
+
+    public Event timeString(String timeString) {
+        this.timeString = timeString;
+        return this;
+    }
+
+    public void setTimeString(String timeString) {
+        this.timeString = timeString;
     }
 
     public Set<Media> getMedias() {
@@ -443,29 +455,29 @@ public class Event implements Serializable {
         this.medias = media;
     }
 
-    public Set<User> getParticipants() {
+    public Set<User1> getParticipants() {
         return participants;
     }
 
-    public Event participants(Set<User> UserS) {
-        this.participants = UserS;
+    public Event participants(Set<User1> user1S) {
+        this.participants = user1S;
         return this;
     }
 
-    public Event addParticipants(User User) {
-        this.participants.add(User);
-        User.getEvents().add(this);
+    public Event addParticipants(User1 user1) {
+        this.participants.add(user1);
+        user1.getEvents().add(this);
         return this;
     }
 
-    public Event removeParticipants(User User) {
-        this.participants.remove(User);
-        User.getEvents().remove(this);
+    public Event removeParticipants(User1 user1) {
+        this.participants.remove(user1);
+        user1.getEvents().remove(this);
         return this;
     }
 
-    public void setParticipants(Set<User> UserS) {
-        this.participants = UserS;
+    public void setParticipants(Set<User1> user1S) {
+        this.participants = user1S;
     }
 
     public Set<Category> getCategories() {
@@ -552,24 +564,21 @@ public class Event implements Serializable {
         return this;
     }
 
-    public String getDateString() {
-        return dateString;
-    }
-
-    public void setDateString(String dateString) {
-        this.dateString = dateString;
-    }
-
-    public String getTimeString() {
-        return timeString;
-    }
-
-    public void setTimeString(String timeString) {
-        this.timeString = timeString;
-    }
-
     public void setTitles(Titles titles) {
         this.titles = titles;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public Event creator(User user) {
+        this.creator = user;
+        return this;
+    }
+
+    public void setCreator(User user) {
+        this.creator = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -617,6 +626,8 @@ public class Event implements Serializable {
             ", telegram='" + getTelegram() + "'" +
             ", capacity=" + getCapacity() +
             ", customTitle='" + getCustomTitle() + "'" +
+            ", dateString='" + getDateString() + "'" +
+            ", timeString='" + getTimeString() + "'" +
             "}";
     }
 }

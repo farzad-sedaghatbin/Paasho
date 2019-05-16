@@ -38,13 +38,16 @@ export interface IEventPaasho {
   telegram?: string;
   capacity?: number;
   customTitle?: string;
-  creatorId?: number;
+  dateString?: string;
+  timeString?: string;
   medias?: IMediaPaasho[];
   participants?: IUser1Paasho[];
   categories?: ICategoryPaasho[];
   rates?: IRatingPaasho[];
   factors?: IFactorPaasho[];
   titlesId?: number;
+  creatorLogin?: string;
+  creatorId?: number;
 }
 
 export const defaultValue: Readonly<IEventPaasho> = {};

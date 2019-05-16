@@ -117,8 +117,14 @@ export class EventPaashoDetail extends React.Component<IEventPaashoDetailProps> 
               <span id="customTitle">Custom Title</span>
             </dt>
             <dd>{eventEntity.customTitle}</dd>
-            <dt>Creator</dt>
-            <dd>{eventEntity.creatorId ? eventEntity.creatorId : ''}</dd>
+            <dt>
+              <span id="dateString">Date String</span>
+            </dt>
+            <dd>{eventEntity.dateString}</dd>
+            <dt>
+              <span id="timeString">Time String</span>
+            </dt>
+            <dd>{eventEntity.timeString}</dd>
             <dt>Participants</dt>
             <dd>
               {eventEntity.participants
@@ -143,6 +149,8 @@ export class EventPaashoDetail extends React.Component<IEventPaashoDetailProps> 
             </dd>
             <dt>Titles</dt>
             <dd>{eventEntity.titlesId ? eventEntity.titlesId : ''}</dd>
+            <dt>Creator</dt>
+            <dd>{eventEntity.creatorLogin ? eventEntity.creatorLogin : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/event-paasho" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

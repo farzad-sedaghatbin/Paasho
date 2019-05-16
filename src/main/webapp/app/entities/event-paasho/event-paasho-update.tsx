@@ -14,6 +14,8 @@ import { ICategoryPaasho } from 'app/shared/model/category-paasho.model';
 import { getEntities as getCategories } from 'app/entities/category-paasho/category-paasho.reducer';
 import { ITitles } from 'app/shared/model/titles.model';
 import { getEntities as getTitles } from 'app/entities/titles/titles.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './event-paasho.reducer';
 import { IEventPaasho } from 'app/shared/model/event-paasho.model';
 // tslint:disable-next-line:no-unused-variable
@@ -26,8 +28,8 @@ export interface IEventPaashoUpdateState {
   isNew: boolean;
   idsparticipants: any[];
   idscategories: any[];
-  creatorId: string;
   titlesId: string;
+  creatorId: string;
 }
 
 export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, IEventPaashoUpdateState> {
@@ -36,8 +38,8 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
     this.state = {
       idsparticipants: [],
       idscategories: [],
-      creatorId: '0',
       titlesId: '0',
+      creatorId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -56,6 +58,7 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
     this.props.getUser1S();
     this.props.getCategories();
     this.props.getTitles();
+    this.props.getUsers();
   }
 
   onBlobChange = (isAnImage, name) => event => {
@@ -91,7 +94,7 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
   };
 
   render() {
-    const { eventEntity, user1S, categories, titles, loading, updating } = this.props;
+    const { eventEntity, user1S, categories, titles, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     const { files, filesContentType } = eventEntity;
@@ -276,17 +279,16 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                   <AvField id="event-paasho-customTitle" type="text" name="customTitle" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="creator.id">Creator</Label>
-                  <AvInput id="event-paasho-creator" type="select" className="form-control" name="creatorId">
-                    <option value="" key="0" />
-                    {user1S
-                      ? user1S.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
+                  <Label id="dateStringLabel" for="dateString">
+                    Date String
+                  </Label>
+                  <AvField id="event-paasho-dateString" type="text" name="dateString" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="timeStringLabel" for="timeString">
+                    Time String
+                  </Label>
+                  <AvField id="event-paasho-timeString" type="text" name="timeString" />
                 </AvGroup>
                 <AvGroup>
                   <Label for="user1S">Participants</Label>
@@ -341,6 +343,19 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="creator.login">Creator</Label>
+                  <AvInput id="event-paasho-creator" type="select" className="form-control" name="creatorId">
+                    <option value="" key="0" />
+                    {users
+                      ? users.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.login}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/event-paasho" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -362,6 +377,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   user1S: storeState.user1.entities,
   categories: storeState.category.entities,
   titles: storeState.titles.entities,
+  users: storeState.userManagement.users,
   eventEntity: storeState.event.entity,
   loading: storeState.event.loading,
   updating: storeState.event.updating,
@@ -372,6 +388,7 @@ const mapDispatchToProps = {
   getUser1S,
   getCategories,
   getTitles,
+  getUsers,
   getEntity,
   updateEntity,
   setBlob,

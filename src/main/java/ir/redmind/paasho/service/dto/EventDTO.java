@@ -54,16 +54,21 @@ public class EventDTO implements Serializable {
     private Long capacity;
 
     private String customTitle;
+
     private String dateString;
+
     private String timeString;
 
-    private Long creatorId;
 
     private Set<User1DTO> participants = new HashSet<>();
 
     private Set<CategoryDTO> categories = new HashSet<>();
 
     private Long titlesId;
+
+    private Long creatorId;
+
+    private String creatorLogin;
 
     public Long getId() {
         return id;
@@ -233,12 +238,20 @@ public class EventDTO implements Serializable {
         this.customTitle = customTitle;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public String getDateString() {
+        return dateString;
     }
 
-    public void setCreatorId(Long user1Id) {
-        this.creatorId = user1Id;
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+
+    public String getTimeString() {
+        return timeString;
+    }
+
+    public void setTimeString(String timeString) {
+        this.timeString = timeString;
     }
 
     public Set<User1DTO> getParticipants() {
@@ -265,20 +278,20 @@ public class EventDTO implements Serializable {
         this.titlesId = titlesId;
     }
 
-    public String getDateString() {
-        return dateString;
+    public Long getCreatorId() {
+        return creatorId;
     }
 
-    public void setDateString(String dateString) {
-        this.dateString = dateString;
+    public void setCreatorId(Long userId) {
+        this.creatorId = userId;
     }
 
-    public String getTimeString() {
-        return timeString;
+    public String getCreatorLogin() {
+        return creatorLogin;
     }
 
-    public void setTimeString(String timeString) {
-        this.timeString = timeString;
+    public void setCreatorLogin(String userLogin) {
+        this.creatorLogin = userLogin;
     }
 
     @Override
@@ -325,8 +338,11 @@ public class EventDTO implements Serializable {
             ", telegram='" + getTelegram() + "'" +
             ", capacity=" + getCapacity() +
             ", customTitle='" + getCustomTitle() + "'" +
-            ", creator=" + getCreatorId() +
+            ", dateString='" + getDateString() + "'" +
+            ", timeString='" + getTimeString() + "'" +
             ", titles=" + getTitlesId() +
+            ", creator=" + getCreatorId() +
+            ", creator='" + getCreatorLogin() + "'" +
             "}";
     }
 }

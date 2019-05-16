@@ -189,11 +189,17 @@ export class EventPaasho extends React.Component<IEventPaashoProps, IEventPaasho
                   <th className="hand" onClick={this.sort('customTitle')}>
                     Custom Title <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th>
-                    Creator <FontAwesomeIcon icon="sort" />
+                  <th className="hand" onClick={this.sort('dateString')}>
+                    Date String <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={this.sort('timeString')}>
+                    Time String <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
                     Titles <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th>
+                    Creator <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -239,8 +245,10 @@ export class EventPaasho extends React.Component<IEventPaashoProps, IEventPaasho
                     <td>{event.telegram}</td>
                     <td>{event.capacity}</td>
                     <td>{event.customTitle}</td>
-                    <td>{event.creatorId ? <Link to={`user-1-paasho/${event.creatorId}`}>{event.creatorId}</Link> : ''}</td>
+                    <td>{event.dateString}</td>
+                    <td>{event.timeString}</td>
                     <td>{event.titlesId ? <Link to={`titles/${event.titlesId}`}>{event.titlesId}</Link> : ''}</td>
+                    <td>{event.creatorLogin ? event.creatorLogin : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${event.id}`} color="info" size="sm">

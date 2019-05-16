@@ -1,9 +1,7 @@
 package ir.redmind.paasho.service;
 
-import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.service.dto.EventDTO;
 
-import org.elasticsearch.index.query.QueryBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -61,8 +59,4 @@ public interface EventService {
      * @return the list of entities
      */
     Page<EventDTO> search(String query, Pageable pageable);
-
-    Page<EventDTO> searchByBuilder(QueryBuilder query, Pageable pageable);
-
-    Event findByCode(String code);
 }
