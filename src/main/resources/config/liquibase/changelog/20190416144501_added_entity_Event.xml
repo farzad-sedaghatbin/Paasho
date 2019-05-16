@@ -100,7 +100,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="creator_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_event_creator_id" />
+                <constraints unique="true" nullable="true" />
             </column>
             <column name="titles_id" type="bigint">
                 <constraints nullable="true" />
