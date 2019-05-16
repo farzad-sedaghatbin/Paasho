@@ -119,6 +119,14 @@ import event, {
 import event, {
   EventPaashoState
 } from 'app/entities/event-paasho/event-paasho.reducer';
+// prettier-ignore
+import event, {
+  EventPaashoState
+} from 'app/entities/event-paasho/event-paasho.reducer';
+// prettier-ignore
+import event, {
+  EventPaashoState
+} from 'app/entities/event-paasho/event-paasho.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

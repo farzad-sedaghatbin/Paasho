@@ -60,8 +60,6 @@ public class EventDTO implements Serializable {
     private String timeString;
 
 
-    private Set<User1DTO> participants = new HashSet<>();
-
     private Set<CategoryDTO> categories = new HashSet<>();
 
     private Long titlesId;
@@ -69,6 +67,8 @@ public class EventDTO implements Serializable {
     private Long creatorId;
 
     private String creatorLogin;
+
+    private Set<UserDTO> participants = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -254,14 +254,6 @@ public class EventDTO implements Serializable {
         this.timeString = timeString;
     }
 
-    public Set<User1DTO> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(Set<User1DTO> user1S) {
-        this.participants = user1S;
-    }
-
     public Set<CategoryDTO> getCategories() {
         return categories;
     }
@@ -292,6 +284,14 @@ public class EventDTO implements Serializable {
 
     public void setCreatorLogin(String userLogin) {
         this.creatorLogin = userLogin;
+    }
+
+    public Set<UserDTO> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Set<UserDTO> users) {
+        this.participants = users;
     }
 
     @Override

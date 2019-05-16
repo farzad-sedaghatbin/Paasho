@@ -8,8 +8,6 @@ import { ICrudGetAction, ICrudGetAllAction, setFileData, openFile, byteSize, ICr
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IUser1Paasho } from 'app/shared/model/user-1-paasho.model';
-import { getEntities as getUser1S } from 'app/entities/user-1-paasho/user-1-paasho.reducer';
 import { ICategoryPaasho } from 'app/shared/model/category-paasho.model';
 import { getEntities as getCategories } from 'app/entities/category-paasho/category-paasho.reducer';
 import { ITitles } from 'app/shared/model/titles.model';
@@ -26,8 +24,8 @@ export interface IEventPaashoUpdateProps extends StateProps, DispatchProps, Rout
 
 export interface IEventPaashoUpdateState {
   isNew: boolean;
-  idsparticipants: any[];
   idscategories: any[];
+  idsparticipants: any[];
   titlesId: string;
   creatorId: string;
 }
@@ -36,8 +34,8 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
   constructor(props) {
     super(props);
     this.state = {
-      idsparticipants: [],
       idscategories: [],
+      idsparticipants: [],
       titlesId: '0',
       creatorId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
@@ -55,7 +53,6 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getUser1S();
     this.props.getCategories();
     this.props.getTitles();
     this.props.getUsers();
@@ -77,8 +74,8 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
       const entity = {
         ...eventEntity,
         ...values,
-        participants: mapIdList(values.participants),
-        categories: mapIdList(values.categories)
+        categories: mapIdList(values.categories),
+        participants: mapIdList(values.participants)
       };
 
       if (this.state.isNew) {
@@ -94,7 +91,7 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
   };
 
   render() {
-    const { eventEntity, user1S, categories, titles, users, loading, updating } = this.props;
+    const { eventEntity, categories, titles, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     const { files, filesContentType } = eventEntity;
@@ -291,26 +288,6 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                   <AvField id="event-paasho-timeString" type="text" name="timeString" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="user1S">Participants</Label>
-                  <AvInput
-                    id="event-paasho-participants"
-                    type="select"
-                    multiple
-                    className="form-control"
-                    name="participants"
-                    value={eventEntity.participants && eventEntity.participants.map(e => e.id)}
-                  >
-                    <option value="" key="0" />
-                    {user1S
-                      ? user1S.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
                   <Label for="categories">Categories</Label>
                   <AvInput
                     id="event-paasho-categories"
@@ -356,6 +333,26 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="users">Participants</Label>
+                  <AvInput
+                    id="event-paasho-participants"
+                    type="select"
+                    multiple
+                    className="form-control"
+                    name="participants"
+                    value={eventEntity.participants && eventEntity.participants.map(e => e.id)}
+                  >
+                    <option value="" key="0" />
+                    {users
+                      ? users.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.login}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/event-paasho" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -374,7 +371,6 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  user1S: storeState.user1.entities,
   categories: storeState.category.entities,
   titles: storeState.titles.entities,
   users: storeState.userManagement.users,
@@ -385,7 +381,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getUser1S,
   getCategories,
   getTitles,
   getUsers,

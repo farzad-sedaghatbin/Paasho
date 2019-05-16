@@ -9,17 +9,6 @@
     <changeSet id="20190416144501-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="event_id"
-                                 baseTableName="event_participants"
-                                 constraintName="fk_event_participants_event_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="event"/>
-        <addForeignKeyConstraint baseColumnNames="participants_id"
-                                 baseTableName="event_participants"
-                                 constraintName="fk_event_participants_participants_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="user_1"/>
-        
-        <addForeignKeyConstraint baseColumnNames="event_id"
                                  baseTableName="event_categories"
                                  constraintName="fk_event_categories_event_id"
                                  referencedColumnNames="id"
@@ -42,5 +31,16 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
+        <addForeignKeyConstraint baseColumnNames="event_id"
+                                 baseTableName="event_participants"
+                                 constraintName="fk_event_participants_event_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="event"/>
+        <addForeignKeyConstraint baseColumnNames="participants_id"
+                                 baseTableName="event_participants"
+                                 constraintName="fk_event_participants_participants_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
     </changeSet>
 </databaseChangeLog>

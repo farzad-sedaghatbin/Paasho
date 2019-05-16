@@ -109,13 +109,6 @@ public class Event implements Serializable {
     private Set<Media> medias = new HashSet<>();
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "event_participants",
-               joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "participants_id", referencedColumnName = "id"))
-    private Set<User1> participants = new HashSet<>();
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "event_categories",
                joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "categories_id", referencedColumnName = "id"))
@@ -134,6 +127,13 @@ public class Event implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("events")
     private User creator;
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "event_participants",
+               joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "participants_id", referencedColumnName = "id"))
+    private Set<User> participants = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -455,31 +455,6 @@ public class Event implements Serializable {
         this.medias = media;
     }
 
-    public Set<User1> getParticipants() {
-        return participants;
-    }
-
-    public Event participants(Set<User1> user1S) {
-        this.participants = user1S;
-        return this;
-    }
-
-    public Event addParticipants(User1 user1) {
-        this.participants.add(user1);
-        user1.getEvents().add(this);
-        return this;
-    }
-
-    public Event removeParticipants(User1 user1) {
-        this.participants.remove(user1);
-        user1.getEvents().remove(this);
-        return this;
-    }
-
-    public void setParticipants(Set<User1> user1S) {
-        this.participants = user1S;
-    }
-
     public Set<Category> getCategories() {
         return categories;
     }
@@ -579,6 +554,29 @@ public class Event implements Serializable {
 
     public void setCreator(User user) {
         this.creator = user;
+    }
+
+    public Set<User> getParticipants() {
+        return participants;
+    }
+
+    public Event participants(Set<User> users) {
+        this.participants = users;
+        return this;
+    }
+
+    public Event addParticipants(User user) {
+        this.participants.add(user);
+        return this;
+    }
+
+    public Event removeParticipants(User user) {
+        this.participants.remove(user);
+        return this;
+    }
+
+    public void setParticipants(Set<User> users) {
+        this.participants = users;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

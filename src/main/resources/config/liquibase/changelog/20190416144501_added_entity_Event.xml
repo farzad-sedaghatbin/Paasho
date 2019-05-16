@@ -120,17 +120,6 @@
         </createTable>
         <dropDefaultValue tableName="event" columnName="event_time" columnDataType="datetime"/>
         
-        <createTable tableName="event_participants">
-            <column name="participants_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="event_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="event_id, participants_id" tableName="event_participants"/>
-        
         <createTable tableName="event_categories">
             <column name="categories_id" type="bigint">
                 <constraints nullable="false"/>
@@ -141,6 +130,17 @@
         </createTable>
 
         <addPrimaryKey columnNames="event_id, categories_id" tableName="event_categories"/>
+        
+        <createTable tableName="event_participants">
+            <column name="participants_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="event_id, participants_id" tableName="event_participants"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

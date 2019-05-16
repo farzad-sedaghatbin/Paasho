@@ -125,17 +125,6 @@ export class EventPaashoDetail extends React.Component<IEventPaashoDetailProps> 
               <span id="timeString">Time String</span>
             </dt>
             <dd>{eventEntity.timeString}</dd>
-            <dt>Participants</dt>
-            <dd>
-              {eventEntity.participants
-                ? eventEntity.participants.map((val, i) => (
-                    <span key={val.id}>
-                      <a>{val.id}</a>
-                      {i === eventEntity.participants.length - 1 ? '' : ', '}
-                    </span>
-                  ))
-                : null}
-            </dd>
             <dt>Categories</dt>
             <dd>
               {eventEntity.categories
@@ -151,6 +140,17 @@ export class EventPaashoDetail extends React.Component<IEventPaashoDetailProps> 
             <dd>{eventEntity.titlesId ? eventEntity.titlesId : ''}</dd>
             <dt>Creator</dt>
             <dd>{eventEntity.creatorLogin ? eventEntity.creatorLogin : ''}</dd>
+            <dt>Participants</dt>
+            <dd>
+              {eventEntity.participants
+                ? eventEntity.participants.map((val, i) => (
+                    <span key={val.id}>
+                      <a>{val.login}</a>
+                      {i === eventEntity.participants.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}{' '}
+            </dd>
           </dl>
           <Button tag={Link} to="/entity/event-paasho" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

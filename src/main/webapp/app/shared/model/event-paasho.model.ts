@@ -1,9 +1,9 @@
 import { Moment } from 'moment';
 import { IMediaPaasho } from 'app/shared/model/media-paasho.model';
-import { IUser1Paasho } from 'app/shared/model/user-1-paasho.model';
 import { ICategoryPaasho } from 'app/shared/model/category-paasho.model';
 import { IRatingPaasho } from 'app/shared/model/rating-paasho.model';
 import { IFactorPaasho } from 'app/shared/model/factor-paasho.model';
+import { IUser } from 'app/shared/model/user.model';
 
 export const enum PriceType {
   FREE = 'FREE',
@@ -41,13 +41,13 @@ export interface IEventPaasho {
   dateString?: string;
   timeString?: string;
   medias?: IMediaPaasho[];
-  participants?: IUser1Paasho[];
   categories?: ICategoryPaasho[];
   rates?: IRatingPaasho[];
   factors?: IFactorPaasho[];
   titlesId?: number;
   creatorLogin?: string;
   creatorId?: number;
+  participants?: IUser[];
 }
 
 export const defaultValue: Readonly<IEventPaasho> = {};
