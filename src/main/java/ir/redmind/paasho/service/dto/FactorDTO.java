@@ -25,8 +25,6 @@ public class FactorDTO implements Serializable {
 
     private Long eventId;
 
-    private Long userId;
-
     public Long getId() {
         return id;
     }
@@ -83,14 +81,6 @@ public class FactorDTO implements Serializable {
         this.eventId = eventId;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long user1Id) {
-        this.userId = user1Id;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -122,7 +112,6 @@ public class FactorDTO implements Serializable {
             ", completeDate='" + getCompleteDate() + "'" +
             ", issueDate='" + getIssueDate() + "'" +
             ", event=" + getEventId() +
-            ", user=" + getUserId() +
             "}";
     }
 }

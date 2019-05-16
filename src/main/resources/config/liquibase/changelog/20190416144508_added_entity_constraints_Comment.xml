@@ -14,5 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
+        <addForeignKeyConstraint baseColumnNames="event_id"
+                                 baseTableName="comment"
+                                 constraintName="fk_comment_event_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="event"/>
+
     </changeSet>
 </databaseChangeLog>

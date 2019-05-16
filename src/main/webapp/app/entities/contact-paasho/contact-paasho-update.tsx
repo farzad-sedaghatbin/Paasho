@@ -8,8 +8,8 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IUser1Paasho } from 'app/shared/model/user-1-paasho.model';
-import { getEntities as getUser1S } from 'app/entities/user-1-paasho/user-1-paasho.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './contact-paasho.reducer';
 import { IContactPaasho } from 'app/shared/model/contact-paasho.model';
 // tslint:disable-next-line:no-unused-variable
@@ -45,7 +45,7 @@ export class ContactPaashoUpdate extends React.Component<IContactPaashoUpdatePro
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getUser1S();
+    this.props.getUsers();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +69,7 @@ export class ContactPaashoUpdate extends React.Component<IContactPaashoUpdatePro
   };
 
   render() {
-    const { contactEntity, user1S, loading, updating } = this.props;
+    const { contactEntity, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -113,25 +113,27 @@ export class ContactPaashoUpdate extends React.Component<IContactPaashoUpdatePro
                   <AvField id="contact-paasho-value" type="text" name="value" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="user.id">User</Label>
+                  <Label for="user.login">User</Label>
                   <AvInput id="contact-paasho-user" type="select" className="form-control" name="userId">
                     <option value="" key="0" />
-                    {user1S
-                      ? user1S.map(otherEntity => (
+                    {users
+                      ? users.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.login}
                           </option>
                         ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/contact-paasho" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp; Save
                 </Button>
               </AvForm>
             )}
@@ -143,7 +145,7 @@ export class ContactPaashoUpdate extends React.Component<IContactPaashoUpdatePro
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  user1S: storeState.user1.entities,
+  users: storeState.userManagement.users,
   contactEntity: storeState.contact.entity,
   loading: storeState.contact.loading,
   updating: storeState.contact.updating,
@@ -151,7 +153,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getUser1S,
+  getUsers,
   getEntity,
   updateEntity,
   createEntity,

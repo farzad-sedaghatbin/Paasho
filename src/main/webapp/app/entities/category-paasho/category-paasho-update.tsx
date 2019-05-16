@@ -8,10 +8,10 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IUser1Paasho } from 'app/shared/model/user-1-paasho.model';
-import { getEntities as getUser1S } from 'app/entities/user-1-paasho/user-1-paasho.reducer';
 import { IEventPaasho } from 'app/shared/model/event-paasho.model';
 import { getEntities as getEvents } from 'app/entities/event-paasho/event-paasho.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './category-paasho.reducer';
 import { ICategoryPaasho } from 'app/shared/model/category-paasho.model';
 // tslint:disable-next-line:no-unused-variable
@@ -22,7 +22,7 @@ export interface ICategoryPaashoUpdateProps extends StateProps, DispatchProps, R
 
 export interface ICategoryPaashoUpdateState {
   isNew: boolean;
-  usersId: string;
+  idsusers: any[];
   eventsId: string;
 }
 
@@ -30,7 +30,7 @@ export class CategoryPaashoUpdate extends React.Component<ICategoryPaashoUpdateP
   constructor(props) {
     super(props);
     this.state = {
-      usersId: '0',
+      idsusers: [],
       eventsId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -49,8 +49,8 @@ export class CategoryPaashoUpdate extends React.Component<ICategoryPaashoUpdateP
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getUser1S();
     this.props.getEvents();
+    this.props.getUsers();
   }
 
   saveEntity = (event, errors, values) => {
@@ -58,7 +58,8 @@ export class CategoryPaashoUpdate extends React.Component<ICategoryPaashoUpdateP
       const { categoryEntity } = this.props;
       const entity = {
         ...categoryEntity,
-        ...values
+        ...values,
+        users: mapIdList(values.users)
       };
 
       if (this.state.isNew) {
@@ -74,7 +75,7 @@ export class CategoryPaashoUpdate extends React.Component<ICategoryPaashoUpdateP
   };
 
   render() {
-    const { categoryEntity, user1S, events, loading, updating } = this.props;
+    const { categoryEntity, events, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -114,13 +115,35 @@ export class CategoryPaashoUpdate extends React.Component<ICategoryPaashoUpdateP
                   </Label>
                   <AvField id="category-paasho-code" type="text" name="code" />
                 </AvGroup>
+                <AvGroup>
+                  <Label for="users">Users</Label>
+                  <AvInput
+                    id="category-paasho-users"
+                    type="select"
+                    multiple
+                    className="form-control"
+                    name="users"
+                    value={categoryEntity.users && categoryEntity.users.map(e => e.id)}
+                  >
+                    <option value="" key="0" />
+                    {users
+                      ? users.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.login}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/category-paasho" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp; Save
                 </Button>
               </AvForm>
             )}
@@ -132,8 +155,8 @@ export class CategoryPaashoUpdate extends React.Component<ICategoryPaashoUpdateP
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  user1S: storeState.user1.entities,
   events: storeState.event.entities,
+  users: storeState.userManagement.users,
   categoryEntity: storeState.category.entity,
   loading: storeState.category.loading,
   updating: storeState.category.updating,
@@ -141,8 +164,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getUser1S,
   getEvents,
+  getUsers,
   getEntity,
   updateEntity,
   createEntity,

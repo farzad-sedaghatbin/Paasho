@@ -40,10 +40,22 @@ export class NotificationPaashoDetail extends React.Component<INotificationPaash
               <span id="status">Status</span>
             </dt>
             <dd>{notificationEntity.status}</dd>
+            <dt>Users</dt>
+            <dd>
+              {notificationEntity.users
+                ? notificationEntity.users.map((val, i) => (
+                    <span key={val.id}>
+                      <a>{val.login}</a>
+                      {i === notificationEntity.users.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}{' '}
+            </dd>
           </dl>
           <Button tag={Link} to="/entity/notification-paasho" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/notification-paasho/${notificationEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>

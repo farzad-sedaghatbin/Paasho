@@ -49,7 +49,8 @@ export class RatingPaasho extends React.Component<IRatingPaashoProps, IRatingPaa
         <h2 id="rating-paasho-heading">
           Ratings
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Rating
+            <FontAwesomeIcon icon="plus" />
+            &nbsp; Create new Rating
           </Link>
         </h2>
         <Row>
@@ -90,7 +91,7 @@ export class RatingPaasho extends React.Component<IRatingPaashoProps, IRatingPaa
                   </td>
                   <td>{rating.rate}</td>
                   <td>{rating.eventId ? <Link to={`event-paasho/${rating.eventId}`}>{rating.eventId}</Link> : ''}</td>
-                  <td>{rating.userId ? <Link to={`user-1-paasho/${rating.userId}`}>{rating.userId}</Link> : ''}</td>
+                  <td>{rating.userLogin ? rating.userLogin : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${rating.id}`} color="info" size="sm">

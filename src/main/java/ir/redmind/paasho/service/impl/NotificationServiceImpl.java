@@ -9,6 +9,8 @@ import ir.redmind.paasho.service.mapper.NotificationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,11 +68,20 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional(readOnly = true)
     public List<NotificationDTO> findAll() {
         log.debug("Request to get all Notifications");
-        return notificationRepository.findAll().stream()
+        return notificationRepository.findAllWithEagerRelationships().stream()
             .map(notificationMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    /**
+     * Get all the Notification with eager load of many-to-many relationships.
+     *
+     * @return the list of entities
+     */
+    public Page<NotificationDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return notificationRepository.findAllWithEagerRelationships(pageable).map(notificationMapper::toDto);
+    }
+    
 
     /**
      * Get one notification by id.
@@ -82,7 +93,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional(readOnly = true)
     public Optional<NotificationDTO> findOne(Long id) {
         log.debug("Request to get Notification : {}", id);
-        return notificationRepository.findById(id)
+        return notificationRepository.findOneWithEagerRelationships(id)
             .map(notificationMapper::toDto);
     }
 

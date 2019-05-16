@@ -13,9 +13,12 @@ import ir.redmind.paasho.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -26,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,8 +65,14 @@ public class NotificationResourceIntTest {
     @Autowired
     private NotificationRepository notificationRepository;
 
+    @Mock
+    private NotificationRepository notificationRepositoryMock;
+
     @Autowired
     private NotificationMapper notificationMapper;
+
+    @Mock
+    private NotificationService notificationServiceMock;
 
     @Autowired
     private NotificationService notificationService;
@@ -188,6 +198,39 @@ public class NotificationResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllNotificationsWithEagerRelationshipsIsEnabled() throws Exception {
+        NotificationResource notificationResource = new NotificationResource(notificationServiceMock);
+        when(notificationServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        MockMvc restNotificationMockMvc = MockMvcBuilders.standaloneSetup(notificationResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restNotificationMockMvc.perform(get("/api/notifications?eagerload=true"))
+        .andExpect(status().isOk());
+
+        verify(notificationServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllNotificationsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        NotificationResource notificationResource = new NotificationResource(notificationServiceMock);
+            when(notificationServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+            MockMvc restNotificationMockMvc = MockMvcBuilders.standaloneSetup(notificationResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restNotificationMockMvc.perform(get("/api/notifications?eagerload=true"))
+        .andExpect(status().isOk());
+
+            verify(notificationServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getNotification() throws Exception {

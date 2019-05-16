@@ -1,5 +1,7 @@
 package ir.redmind.paasho.service.dto;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 import ir.redmind.paasho.domain.enumeration.NotificationType;
 import ir.redmind.paasho.domain.enumeration.NotificationStatus;
@@ -17,6 +19,8 @@ public class NotificationDTO implements Serializable {
 
     private NotificationStatus status;
 
+
+    private Set<UserDTO> users = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -48,6 +52,14 @@ public class NotificationDTO implements Serializable {
 
     public void setStatus(NotificationStatus status) {
         this.status = status;
+    }
+
+    public Set<UserDTO> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserDTO> users) {
+        this.users = users;
     }
 
     @Override

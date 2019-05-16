@@ -64,13 +64,26 @@ public class Comment implements Serializable {
         return user;
     }
 
-    public Comment user(User User) {
-        this.user = User;
+    public Comment user(User user) {
+        this.user = user;
         return this;
     }
 
-    public void setUser(User User) {
-        this.user = User;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public Comment event(Event event) {
+        this.event = event;
+        return this;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -87,14 +100,6 @@ public class Comment implements Serializable {
             return false;
         }
         return Objects.equals(getId(), comment.getId());
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
     }
 
     @Override

@@ -12,53 +12,7 @@ import password, { PasswordState } from 'app/modules/account/password/password.r
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
 // prettier-ignore
-import event, {
-  EventMySuffixState
-} from 'app/entities/event-my-suffix/event-my-suffix.reducer';
-// prettier-ignore
-import user1, {
-  User1MySuffixState
-} from 'app/entities/user-1-my-suffix/user-1-my-suffix.reducer';
-// prettier-ignore
-import contact, {
-  ContactMySuffixState
-} from 'app/entities/contact-my-suffix/contact-my-suffix.reducer';
-// prettier-ignore
-import category, {
-  CategoryMySuffixState
-} from 'app/entities/category-my-suffix/category-my-suffix.reducer';
-// prettier-ignore
-import notification, {
-  NotificationMySuffixState
-} from 'app/entities/notification-my-suffix/notification-my-suffix.reducer';
-// prettier-ignore
-import setting, {
-  SettingMySuffixState
-} from 'app/entities/setting-my-suffix/setting-my-suffix.reducer';
-// prettier-ignore
-import factor, {
-  FactorMySuffixState
-} from 'app/entities/factor-my-suffix/factor-my-suffix.reducer';
-// prettier-ignore
-import comment, {
-  CommentMySuffixState
-} from 'app/entities/comment-my-suffix/comment-my-suffix.reducer';
-// prettier-ignore
-import media, {
-  MediaMySuffixState
-} from 'app/entities/media-my-suffix/media-my-suffix.reducer';
-// prettier-ignore
-import rating, {
-  RatingMySuffixState
-} from 'app/entities/rating-my-suffix/rating-my-suffix.reducer';
-// prettier-ignore
-import event, {
-  EventPaashoState
-} from 'app/entities/event-paasho/event-paasho.reducer';
-// prettier-ignore
-import user1, {
-  User1PaashoState
-} from 'app/entities/user-1-paasho/user-1-paasho.reducer';
+
 // prettier-ignore
 import contact, {
   ContactPaashoState
@@ -76,14 +30,6 @@ import setting, {
   SettingPaashoState
 } from 'app/entities/setting-paasho/setting-paasho.reducer';
 // prettier-ignore
-import factor, {
-  FactorPaashoState
-} from 'app/entities/factor-paasho/factor-paasho.reducer';
-// prettier-ignore
-import comment, {
-  CommentPaashoState
-} from 'app/entities/comment-paasho/comment-paasho.reducer';
-// prettier-ignore
 import media, {
   MediaPaashoState
 } from 'app/entities/media-paasho/media-paasho.reducer';
@@ -91,44 +37,27 @@ import media, {
 import rating, {
   RatingPaashoState
 } from 'app/entities/rating-paasho/rating-paasho.reducer';
-// prettier-ignore
-import event, {
-  EventPaashoState
-} from 'app/entities/event-paasho/event-paasho.reducer';
+
 // prettier-ignore
 import titles, {
   TitlesState
 } from 'app/entities/titles/titles.reducer';
 // prettier-ignore
-import event, {
-  EventPaashoState
-} from 'app/entities/event-paasho/event-paasho.reducer';
-// prettier-ignore
-import user1, {
-  User1PaashoState
-} from 'app/entities/user-1-paasho/user-1-paasho.reducer';
-// prettier-ignore
-import event, {
-  EventPaashoState
-} from 'app/entities/event-paasho/event-paasho.reducer';
-// prettier-ignore
-import event, {
-  EventPaashoState
-} from 'app/entities/event-paasho/event-paasho.reducer';
-// prettier-ignore
-import event, {
-  EventPaashoState
-} from 'app/entities/event-paasho/event-paasho.reducer';
-// prettier-ignore
-import event, {
-  EventPaashoState
-} from 'app/entities/event-paasho/event-paasho.reducer';
-// prettier-ignore
-import event, {
-  EventPaashoState
-} from 'app/entities/event-paasho/event-paasho.reducer';
-/* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
+// prettier-ignore
+import comment, {
+  CommentPaashoState
+} from 'app/entities/comment-paasho/comment-paasho.reducer';
+// prettier-ignore
+import event, {
+  EventPaashoState
+} from 'app/entities/event-paasho/event-paasho.reducer';
+
+// prettier-ignore
+import factor, {
+  FactorPaashoState
+} from 'app/entities/factor-paasho/factor-paasho.reducer';
+// prettier-ignore
 export interface IRootState {
   readonly authentication: AuthenticationState;
   readonly applicationProfile: ApplicationProfileState;
@@ -139,18 +68,7 @@ export interface IRootState {
   readonly passwordReset: PasswordResetState;
   readonly password: PasswordState;
   readonly settings: SettingsState;
-  readonly event: EventMySuffixState;
-  readonly user1: User1MySuffixState;
-  readonly contact: ContactMySuffixState;
-  readonly category: CategoryMySuffixState;
-  readonly notification: NotificationMySuffixState;
-  readonly setting: SettingMySuffixState;
-  readonly factor: FactorMySuffixState;
-  readonly comment: CommentMySuffixState;
-  readonly media: MediaMySuffixState;
-  readonly rating: RatingMySuffixState;
   readonly event: EventPaashoState;
-  readonly user1: User1PaashoState;
   readonly contact: ContactPaashoState;
   readonly category: CategoryPaashoState;
   readonly notification: NotificationPaashoState;
@@ -175,7 +93,6 @@ const rootReducer = combineReducers<IRootState>({
   password,
   settings,
   event,
-  user1,
   contact,
   category,
   notification,

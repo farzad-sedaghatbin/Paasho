@@ -49,7 +49,8 @@ export class CategoryPaasho extends React.Component<ICategoryPaashoProps, ICateg
         <h2 id="category-paasho-heading">
           Categories
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Category
+            <FontAwesomeIcon icon="plus" />
+            &nbsp; Create new Category
           </Link>
         </h2>
         <Row>
@@ -77,6 +78,7 @@ export class CategoryPaasho extends React.Component<ICategoryPaashoProps, ICateg
                 <th>Icon</th>
                 <th>Name</th>
                 <th>Code</th>
+                <th>Users</th>
                 <th />
               </tr>
             </thead>
@@ -91,6 +93,16 @@ export class CategoryPaasho extends React.Component<ICategoryPaashoProps, ICateg
                   <td>{category.icon}</td>
                   <td>{category.name}</td>
                   <td>{category.code}</td>
+                  <td>
+                    {category.users
+                      ? category.users.map((val, j) => (
+                          <span key={j}>
+                            {val.login}
+                            {j === category.users.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${category.id}`} color="info" size="sm">

@@ -13,9 +13,12 @@ import ir.redmind.paasho.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -26,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,8 +63,14 @@ public class CategoryResourceIntTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Mock
+    private CategoryRepository categoryRepositoryMock;
+
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Mock
+    private CategoryService categoryServiceMock;
 
     @Autowired
     private CategoryService categoryService;
@@ -186,6 +196,39 @@ public class CategoryResourceIntTest {
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllCategoriesWithEagerRelationshipsIsEnabled() throws Exception {
+        CategoryResource categoryResource = new CategoryResource(categoryServiceMock);
+        when(categoryServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        MockMvc restCategoryMockMvc = MockMvcBuilders.standaloneSetup(categoryResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restCategoryMockMvc.perform(get("/api/categories?eagerload=true"))
+        .andExpect(status().isOk());
+
+        verify(categoryServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllCategoriesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        CategoryResource categoryResource = new CategoryResource(categoryServiceMock);
+            when(categoryServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+            MockMvc restCategoryMockMvc = MockMvcBuilders.standaloneSetup(categoryResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restCategoryMockMvc.perform(get("/api/categories?eagerload=true"))
+        .andExpect(status().isOk());
+
+            verify(categoryServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getCategory() throws Exception {

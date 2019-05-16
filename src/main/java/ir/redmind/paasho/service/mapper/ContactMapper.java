@@ -12,6 +12,7 @@ import org.mapstruct.*;
 public interface ContactMapper extends EntityMapper<ContactDTO, Contact> {
 
     @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.login", target = "userLogin")
     ContactDTO toDto(Contact contact);
 
     @Mapping(source = "userId", target = "user")

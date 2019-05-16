@@ -10,8 +10,6 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IEventPaasho } from 'app/shared/model/event-paasho.model';
 import { getEntities as getEvents } from 'app/entities/event-paasho/event-paasho.reducer';
-import { IUser1Paasho } from 'app/shared/model/user-1-paasho.model';
-import { getEntities as getUser1S } from 'app/entities/user-1-paasho/user-1-paasho.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './factor-paasho.reducer';
 import { IFactorPaasho } from 'app/shared/model/factor-paasho.model';
 // tslint:disable-next-line:no-unused-variable
@@ -23,7 +21,6 @@ export interface IFactorPaashoUpdateProps extends StateProps, DispatchProps, Rou
 export interface IFactorPaashoUpdateState {
   isNew: boolean;
   eventId: string;
-  userId: string;
 }
 
 export class FactorPaashoUpdate extends React.Component<IFactorPaashoUpdateProps, IFactorPaashoUpdateState> {
@@ -31,7 +28,6 @@ export class FactorPaashoUpdate extends React.Component<IFactorPaashoUpdateProps
     super(props);
     this.state = {
       eventId: '0',
-      userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -50,7 +46,6 @@ export class FactorPaashoUpdate extends React.Component<IFactorPaashoUpdateProps
     }
 
     this.props.getEvents();
-    this.props.getUser1S();
   }
 
   saveEntity = (event, errors, values) => {
@@ -77,7 +72,7 @@ export class FactorPaashoUpdate extends React.Component<IFactorPaashoUpdateProps
   };
 
   render() {
-    const { factorEntity, events, user1S, loading, updating } = this.props;
+    const { factorEntity, events, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -163,26 +158,15 @@ export class FactorPaashoUpdate extends React.Component<IFactorPaashoUpdateProps
                       : null}
                   </AvInput>
                 </AvGroup>
-                <AvGroup>
-                  <Label for="user.id">User</Label>
-                  <AvInput id="factor-paasho-user" type="select" className="form-control" name="userId">
-                    <option value="" key="0" />
-                    {user1S
-                      ? user1S.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/factor-paasho" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp; Save
                 </Button>
               </AvForm>
             )}
@@ -195,7 +179,6 @@ export class FactorPaashoUpdate extends React.Component<IFactorPaashoUpdateProps
 
 const mapStateToProps = (storeState: IRootState) => ({
   events: storeState.event.entities,
-  user1S: storeState.user1.entities,
   factorEntity: storeState.factor.entity,
   loading: storeState.factor.loading,
   updating: storeState.factor.updating,
@@ -204,7 +187,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getEvents,
-  getUser1S,
   getEntity,
   updateEntity,
   createEntity,

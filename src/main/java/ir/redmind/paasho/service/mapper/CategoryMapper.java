@@ -8,11 +8,10 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Category and its DTO CategoryDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface CategoryMapper extends EntityMapper<CategoryDTO, Category> {
 
 
-    @Mapping(target = "users", ignore = true)
     @Mapping(target = "events", ignore = true)
     Category toEntity(CategoryDTO categoryDTO);
 

@@ -1,4 +1,4 @@
-import { IUser1Paasho } from 'app/shared/model/user-1-paasho.model';
+import { IUser } from 'app/shared/model/user.model';
 
 export const enum NotificationType {
   NEWS = 'NEWS'
@@ -13,7 +13,7 @@ export interface INotificationPaasho {
   description?: string;
   type?: NotificationType;
   status?: NotificationStatus;
-  users?: IUser1Paasho[];
+  users?: IUser[];
 }
 
 export const defaultValue: Readonly<INotificationPaasho> = {};

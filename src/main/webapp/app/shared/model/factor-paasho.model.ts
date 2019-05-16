@@ -13,7 +13,6 @@ export interface IFactorPaasho {
   completeDate?: Moment;
   issueDate?: Moment;
   eventId?: number;
-  userId?: number;
 }
 
 export const defaultValue: Readonly<IFactorPaasho> = {};

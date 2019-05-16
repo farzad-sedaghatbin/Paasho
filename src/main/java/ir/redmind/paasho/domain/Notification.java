@@ -1,7 +1,6 @@
 package ir.redmind.paasho.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -44,9 +43,13 @@ public class Notification implements Serializable {
     @Column(name = "status")
     private NotificationStatus status;
 
-    @OneToMany(mappedBy = "notification")
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "notification_users",
+               joinColumns = @JoinColumn(name = "notification_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"))
     private Set<User> users = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -99,25 +102,23 @@ public class Notification implements Serializable {
         return users;
     }
 
-    public Notification users(Set<User> user1S) {
-        this.users = user1S;
+    public Notification users(Set<User> users) {
+        this.users = users;
         return this;
     }
 
-    public Notification addUsers(User user1) {
-        this.users.add(user1);
-        user1.setNotification(this);
+    public Notification addUsers(User user) {
+        this.users.add(user);
         return this;
     }
 
-    public Notification removeUsers(User user1) {
-        this.users.remove(user1);
-        user1.setNotification(null);
+    public Notification removeUsers(User user) {
+        this.users.remove(user);
         return this;
     }
 
-    public void setUsers(Set<User> user1S) {
-        this.users = user1S;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

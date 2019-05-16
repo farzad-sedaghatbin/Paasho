@@ -10,8 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IEventPaasho } from 'app/shared/model/event-paasho.model';
 import { getEntities as getEvents } from 'app/entities/event-paasho/event-paasho.reducer';
-import { IUser1Paasho } from 'app/shared/model/user-1-paasho.model';
-import { getEntities as getUser1S } from 'app/entities/user-1-paasho/user-1-paasho.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './rating-paasho.reducer';
 import { IRatingPaasho } from 'app/shared/model/rating-paasho.model';
 // tslint:disable-next-line:no-unused-variable
@@ -50,7 +50,7 @@ export class RatingPaashoUpdate extends React.Component<IRatingPaashoUpdateProps
     }
 
     this.props.getEvents();
-    this.props.getUser1S();
+    this.props.getUsers();
   }
 
   saveEntity = (event, errors, values) => {
@@ -74,7 +74,7 @@ export class RatingPaashoUpdate extends React.Component<IRatingPaashoUpdateProps
   };
 
   render() {
-    const { ratingEntity, events, user1S, loading, updating } = this.props;
+    const { ratingEntity, events, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -116,25 +116,27 @@ export class RatingPaashoUpdate extends React.Component<IRatingPaashoUpdateProps
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="user.id">User</Label>
+                  <Label for="user.login">User</Label>
                   <AvInput id="rating-paasho-user" type="select" className="form-control" name="userId">
                     <option value="" key="0" />
-                    {user1S
-                      ? user1S.map(otherEntity => (
+                    {users
+                      ? users.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.login}
                           </option>
                         ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/rating-paasho" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp; Save
                 </Button>
               </AvForm>
             )}
@@ -147,7 +149,7 @@ export class RatingPaashoUpdate extends React.Component<IRatingPaashoUpdateProps
 
 const mapStateToProps = (storeState: IRootState) => ({
   events: storeState.event.entities,
-  user1S: storeState.user1.entities,
+  users: storeState.userManagement.users,
   ratingEntity: storeState.rating.entity,
   loading: storeState.rating.loading,
   updating: storeState.rating.updating,
@@ -156,7 +158,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getEvents,
-  getUser1S,
+  getUsers,
   getEntity,
   updateEntity,
   createEntity,

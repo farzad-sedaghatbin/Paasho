@@ -49,7 +49,8 @@ export class ContactPaasho extends React.Component<IContactPaashoProps, IContact
         <h2 id="contact-paasho-heading">
           Contacts
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Contact
+            <FontAwesomeIcon icon="plus" />
+            &nbsp; Create new Contact
           </Link>
         </h2>
         <Row>
@@ -90,7 +91,7 @@ export class ContactPaasho extends React.Component<IContactPaashoProps, IContact
                   </td>
                   <td>{contact.type}</td>
                   <td>{contact.value}</td>
-                  <td>{contact.userId ? <Link to={`user-1-paasho/${contact.userId}`}>{contact.userId}</Link> : ''}</td>
+                  <td>{contact.userLogin ? contact.userLogin : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${contact.id}`} color="info" size="sm">

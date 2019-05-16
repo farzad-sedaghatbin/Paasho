@@ -33,11 +33,14 @@ export class CommentPaashoDetail extends React.Component<ICommentPaashoDetailPro
             </dt>
             <dd>{commentEntity.description}</dd>
             <dt>User</dt>
-            <dd>{commentEntity.userId ? commentEntity.userId : ''}</dd>
+            <dd>{commentEntity.userLogin ? commentEntity.userLogin : ''}</dd>
+            <dt>Event</dt>
+            <dd>{commentEntity.eventId ? commentEntity.eventId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/comment-paasho" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/comment-paasho/${commentEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>

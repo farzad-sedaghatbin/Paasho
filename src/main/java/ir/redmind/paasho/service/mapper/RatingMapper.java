@@ -13,6 +13,7 @@ public interface RatingMapper extends EntityMapper<RatingDTO, Rating> {
 
     @Mapping(source = "event.id", target = "eventId")
     @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.login", target = "userLogin")
     RatingDTO toDto(Rating rating);
 
     @Mapping(source = "eventId", target = "event")

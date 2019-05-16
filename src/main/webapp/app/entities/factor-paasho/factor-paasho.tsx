@@ -49,7 +49,8 @@ export class FactorPaasho extends React.Component<IFactorPaashoProps, IFactorPaa
         <h2 id="factor-paasho-heading">
           Factors
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Factor
+            <FontAwesomeIcon icon="plus" />
+            &nbsp; Create new Factor
           </Link>
         </h2>
         <Row>
@@ -80,7 +81,6 @@ export class FactorPaasho extends React.Component<IFactorPaashoProps, IFactorPaa
                 <th>Complete Date</th>
                 <th>Issue Date</th>
                 <th>Event</th>
-                <th>User</th>
                 <th />
               </tr>
             </thead>
@@ -102,7 +102,6 @@ export class FactorPaasho extends React.Component<IFactorPaashoProps, IFactorPaa
                     <TextFormat type="date" value={factor.issueDate} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{factor.eventId ? <Link to={`event-paasho/${factor.eventId}`}>{factor.eventId}</Link> : ''}</td>
-                  <td>{factor.userId ? <Link to={`user-1-paasho/${factor.userId}`}>{factor.userId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${factor.id}`} color="info" size="sm">

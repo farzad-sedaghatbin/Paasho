@@ -9,91 +9,184 @@ export const EntitiesMenu = props => (
   // tslint:disable-next-line:jsx-self-close
   <NavDropdown icon="th-list" name="Entities" id="entity-menu">
     <DropdownItem tag={Link} to="/entity/event-my-suffix">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Event My Suffix
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Event My Suffix
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/user-1-my-suffix">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;User 1 My Suffix
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;User 1 My Suffix
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/contact-my-suffix">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Contact My Suffix
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Contact My Suffix
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/category-my-suffix">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Category My Suffix
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Category My Suffix
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/notification-my-suffix">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Notification My Suffix
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Notification My Suffix
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/setting-my-suffix">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Setting My Suffix
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Setting My Suffix
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/factor-my-suffix">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Factor My Suffix
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Factor My Suffix
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/comment-my-suffix">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Comment My Suffix
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Comment My Suffix
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/media-my-suffix">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Media My Suffix
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Media My Suffix
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/rating-my-suffix">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Rating My Suffix
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Rating My Suffix
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/event-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Event Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Event Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/user-1-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;User 1 Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;User 1 Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/contact-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Contact Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Contact Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/category-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Category Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Category Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/notification-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Notification Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Notification Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/setting-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Setting Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Setting Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/factor-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Factor Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Factor Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/comment-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Comment Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Comment Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/media-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Media Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Media Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/rating-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Rating Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Rating Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/event-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Event Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Event Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/titles">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Titles
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Titles
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/event-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Event Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Event Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/user-1-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;User 1 Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;User 1 Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/event-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Event Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Event Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/event-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Event Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Event Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/event-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Event Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Event Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/event-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Event Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Event Paasho
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/event-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Event Paasho
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Event Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/notification-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Notification Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/notification-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Notification Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/comment-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Comment Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/comment-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Comment Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/category-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Category Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/category-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Category Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/contact-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Contact Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/contact-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Contact Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/event-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Event Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/event-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Event Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/factor-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Factor Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/notification-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Notification Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/notification-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Notification Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/rating-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Rating Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/rating-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Rating Paasho
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/comment-paasho">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Comment Paasho
     </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>

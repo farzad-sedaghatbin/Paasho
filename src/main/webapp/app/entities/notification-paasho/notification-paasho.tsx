@@ -49,7 +49,8 @@ export class NotificationPaasho extends React.Component<INotificationPaashoProps
         <h2 id="notification-paasho-heading">
           Notifications
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Notification
+            <FontAwesomeIcon icon="plus" />
+            &nbsp; Create new Notification
           </Link>
         </h2>
         <Row>
@@ -77,6 +78,7 @@ export class NotificationPaasho extends React.Component<INotificationPaashoProps
                 <th>Description</th>
                 <th>Type</th>
                 <th>Status</th>
+                <th>Users</th>
                 <th />
               </tr>
             </thead>
@@ -91,6 +93,16 @@ export class NotificationPaasho extends React.Component<INotificationPaashoProps
                   <td>{notification.description}</td>
                   <td>{notification.type}</td>
                   <td>{notification.status}</td>
+                  <td>
+                    {notification.users
+                      ? notification.users.map((val, j) => (
+                          <span key={j}>
+                            {val.login}
+                            {j === notification.users.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${notification.id}`} color="info" size="sm">

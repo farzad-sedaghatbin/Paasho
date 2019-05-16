@@ -9,6 +9,8 @@ import ir.redmind.paasho.service.mapper.CategoryMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,11 +68,20 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public List<CategoryDTO> findAll() {
         log.debug("Request to get all Categories");
-        return categoryRepository.findAll().stream()
+        return categoryRepository.findAllWithEagerRelationships().stream()
             .map(categoryMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    /**
+     * Get all the Category with eager load of many-to-many relationships.
+     *
+     * @return the list of entities
+     */
+    public Page<CategoryDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return categoryRepository.findAllWithEagerRelationships(pageable).map(categoryMapper::toDto);
+    }
+    
 
     /**
      * Get one category by id.
@@ -82,7 +93,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public Optional<CategoryDTO> findOne(Long id) {
         log.debug("Request to get Category : {}", id);
-        return categoryRepository.findById(id)
+        return categoryRepository.findOneWithEagerRelationships(id)
             .map(categoryMapper::toDto);
     }
 

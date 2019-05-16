@@ -8,8 +8,10 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IUser1Paasho } from 'app/shared/model/user-1-paasho.model';
-import { getEntities as getUser1S } from 'app/entities/user-1-paasho/user-1-paasho.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+import { IEventPaasho } from 'app/shared/model/event-paasho.model';
+import { getEntities as getEvents } from 'app/entities/event-paasho/event-paasho.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './comment-paasho.reducer';
 import { ICommentPaasho } from 'app/shared/model/comment-paasho.model';
 // tslint:disable-next-line:no-unused-variable
@@ -21,6 +23,7 @@ export interface ICommentPaashoUpdateProps extends StateProps, DispatchProps, Ro
 export interface ICommentPaashoUpdateState {
   isNew: boolean;
   userId: string;
+  eventId: string;
 }
 
 export class CommentPaashoUpdate extends React.Component<ICommentPaashoUpdateProps, ICommentPaashoUpdateState> {
@@ -28,6 +31,7 @@ export class CommentPaashoUpdate extends React.Component<ICommentPaashoUpdatePro
     super(props);
     this.state = {
       userId: '0',
+      eventId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -45,7 +49,8 @@ export class CommentPaashoUpdate extends React.Component<ICommentPaashoUpdatePro
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getUser1S();
+    this.props.getUsers();
+    this.props.getEvents();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +74,7 @@ export class CommentPaashoUpdate extends React.Component<ICommentPaashoUpdatePro
   };
 
   render() {
-    const { commentEntity, user1S, loading, updating } = this.props;
+    const { commentEntity, users, events, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -98,11 +103,24 @@ export class CommentPaashoUpdate extends React.Component<ICommentPaashoUpdatePro
                   <AvField id="comment-paasho-description" type="text" name="description" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="user.id">User</Label>
+                  <Label for="user.login">User</Label>
                   <AvInput id="comment-paasho-user" type="select" className="form-control" name="userId">
                     <option value="" key="0" />
-                    {user1S
-                      ? user1S.map(otherEntity => (
+                    {users
+                      ? users.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.login}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="event.id">Event</Label>
+                  <AvInput id="comment-paasho-event" type="select" className="form-control" name="eventId">
+                    <option value="" key="0" />
+                    {events
+                      ? events.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -111,12 +129,14 @@ export class CommentPaashoUpdate extends React.Component<ICommentPaashoUpdatePro
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/comment-paasho" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp; Save
                 </Button>
               </AvForm>
             )}
@@ -128,7 +148,8 @@ export class CommentPaashoUpdate extends React.Component<ICommentPaashoUpdatePro
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  user1S: storeState.user1.entities,
+  users: storeState.userManagement.users,
+  events: storeState.event.entities,
   commentEntity: storeState.comment.entity,
   loading: storeState.comment.loading,
   updating: storeState.comment.updating,
@@ -136,7 +157,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getUser1S,
+  getUsers,
+  getEvents,
   getEntity,
   updateEntity,
   createEntity,

@@ -49,7 +49,8 @@ export class CommentPaasho extends React.Component<ICommentPaashoProps, IComment
         <h2 id="comment-paasho-heading">
           Comments
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Comment
+            <FontAwesomeIcon icon="plus" />
+            &nbsp; Create new Comment
           </Link>
         </h2>
         <Row>
@@ -76,6 +77,7 @@ export class CommentPaasho extends React.Component<ICommentPaashoProps, IComment
                 <th>ID</th>
                 <th>Description</th>
                 <th>User</th>
+                <th>Event</th>
                 <th />
               </tr>
             </thead>
@@ -88,7 +90,8 @@ export class CommentPaasho extends React.Component<ICommentPaashoProps, IComment
                     </Button>
                   </td>
                   <td>{comment.description}</td>
-                  <td>{comment.userId ? <Link to={`user-1-paasho/${comment.userId}`}>{comment.userId}</Link> : ''}</td>
+                  <td>{comment.userLogin ? comment.userLogin : ''}</td>
+                  <td>{comment.eventId ? <Link to={`event-paasho/${comment.eventId}`}>{comment.eventId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${comment.id}`} color="info" size="sm">

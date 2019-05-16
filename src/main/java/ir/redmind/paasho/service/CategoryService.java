@@ -2,6 +2,9 @@ package ir.redmind.paasho.service;
 
 import ir.redmind.paasho.service.dto.CategoryDTO;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +28,13 @@ public interface CategoryService {
      */
     List<CategoryDTO> findAll();
 
-
+    /**
+     * Get all the Category with eager load of many-to-many relationships.
+     *
+     * @return the list of entities
+     */
+    Page<CategoryDTO> findAllWithEagerRelationships(Pageable pageable);
+    
     /**
      * Get the "id" category.
      *

@@ -9,6 +9,7 @@ export interface IContactPaasho {
   id?: number;
   type?: ContactType;
   value?: string;
+  userLogin?: string;
   userId?: number;
 }
 

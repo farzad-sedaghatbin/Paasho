@@ -78,10 +78,11 @@ public class CategoryResource {
     /**
      * GET  /categories : get all the categories.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of categories in body
      */
     @GetMapping("/categories")
-    public List<CategoryDTO> getAllCategories() {
+    public List<CategoryDTO> getAllCategories(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Categories");
         return categoryService.findAll();
     }

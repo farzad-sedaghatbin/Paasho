@@ -51,10 +51,6 @@ public class Factor implements Serializable {
     @JsonIgnoreProperties("factors")
     private Event event;
 
-    @ManyToOne
-    @JsonIgnoreProperties("factors")
-    private User user;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -140,19 +136,6 @@ public class Factor implements Serializable {
 
     public void setEvent(Event event) {
         this.event = event;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Factor user(User user1) {
-        this.user = user1;
-        return this;
-    }
-
-    public void setUser(User user1) {
-        this.user = user1;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -35,7 +35,7 @@ public class Rating implements Serializable {
     private Event event;
 
     @ManyToOne
-    @JsonIgnoreProperties("rates")
+    @JsonIgnoreProperties("ratings")
     private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -77,13 +77,13 @@ public class Rating implements Serializable {
         return user;
     }
 
-    public Rating user(User user1) {
-        this.user = user1;
+    public Rating user(User user) {
+        this.user = user;
         return this;
     }
 
-    public void setUser(User user1) {
-        this.user = user1;
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

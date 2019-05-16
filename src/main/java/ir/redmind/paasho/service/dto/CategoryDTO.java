@@ -1,5 +1,7 @@
 package ir.redmind.paasho.service.dto;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -15,6 +17,8 @@ public class CategoryDTO implements Serializable {
 
     private String code;
 
+
+    private Set<UserDTO> users = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -46,6 +50,14 @@ public class CategoryDTO implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Set<UserDTO> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserDTO> users) {
+        this.users = users;
     }
 
     @Override

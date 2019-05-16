@@ -13,6 +13,9 @@ public class CommentDTO implements Serializable {
 
 
     private Long userId;
+
+    private String userLogin;
+
     private Long eventId;
 
     public Long getId() {
@@ -35,8 +38,24 @@ public class CommentDTO implements Serializable {
         return userId;
     }
 
-    public void setUserId(Long user1Id) {
-        this.userId = user1Id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 
     @Override
@@ -55,14 +74,6 @@ public class CommentDTO implements Serializable {
         return Objects.equals(getId(), commentDTO.getId());
     }
 
-    public Long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
-    }
-
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
@@ -74,6 +85,8 @@ public class CommentDTO implements Serializable {
             "id=" + getId() +
             ", description='" + getDescription() + "'" +
             ", user=" + getUserId() +
+            ", user='" + getUserLogin() + "'" +
+            ", event=" + getEventId() +
             "}";
     }
 }

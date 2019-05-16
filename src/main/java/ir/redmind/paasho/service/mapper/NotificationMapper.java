@@ -8,12 +8,10 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Notification and its DTO NotificationDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface NotificationMapper extends EntityMapper<NotificationDTO, Notification> {
 
 
-    @Mapping(target = "users", ignore = true)
-    Notification toEntity(NotificationDTO notificationDTO);
 
     default Notification fromId(Long id) {
         if (id == null) {

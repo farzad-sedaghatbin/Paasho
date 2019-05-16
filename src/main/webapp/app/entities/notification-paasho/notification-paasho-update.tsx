@@ -8,6 +8,8 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './notification-paasho.reducer';
 import { INotificationPaasho } from 'app/shared/model/notification-paasho.model';
 // tslint:disable-next-line:no-unused-variable
@@ -18,12 +20,14 @@ export interface INotificationPaashoUpdateProps extends StateProps, DispatchProp
 
 export interface INotificationPaashoUpdateState {
   isNew: boolean;
+  idsusers: any[];
 }
 
 export class NotificationPaashoUpdate extends React.Component<INotificationPaashoUpdateProps, INotificationPaashoUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      idsusers: [],
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -40,6 +44,8 @@ export class NotificationPaashoUpdate extends React.Component<INotificationPaash
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getUsers();
   }
 
   saveEntity = (event, errors, values) => {
@@ -47,7 +53,8 @@ export class NotificationPaashoUpdate extends React.Component<INotificationPaash
       const { notificationEntity } = this.props;
       const entity = {
         ...notificationEntity,
-        ...values
+        ...values,
+        users: mapIdList(values.users)
       };
 
       if (this.state.isNew) {
@@ -63,7 +70,7 @@ export class NotificationPaashoUpdate extends React.Component<INotificationPaash
   };
 
   render() {
-    const { notificationEntity, loading, updating } = this.props;
+    const { notificationEntity, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -115,13 +122,35 @@ export class NotificationPaashoUpdate extends React.Component<INotificationPaash
                     <option value="READ">READ</option>
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="users">Users</Label>
+                  <AvInput
+                    id="notification-paasho-users"
+                    type="select"
+                    multiple
+                    className="form-control"
+                    name="users"
+                    value={notificationEntity.users && notificationEntity.users.map(e => e.id)}
+                  >
+                    <option value="" key="0" />
+                    {users
+                      ? users.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.login}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/notification-paasho" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp; Save
                 </Button>
               </AvForm>
             )}
@@ -133,6 +162,7 @@ export class NotificationPaashoUpdate extends React.Component<INotificationPaash
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  users: storeState.userManagement.users,
   notificationEntity: storeState.notification.entity,
   loading: storeState.notification.loading,
   updating: storeState.notification.updating,
@@ -140,6 +170,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getUsers,
   getEntity,
   updateEntity,
   createEntity,

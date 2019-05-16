@@ -176,7 +176,7 @@ public ResponseEntity<RecordDTO> ranks() {
         String s = String.valueOf(randomNumber);
 
         user.setResetKey(s);
-//            user1.setResetDate();
+//            user.setResetDate();
         userRepository.save(user);
         try {
             String tel = user.getLogin();
@@ -246,12 +246,12 @@ public ResponseEntity<RecordDTO> ranks() {
 //            long fraction = (long) (range * random.nextDouble());
 //            int randomNumber = (int) (fraction + START);
 //            String s = String.valueOf(randomNumber);
-//            User user1 = user;
-//            user1.setResetKey(s);
-////            user1.setResetDate();
-//            userRepository.save(user1);
+//            User user = user;
+//            user.setResetKey(s);
+////            user.setResetDate();
+//            userRepository.save(user);
 //            try {
-//                String tel = user1.getMobile();
+//                String tel = user.getMobile();
 //
 //                KavenegarApi api = new KavenegarApi("5635717141617A52534F636F49546D38454E647870773D3D");
 ////                api.send("10006006606600", tel, "شماره بازیابی :  " + s);
@@ -282,7 +282,7 @@ public ResponseEntity<RecordDTO> ranks() {
 
         Optional<User> user = userRepository.findOneByResetKeyAndLogin(data.getCode(), data.getMobile());
         if (user.isPresent()) {
-            User user1 = user.get();
+            User usr = user.get();
             UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(data.getMobile(), "123");
             Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
@@ -291,9 +291,9 @@ public ResponseEntity<RecordDTO> ranks() {
             String jwt = tokenProvider.createToken(authentication, true);
             response.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
             System.out.println(jwt);
-            user1.setPassword(passwordEncoder.encode("123"));
-            user1.setResetDate(ZonedDateTime.now().toInstant());
-            userRepository.save(user1);
+            usr.setPassword(passwordEncoder.encode("123"));
+            usr.setResetDate(ZonedDateTime.now().toInstant());
+            userRepository.save(usr);
             return ResponseEntity.ok("200");
         } else {
             return ResponseEntity.notFound().build();
@@ -309,10 +309,10 @@ public ResponseEntity<RecordDTO> ranks() {
 
         Optional<User> user = userRepository.findOneByResetKey(data.getCode());
         if (user.isPresent()) {
-            User user1 = user.get();
-            user1.setPassword(passwordEncoder.encode(data.getMobile()));
-            user1.setResetDate(ZonedDateTime.now());
-            userRepository.save(user1);
+            User user = user.get();
+            user.setPassword(passwordEncoder.encode(data.getMobile()));
+            user.setResetDate(ZonedDateTime.now());
+            userRepository.save(user);
             return ResponseEntity.ok("200");
         } else {
             return ResponseEntity.ok("201");
@@ -326,9 +326,9 @@ public ResponseEntity<RecordDTO> ranks() {
 //
 //    public ResponseEntity<?> changePassword(@Valid @RequestBody String data) {
 //        String[] s = data.split(",");
-//        User user1 = userRepository.findOneByLogin(s[0].toLowerCase());
-//        user1.setMobile(passwordEncoder.encode(s[1]));
-//        userRepository.save(user1);
+//        User user = userRepository.findOneByLogin(s[0].toLowerCase());
+//        user.setMobile(passwordEncoder.encode(s[1]));
+//        userRepository.save(user);
 //        return ResponseEntity.ok("200");
 //    }
 //
@@ -338,10 +338,10 @@ public ResponseEntity<RecordDTO> ranks() {
 //
 //    public ResponseEntity<?> changePasswordV2(@Valid @RequestBody String data) {
 //        String[] s = data.split(",");
-//        User user1 = userRepository.findOneByLogin(s[0].toLowerCase());
-//        if (user1.getMobile().equalsIgnoreCase(passwordEncoder.encode(s[2]))) {
-//            user1.setMobile(passwordEncoder.encode(s[1]));
-//            userRepository.save(user1);
+//        User user = userRepository.findOneByLogin(s[0].toLowerCase());
+//        if (user.getMobile().equalsIgnoreCase(passwordEncoder.encode(s[2]))) {
+//            user.setMobile(passwordEncoder.encode(s[1]));
+//            userRepository.save(user);
 //            return ResponseEntity.ok("200");
 //        } else {
 //            return ResponseEntity.ok("201");

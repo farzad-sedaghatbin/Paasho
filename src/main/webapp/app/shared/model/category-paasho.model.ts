@@ -1,13 +1,13 @@
-import { IUser1Paasho } from 'app/shared/model/user-1-paasho.model';
 import { IEventPaasho } from 'app/shared/model/event-paasho.model';
+import { IUser } from 'app/shared/model/user.model';
 
 export interface ICategoryPaasho {
   id?: number;
   icon?: string;
   name?: string;
   code?: string;
-  users?: IUser1Paasho[];
   events?: IEventPaasho[];
+  users?: IUser[];
 }
 
 export const defaultValue: Readonly<ICategoryPaasho> = {};
