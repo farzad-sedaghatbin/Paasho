@@ -5,7 +5,6 @@ import ir.redmind.paasho.domain.Authority;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.repository.AuthorityRepository;
 import ir.redmind.paasho.repository.UserRepository;
-import ir.redmind.paasho.repository.search.UserSearchRepository;
 import ir.redmind.paasho.security.AuthoritiesConstants;
 import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.dto.UserDTO;
