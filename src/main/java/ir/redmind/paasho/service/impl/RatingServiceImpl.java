@@ -33,12 +33,12 @@ public class RatingServiceImpl implements RatingService {
 
     private final RatingMapper ratingMapper;
 
-    private final RatingSearchRepository ratingSearchRepository;
+//    private final RatingSearchRepository ratingSearchRepository;
 
-    public RatingServiceImpl(RatingRepository ratingRepository, RatingMapper ratingMapper, RatingSearchRepository ratingSearchRepository) {
+    public RatingServiceImpl(RatingRepository ratingRepository, RatingMapper ratingMapper) {
         this.ratingRepository = ratingRepository;
         this.ratingMapper = ratingMapper;
-        this.ratingSearchRepository = ratingSearchRepository;
+//        this.ratingSearchRepository = ratingSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class RatingServiceImpl implements RatingService {
         Rating rating = ratingMapper.toEntity(ratingDTO);
         rating = ratingRepository.save(rating);
         RatingDTO result = ratingMapper.toDto(rating);
-        ratingSearchRepository.save(rating);
+//        ratingSearchRepository.save(rating);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class RatingServiceImpl implements RatingService {
     public void delete(Long id) {
         log.debug("Request to delete Rating : {}", id);
         ratingRepository.deleteById(id);
-        ratingSearchRepository.deleteById(id);
+//        ratingSearchRepository.deleteById(id);
     }
 
     /**
@@ -105,12 +105,9 @@ public class RatingServiceImpl implements RatingService {
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public List<RatingDTO> search(String query) {
         log.debug("Request to search Ratings for query {}", query);
-        return StreamSupport
-            .stream(ratingSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(ratingMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

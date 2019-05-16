@@ -33,12 +33,12 @@ public class FactorServiceImpl implements FactorService {
 
     private final FactorMapper factorMapper;
 
-    private final FactorSearchRepository factorSearchRepository;
+//    private final FactorSearchRepository factorSearchRepository;
 
-    public FactorServiceImpl(FactorRepository factorRepository, FactorMapper factorMapper, FactorSearchRepository factorSearchRepository) {
+    public FactorServiceImpl(FactorRepository factorRepository, FactorMapper factorMapper) {
         this.factorRepository = factorRepository;
         this.factorMapper = factorMapper;
-        this.factorSearchRepository = factorSearchRepository;
+//        this.factorSearchRepository = factorSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class FactorServiceImpl implements FactorService {
         Factor factor = factorMapper.toEntity(factorDTO);
         factor = factorRepository.save(factor);
         FactorDTO result = factorMapper.toDto(factor);
-        factorSearchRepository.save(factor);
+//        factorSearchRepository.save(factor);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class FactorServiceImpl implements FactorService {
     public void delete(Long id) {
         log.debug("Request to delete Factor : {}", id);
         factorRepository.deleteById(id);
-        factorSearchRepository.deleteById(id);
+//        factorSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,6 @@ public class FactorServiceImpl implements FactorService {
     @Transactional(readOnly = true)
     public List<FactorDTO> search(String query) {
         log.debug("Request to search Factors for query {}", query);
-        return StreamSupport
-            .stream(factorSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(factorMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

@@ -33,12 +33,12 @@ public class SettingServiceImpl implements SettingService {
 
     private final SettingMapper settingMapper;
 
-    private final SettingSearchRepository settingSearchRepository;
+//    private final SettingSearchRepository settingSearchRepository;
 
-    public SettingServiceImpl(SettingRepository settingRepository, SettingMapper settingMapper, SettingSearchRepository settingSearchRepository) {
+    public SettingServiceImpl(SettingRepository settingRepository, SettingMapper settingMapper) {
         this.settingRepository = settingRepository;
         this.settingMapper = settingMapper;
-        this.settingSearchRepository = settingSearchRepository;
+//        this.settingSearchRepository = settingSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class SettingServiceImpl implements SettingService {
         Setting setting = settingMapper.toEntity(settingDTO);
         setting = settingRepository.save(setting);
         SettingDTO result = settingMapper.toDto(setting);
-        settingSearchRepository.save(setting);
+//        settingSearchRepository.save(setting);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class SettingServiceImpl implements SettingService {
     public void delete(Long id) {
         log.debug("Request to delete Setting : {}", id);
         settingRepository.deleteById(id);
-        settingSearchRepository.deleteById(id);
+//        settingSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,6 @@ public class SettingServiceImpl implements SettingService {
     @Transactional(readOnly = true)
     public List<SettingDTO> search(String query) {
         log.debug("Request to search Settings for query {}", query);
-        return StreamSupport
-            .stream(settingSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(settingMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }
