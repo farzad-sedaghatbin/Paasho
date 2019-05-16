@@ -70,14 +70,14 @@ public class UserResource {
 
     private final MailService mailService;
 
-//    private final UserSearchRepository userSearchRepository;
+    private final UserSearchRepository userSearchRepository;
 
     public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
 
         this.userService = userService;
         this.userRepository = userRepository;
         this.mailService = mailService;
-//        this.userSearchRepository = userSearchRepository;
+        this.userSearchRepository = userSearchRepository;
     }
 
     /**
@@ -198,6 +198,8 @@ public class UserResource {
      */
     @GetMapping("/_search/users/{query}")
     public List<User> search(@PathVariable String query) {
-        return null;
+        return StreamSupport
+            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }
