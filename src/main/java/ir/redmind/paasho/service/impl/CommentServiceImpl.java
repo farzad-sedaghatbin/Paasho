@@ -33,12 +33,12 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentMapper commentMapper;
 
-//    private final CommentSearchRepository commentSearchRepository;
+    private final CommentSearchRepository commentSearchRepository;
 
-    public CommentServiceImpl(CommentRepository commentRepository, CommentMapper commentMapper) {
+    public CommentServiceImpl(CommentRepository commentRepository, CommentMapper commentMapper, CommentSearchRepository commentSearchRepository) {
         this.commentRepository = commentRepository;
         this.commentMapper = commentMapper;
-//        this.commentSearchRepository = commentSearchRepository;
+        this.commentSearchRepository = commentSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentMapper.toEntity(commentDTO);
         comment = commentRepository.save(comment);
         CommentDTO result = commentMapper.toDto(comment);
-//        commentSearchRepository.save(comment);
+        commentSearchRepository.save(comment);
         return result;
     }
 
@@ -100,7 +100,7 @@ public class CommentServiceImpl implements CommentService {
     public void delete(Long id) {
         log.debug("Request to delete Comment : {}", id);
         commentRepository.deleteById(id);
-//        commentSearchRepository.deleteById(id);
+        commentSearchRepository.deleteById(id);
     }
 
     /**
@@ -113,6 +113,9 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(readOnly = true)
     public List<CommentDTO> search(String query) {
         log.debug("Request to search Comments for query {}", query);
-        return null;
+        return StreamSupport
+            .stream(commentSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .map(commentMapper::toDto)
+            .collect(Collectors.toList());
     }
 }
