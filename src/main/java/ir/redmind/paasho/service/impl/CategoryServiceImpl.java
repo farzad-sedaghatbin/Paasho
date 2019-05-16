@@ -33,12 +33,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryMapper categoryMapper;
 
-    private final CategorySearchRepository categorySearchRepository;
+//    private final CategorySearchRepository categorySearchRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper, CategorySearchRepository categorySearchRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
-        this.categorySearchRepository = categorySearchRepository;
     }
 
     /**
@@ -53,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryMapper.toEntity(categoryDTO);
         category = categoryRepository.save(category);
         CategoryDTO result = categoryMapper.toDto(category);
-        categorySearchRepository.save(category);
+//        categorySearchRepository.save(category);
         return result;
     }
 
@@ -95,7 +94,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void delete(Long id) {
         log.debug("Request to delete Category : {}", id);
         categoryRepository.deleteById(id);
-        categorySearchRepository.deleteById(id);
+//        categorySearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +107,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public List<CategoryDTO> search(String query) {
         log.debug("Request to search Categories for query {}", query);
-        return StreamSupport
-            .stream(categorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(categoryMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }
