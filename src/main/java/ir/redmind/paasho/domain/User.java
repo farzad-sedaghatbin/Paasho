@@ -115,22 +115,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private Set<Comment> comments = new HashSet<>();
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "user_1_favorits",
-        joinColumns = @JoinColumn(name = "user1_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "favorits_id", referencedColumnName = "id"))
+    @JoinTable(name = "category_users",
+        joinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> favorits = new HashSet<>();
 
     @OneToOne(mappedBy = "creator")
     @JsonIgnore
     private Event event;
 
-    @ManyToOne
+    @ManyToMany
     @JsonIgnoreProperties("users")
-    private Notification notification;
-
-    @OneToMany(mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Factor> factors = new HashSet<>();
+    @JoinTable(name = "notification_users",
+        inverseJoinColumns = @JoinColumn(name = "notification_id", referencedColumnName = "id"),
+        joinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"))
+    private List<Notification> notification;
     @ManyToMany(mappedBy = "participants")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
@@ -318,20 +318,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.event = event;
     }
 
-    public Notification getNotification() {
+    public List<Notification> getNotification() {
         return notification;
     }
 
-    public void setNotification(Notification notification) {
+    public void setNotification(List<Notification> notification) {
         this.notification = notification;
-    }
-
-    public Set<Factor> getFactors() {
-        return factors;
-    }
-
-    public void setFactors(Set<Factor> factors) {
-        this.factors = factors;
     }
 
     public Set<Event> getEvents() {
