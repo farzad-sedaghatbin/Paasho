@@ -338,7 +338,9 @@ public class EventResources {
     @Timed
     @CrossOrigin(origins = "*")
     public ResponseEntity<HttpStatus> view(@PathVariable("code") String code) {
-
+        Event ev = eventService.findByCode(code);
+        ev.setVisitCount(ev.getVisitCount() + 1);
+        eventService.save(eventMapper.toDto(ev));
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
