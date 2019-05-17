@@ -63,8 +63,8 @@ public class NotificationResources {
             notif.setPending(true);
             notif.setText(l.getDescription());
             notif.setRelatedEventcode(String.valueOf(l.getRelatedEventId()));
-            notif.setRelatedUserId(l.getFromId());
-            notif.setAvatar(userService.getUserWithAuthorities(Long.valueOf(l.getFromId())).get().getAvatar());
+            notif.setRelatedUserId(String.valueOf(l.getFromId()));
+            notif.setAvatar(userService.getUserWithAuthorities(l.getFromId()).get().getAvatar());
             notificationDTOS.add(notif);
 });
 

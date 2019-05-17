@@ -68,7 +68,7 @@ public class NotificationDTO implements Serializable {
         this.users = users;
     }
 
-    public String getFromId() {
+    public Long getFromId() {
         return fromId;
     }
 
