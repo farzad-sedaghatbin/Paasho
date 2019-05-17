@@ -16,13 +16,10 @@ import ir.redmind.paasho.service.mapper.EventMapper;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
 import ir.redmind.paasho.web.rest.util.PaginationUtil;
-import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
-
-import static org.elasticsearch.index.query.QueryBuilders.multiMatchQuery;
 
 @RestController
 @RequestMapping("/api/v1/events/")
@@ -108,8 +102,8 @@ public class EventResources {
     @Timed
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<EventDTO>> events(@RequestParam("key") String key, Pageable pageable) {
-        SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(multiMatchQuery("key").field("title").field("description").type(MultiMatchQueryBuilder.Type.BEST_FIELDS)).build();
-        Page<ir.redmind.paasho.service.dto.EventDTO> events = eventService.searchByBuilder(searchQuery.getQuery(), PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
+//        SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(multiMatchQuery("key").field("title").field("description").type(MultiMatchQueryBuilder.Type.BEST_FIELDS)).build();
+        Page<ir.redmind.paasho.service.dto.EventDTO> events = eventService.searchByBuilder("", PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
         List<EventDTO> eventDTOS = new ArrayList<>();
 
         events.getContent().forEach(e -> {
