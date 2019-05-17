@@ -116,9 +116,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> favorits = new HashSet<>();
 
-    @OneToOne(mappedBy = "creator")
+    @OneToMany(mappedBy = "creator")
     @JsonIgnore
-    private Event event;
+    private List<Event> createdEvents;
 
     @ManyToMany
     @JsonIgnoreProperties("users")
@@ -306,12 +306,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.favorits = favorits;
     }
 
-    public Event getEvent() {
-        return event;
+    public List<Event> getCreatedEvents() {
+        return createdEvents;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setCreatedEvents(List<Event> createdEvents) {
+        this.createdEvents = createdEvents;
     }
 
     public List<Notification> getNotification() {

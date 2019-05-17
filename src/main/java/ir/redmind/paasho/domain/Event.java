@@ -118,16 +118,16 @@ public class Event implements Serializable {
     @JsonIgnoreProperties("events")
     private Titles titles;
 
-    @ManyToOne
-    @JsonIgnoreProperties("events")
-    private User creator;
-
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "event_participants",
                joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "participants_id", referencedColumnName = "id"))
     private Set<User> participants = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("events")
+    private User creator;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -537,19 +537,6 @@ public class Event implements Serializable {
         this.titles = titles;
     }
 
-    public User getCreator() {
-        return creator;
-    }
-
-    public Event creator(User user) {
-        this.creator = user;
-        return this;
-    }
-
-    public void setCreator(User user) {
-        this.creator = user;
-    }
-
     public Set<User> getParticipants() {
         return participants;
     }
@@ -571,6 +558,19 @@ public class Event implements Serializable {
 
     public void setParticipants(Set<User> users) {
         this.participants = users;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public Event creator(User user) {
+        this.creator = user;
+        return this;
+    }
+
+    public void setCreator(User user) {
+        this.creator = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

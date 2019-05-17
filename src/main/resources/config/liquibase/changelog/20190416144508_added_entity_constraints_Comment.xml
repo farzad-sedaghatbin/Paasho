@@ -18,7 +18,7 @@
                                  baseTableName="comment"
                                  constraintName="fk_comment_event_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="event"/>
+                                 referencedTableName="createdEvents"/>
 
     </changeSet>
 </databaseChangeLog>

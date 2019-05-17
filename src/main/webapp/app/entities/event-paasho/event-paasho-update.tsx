@@ -321,19 +321,6 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="creator.login">Creator</Label>
-                  <AvInput id="event-paasho-creator" type="select" className="form-control" name="creatorId">
-                    <option value="" key="0" />
-                    {users
-                      ? users.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.login}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
                   <Label for="users">Participants</Label>
                   <AvInput
                     id="event-paasho-participants"
@@ -353,13 +340,28 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="creator.login">Creator</Label>
+                  <AvInput id="event-paasho-creator" type="select" className="form-control" name="creatorId">
+                    <option value="" key="0" />
+                    {users
+                      ? users.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.login}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/event-paasho" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp; Save
                 </Button>
               </AvForm>
             )}

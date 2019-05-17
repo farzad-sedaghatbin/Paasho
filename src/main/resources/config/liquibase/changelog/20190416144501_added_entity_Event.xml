@@ -17,7 +17,7 @@
         Added the entity Event.
     -->
     <changeSet id="20190416144501-1" author="jhipster">
-        <createTable tableName="event">
+        <createTable tableName="createdEvents">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -118,7 +118,7 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="event" columnName="event_time" columnDataType="datetime"/>
+        <dropDefaultValue tableName="createdEvents" columnName="event_time" columnDataType="datetime"/>
         
         <createTable tableName="event_categories">
             <column name="categories_id" type="bigint">

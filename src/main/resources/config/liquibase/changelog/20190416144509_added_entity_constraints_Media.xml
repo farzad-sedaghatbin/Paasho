@@ -12,7 +12,7 @@
                                  baseTableName="media"
                                  constraintName="fk_media_event_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="event"/>
+                                 referencedTableName="createdEvents"/>
 
     </changeSet>
 </databaseChangeLog>

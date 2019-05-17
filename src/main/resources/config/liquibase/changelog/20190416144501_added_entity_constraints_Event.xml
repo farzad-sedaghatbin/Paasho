@@ -7,12 +7,7 @@
         Added the constraints for entity Event.
     -->
     <changeSet id="20190416144501-2" author="jhipster">
-        
-        <addForeignKeyConstraint baseColumnNames="event_id"
-                                 baseTableName="event_categories"
-                                 constraintName="fk_event_categories_event_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="event"/>
+
         <addForeignKeyConstraint baseColumnNames="categories_id"
                                  baseTableName="event_categories"
                                  constraintName="fk_event_categories_categories_id"
@@ -20,27 +15,27 @@
                                  referencedTableName="category"/>
         
         <addForeignKeyConstraint baseColumnNames="titles_id"
-                                 baseTableName="event"
+                                 baseTableName="createdEvents"
                                  constraintName="fk_event_titles_id"
                                  referencedColumnNames="id"
                                  referencedTableName="titles"/>
-
-        <addForeignKeyConstraint baseColumnNames="creator_id"
-                                 baseTableName="event"
-                                 constraintName="fk_event_creator_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
 
         <addForeignKeyConstraint baseColumnNames="event_id"
                                  baseTableName="event_participants"
                                  constraintName="fk_event_participants_event_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="event"/>
+                                 referencedTableName="createdEvents"/>
         <addForeignKeyConstraint baseColumnNames="participants_id"
                                  baseTableName="event_participants"
                                  constraintName="fk_event_participants_participants_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
         
+        <addForeignKeyConstraint baseColumnNames="creator_id"
+                                 baseTableName="createdEvents"
+                                 constraintName="fk_event_creator_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
     </changeSet>
 </databaseChangeLog>

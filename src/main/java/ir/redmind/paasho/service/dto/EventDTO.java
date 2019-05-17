@@ -64,11 +64,11 @@ public class EventDTO implements Serializable {
 
     private Long titlesId;
 
+    private Set<UserDTO> participants = new HashSet<>();
+
     private Long creatorId;
 
     private String creatorLogin;
-
-    private Set<UserDTO> participants = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -270,6 +270,14 @@ public class EventDTO implements Serializable {
         this.titlesId = titlesId;
     }
 
+    public Set<UserDTO> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Set<UserDTO> users) {
+        this.participants = users;
+    }
+
     public Long getCreatorId() {
         return creatorId;
     }
@@ -284,14 +292,6 @@ public class EventDTO implements Serializable {
 
     public void setCreatorLogin(String userLogin) {
         this.creatorLogin = userLogin;
-    }
-
-    public Set<UserDTO> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(Set<UserDTO> users) {
-        this.participants = users;
     }
 
     @Override

@@ -12,7 +12,7 @@
                                  baseTableName="rating"
                                  constraintName="fk_rating_event_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="event"/>
+                                 referencedTableName="createdEvents"/>
 
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="rating"

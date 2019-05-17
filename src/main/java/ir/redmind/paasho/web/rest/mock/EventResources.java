@@ -325,7 +325,7 @@ public class EventResources {
             event1.setDate(String.valueOf(e[4]));
             event1.setLatitude((Double) e[6]);
             event1.setLongitude((Double) e[7]);
-            event1.setView((Long) e[8]);
+            event1.setView(Long.valueOf((Integer) e[8]));
 
             eventDTOS.add(event1);
         });

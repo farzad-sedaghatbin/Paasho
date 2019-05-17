@@ -45,9 +45,9 @@ export interface IEventPaasho {
   rates?: IRatingPaasho[];
   factors?: IFactorPaasho[];
   titlesId?: number;
+  participants?: IUser[];
   creatorLogin?: string;
   creatorId?: number;
-  participants?: IUser[];
 }
 
 export const defaultValue: Readonly<IEventPaasho> = {};

@@ -61,7 +61,7 @@ public class HomeResource {
             event1.setPricing(PriceType.FREE);
             event1.setScore(event.getCreator().getScore().floatValue());
             event1.setTime(event.getTimeString());
-            event1.setDate(event.getDateString());
+            event1.setDate("1397/11/28");
             event1.setCategoryId(event.getCategories().iterator().next().getId().intValue());
             event1.setCreator(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
             event1.setEditable(event.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));

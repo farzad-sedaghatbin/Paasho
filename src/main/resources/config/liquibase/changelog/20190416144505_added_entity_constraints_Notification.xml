@@ -29,7 +29,7 @@
                                  baseTableName="notification"
                                  constraintName="fk_notification_related_event_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="event"/>
+                                 referencedTableName="createdEvents"/>
 
     </changeSet>
 </databaseChangeLog>
