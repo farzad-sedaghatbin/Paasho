@@ -1,14 +1,12 @@
 package ir.redmind.paasho.service.impl;
 
-import ir.redmind.paasho.service.CategoryService;
 import ir.redmind.paasho.domain.Category;
 import ir.redmind.paasho.repository.CategoryRepository;
-import ir.redmind.paasho.repository.search.CategorySearchRepository;
+import ir.redmind.paasho.service.CategoryService;
 import ir.redmind.paasho.service.dto.CategoryDTO;
 import ir.redmind.paasho.service.mapper.CategoryMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,9 +16,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Category.
@@ -35,12 +30,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryMapper categoryMapper;
 
-    private final CategorySearchRepository categorySearchRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper, CategorySearchRepository categorySearchRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
-        this.categorySearchRepository = categorySearchRepository;
     }
 
     /**
@@ -55,7 +48,6 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryMapper.toEntity(categoryDTO);
         category = categoryRepository.save(category);
         CategoryDTO result = categoryMapper.toDto(category);
-        categorySearchRepository.save(category);
         return result;
     }
 
@@ -106,7 +98,6 @@ public class CategoryServiceImpl implements CategoryService {
     public void delete(Long id) {
         log.debug("Request to delete Category : {}", id);
         categoryRepository.deleteById(id);
-        categorySearchRepository.deleteById(id);
     }
 
     /**
@@ -119,9 +110,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public List<CategoryDTO> search(String query) {
         log.debug("Request to search Categories for query {}", query);
-        return StreamSupport
-            .stream(categorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(categoryMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

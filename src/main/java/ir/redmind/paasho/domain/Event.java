@@ -1,23 +1,18 @@
 package ir.redmind.paasho.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ir.redmind.paasho.domain.enumeration.EventStatus;
+import ir.redmind.paasho.domain.enumeration.PriceType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
-
-import ir.redmind.paasho.domain.enumeration.PriceType;
-
-import ir.redmind.paasho.domain.enumeration.EventStatus;
+import java.util.Set;
 
 /**
  * A Event.
@@ -25,7 +20,6 @@ import ir.redmind.paasho.domain.enumeration.EventStatus;
 @Entity
 @Table(name = "event")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "event")
 public class Event implements Serializable {
 
     private static final long serialVersionUID = 1L;

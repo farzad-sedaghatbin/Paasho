@@ -1,23 +1,18 @@
 package ir.redmind.paasho.service.impl;
 
-import ir.redmind.paasho.service.EventService;
 import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.repository.EventRepository;
-import ir.redmind.paasho.repository.search.EventSearchRepository;
+import ir.redmind.paasho.service.EventService;
 import ir.redmind.paasho.service.dto.EventDTO;
 import ir.redmind.paasho.service.mapper.EventMapper;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Event.
@@ -32,12 +27,10 @@ public class EventServiceImpl implements EventService {
 
     private final EventMapper eventMapper;
 
-    private final EventSearchRepository eventSearchRepository;
 
-    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EventSearchRepository eventSearchRepository) {
+    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
-        this.eventSearchRepository = eventSearchRepository;
     }
 
     /**
@@ -52,7 +45,6 @@ public class EventServiceImpl implements EventService {
         Event event = eventMapper.toEntity(eventDTO);
         event = eventRepository.save(event);
         EventDTO result = eventMapper.toDto(event);
-        eventSearchRepository.save(event);
         return result;
     }
 
@@ -103,7 +95,6 @@ public class EventServiceImpl implements EventService {
     public void delete(Long id) {
         log.debug("Request to delete Event : {}", id);
         eventRepository.deleteById(id);
-        eventSearchRepository.deleteById(id);
     }
 
     /**
@@ -117,17 +108,18 @@ public class EventServiceImpl implements EventService {
     @Transactional(readOnly = true)
     public Page<EventDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Events for query {}", query);
-        return eventSearchRepository.search(queryStringQuery(query), pageable)
-            .map(eventMapper::toDto);
+//        return eventSearchRepository.search(queryStringQuery(query), pageable)
+//            .map(eventMapper::toDto);
+        return null;
     }
 
     @Override
-    public Page<EventDTO> searchByBuilder(QueryBuilder query, Pageable pageable) {
-        return eventSearchRepository.search(query, pageable).map(eventMapper::toDto);
+    public Page<EventDTO> searchByBuilder(String query, Pageable pageable) {
+        return null;
     }
 
     @Override
     public Event findByCode(String code) {
-        return eventSearchRepository.findByCode(code);
+        return eventRepository.findByCode(code);
     }
 }

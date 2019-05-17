@@ -1,14 +1,12 @@
 package ir.redmind.paasho.service.impl;
 
-import ir.redmind.paasho.service.TitlesService;
 import ir.redmind.paasho.domain.Titles;
 import ir.redmind.paasho.repository.TitlesRepository;
-import ir.redmind.paasho.repository.search.TitlesSearchRepository;
+import ir.redmind.paasho.service.TitlesService;
 import ir.redmind.paasho.service.dto.TitlesDTO;
 import ir.redmind.paasho.service.mapper.TitlesMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Titles.
@@ -33,12 +28,10 @@ public class TitlesServiceImpl implements TitlesService {
 
     private final TitlesMapper titlesMapper;
 
-    private final TitlesSearchRepository titlesSearchRepository;
 
-    public TitlesServiceImpl(TitlesRepository titlesRepository, TitlesMapper titlesMapper, TitlesSearchRepository titlesSearchRepository) {
+    public TitlesServiceImpl(TitlesRepository titlesRepository, TitlesMapper titlesMapper) {
         this.titlesRepository = titlesRepository;
         this.titlesMapper = titlesMapper;
-        this.titlesSearchRepository = titlesSearchRepository;
     }
 
     /**
@@ -53,7 +46,6 @@ public class TitlesServiceImpl implements TitlesService {
         Titles titles = titlesMapper.toEntity(titlesDTO);
         titles = titlesRepository.save(titles);
         TitlesDTO result = titlesMapper.toDto(titles);
-        titlesSearchRepository.save(titles);
         return result;
     }
 
@@ -95,7 +87,6 @@ public class TitlesServiceImpl implements TitlesService {
     public void delete(Long id) {
         log.debug("Request to delete Titles : {}", id);
         titlesRepository.deleteById(id);
-        titlesSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +99,10 @@ public class TitlesServiceImpl implements TitlesService {
     @Transactional(readOnly = true)
     public List<TitlesDTO> search(String query) {
         log.debug("Request to search Titles for query {}", query);
-        return StreamSupport
-            .stream(titlesSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(titlesMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
+//        return StreamSupport
+//            .stream(titlesRepository.findAll(queryStringQuery(query)).spliterator(), false)
+//            .map(titlesMapper::toDto)
+//            .collect(Collectors.toList());
     }
 }

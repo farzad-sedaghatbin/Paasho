@@ -1,14 +1,12 @@
 package ir.redmind.paasho.service.impl;
 
-import ir.redmind.paasho.service.NotificationService;
 import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.repository.NotificationRepository;
-import ir.redmind.paasho.repository.search.NotificationSearchRepository;
+import ir.redmind.paasho.service.NotificationService;
 import ir.redmind.paasho.service.dto.NotificationDTO;
 import ir.redmind.paasho.service.mapper.NotificationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+;
 
 /**
  * Service Implementation for managing Notification.
@@ -35,12 +33,10 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationMapper notificationMapper;
 
-    private final NotificationSearchRepository notificationSearchRepository;
 
-    public NotificationServiceImpl(NotificationRepository notificationRepository, NotificationMapper notificationMapper, NotificationSearchRepository notificationSearchRepository) {
+    public NotificationServiceImpl(NotificationRepository notificationRepository, NotificationMapper notificationMapper) {
         this.notificationRepository = notificationRepository;
         this.notificationMapper = notificationMapper;
-        this.notificationSearchRepository = notificationSearchRepository;
     }
 
     /**
@@ -55,7 +51,6 @@ public class NotificationServiceImpl implements NotificationService {
         Notification notification = notificationMapper.toEntity(notificationDTO);
         notification = notificationRepository.save(notification);
         NotificationDTO result = notificationMapper.toDto(notification);
-        notificationSearchRepository.save(notification);
         return result;
     }
 
@@ -81,7 +76,7 @@ public class NotificationServiceImpl implements NotificationService {
     public Page<NotificationDTO> findAllWithEagerRelationships(Pageable pageable) {
         return notificationRepository.findAllWithEagerRelationships(pageable).map(notificationMapper::toDto);
     }
-    
+
 
     /**
      * Get one notification by id.
@@ -106,7 +101,6 @@ public class NotificationServiceImpl implements NotificationService {
     public void delete(Long id) {
         log.debug("Request to delete Notification : {}", id);
         notificationRepository.deleteById(id);
-        notificationSearchRepository.deleteById(id);
     }
 
     /**
@@ -119,9 +113,6 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional(readOnly = true)
     public List<NotificationDTO> search(String query) {
         log.debug("Request to search Notifications for query {}", query);
-        return StreamSupport
-            .stream(notificationSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(notificationMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

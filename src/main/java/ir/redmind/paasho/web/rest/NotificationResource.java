@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
-
 /**
  * REST controller for managing Notification.
  */

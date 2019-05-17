@@ -1,9 +1,9 @@
 package ir.redmind.paasho.web.rest;
 
+import io.github.jhipster.web.util.ResponseUtil;
 import ir.redmind.paasho.config.Constants;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.repository.UserRepository;
-import ir.redmind.paasho.repository.search.UserSearchRepository;
 import ir.redmind.paasho.security.AuthoritiesConstants;
 import ir.redmind.paasho.service.MailService;
 import ir.redmind.paasho.service.UserService;
@@ -13,8 +13,6 @@ import ir.redmind.paasho.web.rest.errors.EmailAlreadyUsedException;
 import ir.redmind.paasho.web.rest.errors.LoginAlreadyUsedException;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
 import ir.redmind.paasho.web.rest.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -28,11 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import java.util.List;
 
 /**
  * REST controller for managing users.
@@ -70,14 +64,12 @@ public class UserResource {
 
     private final MailService mailService;
 
-    private final UserSearchRepository userSearchRepository;
 
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService, UserSearchRepository userSearchRepository) {
+    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
 
         this.userService = userService;
         this.userRepository = userRepository;
         this.mailService = mailService;
-        this.userSearchRepository = userSearchRepository;
     }
 
     /**
@@ -198,8 +190,9 @@ public class UserResource {
      */
     @GetMapping("/_search/users/{query}")
     public List<User> search(@PathVariable String query) {
-        return StreamSupport
-            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return null;
+//        return StreamSupport
+//            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .collect(Collectors.toList());
     }
 }

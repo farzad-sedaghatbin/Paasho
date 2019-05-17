@@ -2,18 +2,15 @@ package ir.redmind.paasho.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ir.redmind.paasho.domain.enumeration.FactorStatus;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Objects;
-
-import ir.redmind.paasho.domain.enumeration.FactorStatus;
 
 /**
  * A Factor.
@@ -21,7 +18,6 @@ import ir.redmind.paasho.domain.enumeration.FactorStatus;
 @Entity
 @Table(name = "factor")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "factor")
 public class Factor implements Serializable {
 
     private static final long serialVersionUID = 1L;

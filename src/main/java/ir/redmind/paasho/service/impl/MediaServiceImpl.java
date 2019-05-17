@@ -3,7 +3,6 @@ package ir.redmind.paasho.service.impl;
 import ir.redmind.paasho.service.MediaService;
 import ir.redmind.paasho.domain.Media;
 import ir.redmind.paasho.repository.MediaRepository;
-import ir.redmind.paasho.repository.search.MediaSearchRepository;
 import ir.redmind.paasho.service.dto.MediaDTO;
 import ir.redmind.paasho.service.mapper.MediaMapper;
 import org.slf4j.Logger;
@@ -18,8 +17,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
-
 /**
  * Service Implementation for managing Media.
  */
@@ -33,12 +30,10 @@ public class MediaServiceImpl implements MediaService {
 
     private final MediaMapper mediaMapper;
 
-    private final MediaSearchRepository mediaSearchRepository;
 
-    public MediaServiceImpl(MediaRepository mediaRepository, MediaMapper mediaMapper, MediaSearchRepository mediaSearchRepository) {
+    public MediaServiceImpl(MediaRepository mediaRepository, MediaMapper mediaMapper) {
         this.mediaRepository = mediaRepository;
         this.mediaMapper = mediaMapper;
-        this.mediaSearchRepository = mediaSearchRepository;
     }
 
     /**
@@ -53,7 +48,6 @@ public class MediaServiceImpl implements MediaService {
         Media media = mediaMapper.toEntity(mediaDTO);
         media = mediaRepository.save(media);
         MediaDTO result = mediaMapper.toDto(media);
-        mediaSearchRepository.save(media);
         return result;
     }
 
@@ -95,7 +89,6 @@ public class MediaServiceImpl implements MediaService {
     public void delete(Long id) {
         log.debug("Request to delete Media : {}", id);
         mediaRepository.deleteById(id);
-        mediaSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +101,6 @@ public class MediaServiceImpl implements MediaService {
     @Transactional(readOnly = true)
     public List<MediaDTO> search(String query) {
         log.debug("Request to search Media for query {}", query);
-        return StreamSupport
-            .stream(mediaSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(mediaMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

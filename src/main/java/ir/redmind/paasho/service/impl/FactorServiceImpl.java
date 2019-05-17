@@ -1,14 +1,12 @@
 package ir.redmind.paasho.service.impl;
 
-import ir.redmind.paasho.service.FactorService;
 import ir.redmind.paasho.domain.Factor;
 import ir.redmind.paasho.repository.FactorRepository;
-import ir.redmind.paasho.repository.search.FactorSearchRepository;
+import ir.redmind.paasho.service.FactorService;
 import ir.redmind.paasho.service.dto.FactorDTO;
 import ir.redmind.paasho.service.mapper.FactorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Factor.
@@ -33,12 +28,10 @@ public class FactorServiceImpl implements FactorService {
 
     private final FactorMapper factorMapper;
 
-    private final FactorSearchRepository factorSearchRepository;
 
-    public FactorServiceImpl(FactorRepository factorRepository, FactorMapper factorMapper, FactorSearchRepository factorSearchRepository) {
+    public FactorServiceImpl(FactorRepository factorRepository, FactorMapper factorMapper) {
         this.factorRepository = factorRepository;
         this.factorMapper = factorMapper;
-        this.factorSearchRepository = factorSearchRepository;
     }
 
     /**
@@ -53,7 +46,6 @@ public class FactorServiceImpl implements FactorService {
         Factor factor = factorMapper.toEntity(factorDTO);
         factor = factorRepository.save(factor);
         FactorDTO result = factorMapper.toDto(factor);
-        factorSearchRepository.save(factor);
         return result;
     }
 
@@ -95,7 +87,6 @@ public class FactorServiceImpl implements FactorService {
     public void delete(Long id) {
         log.debug("Request to delete Factor : {}", id);
         factorRepository.deleteById(id);
-        factorSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +99,6 @@ public class FactorServiceImpl implements FactorService {
     @Transactional(readOnly = true)
     public List<FactorDTO> search(String query) {
         log.debug("Request to search Factors for query {}", query);
-        return StreamSupport
-            .stream(factorSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(factorMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

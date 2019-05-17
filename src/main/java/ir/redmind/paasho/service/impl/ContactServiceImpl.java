@@ -1,14 +1,12 @@
 package ir.redmind.paasho.service.impl;
 
-import ir.redmind.paasho.service.ContactService;
 import ir.redmind.paasho.domain.Contact;
 import ir.redmind.paasho.repository.ContactRepository;
-import ir.redmind.paasho.repository.search.ContactSearchRepository;
+import ir.redmind.paasho.service.ContactService;
 import ir.redmind.paasho.service.dto.ContactDTO;
 import ir.redmind.paasho.service.mapper.ContactMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Contact.
@@ -33,12 +28,10 @@ public class ContactServiceImpl implements ContactService {
 
     private final ContactMapper contactMapper;
 
-    private final ContactSearchRepository contactSearchRepository;
 
-    public ContactServiceImpl(ContactRepository contactRepository, ContactMapper contactMapper, ContactSearchRepository contactSearchRepository) {
+    public ContactServiceImpl(ContactRepository contactRepository, ContactMapper contactMapper) {
         this.contactRepository = contactRepository;
         this.contactMapper = contactMapper;
-        this.contactSearchRepository = contactSearchRepository;
     }
 
     /**
@@ -53,7 +46,6 @@ public class ContactServiceImpl implements ContactService {
         Contact contact = contactMapper.toEntity(contactDTO);
         contact = contactRepository.save(contact);
         ContactDTO result = contactMapper.toDto(contact);
-        contactSearchRepository.save(contact);
         return result;
     }
 
@@ -95,7 +87,6 @@ public class ContactServiceImpl implements ContactService {
     public void delete(Long id) {
         log.debug("Request to delete Contact : {}", id);
         contactRepository.deleteById(id);
-        contactSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +99,6 @@ public class ContactServiceImpl implements ContactService {
     @Transactional(readOnly = true)
     public List<ContactDTO> search(String query) {
         log.debug("Request to search Contacts for query {}", query);
-        return StreamSupport
-            .stream(contactSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(contactMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

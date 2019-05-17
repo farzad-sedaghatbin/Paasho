@@ -1,16 +1,13 @@
 package ir.redmind.paasho.domain;
 
 
+import ir.redmind.paasho.domain.enumeration.SettingKey;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
-
-import ir.redmind.paasho.domain.enumeration.SettingKey;
 
 /**
  * A Setting.
@@ -18,7 +15,6 @@ import ir.redmind.paasho.domain.enumeration.SettingKey;
 @Entity
 @Table(name = "setting")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "setting")
 public class Setting implements Serializable {
 
     private static final long serialVersionUID = 1L;
