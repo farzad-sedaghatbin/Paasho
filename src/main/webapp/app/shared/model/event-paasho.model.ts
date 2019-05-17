@@ -4,6 +4,7 @@ import { ICategoryPaasho } from 'app/shared/model/category-paasho.model';
 import { IRatingPaasho } from 'app/shared/model/rating-paasho.model';
 import { IFactorPaasho } from 'app/shared/model/factor-paasho.model';
 import { IUser } from 'app/shared/model/user.model';
+import { ICommentPaasho } from 'app/shared/model/comment-paasho.model';
 
 export const enum PriceType {
   FREE = 'FREE',
@@ -48,6 +49,7 @@ export interface IEventPaasho {
   participants?: IUser[];
   creatorLogin?: string;
   creatorId?: number;
+  comments?: ICommentPaasho[];
 }
 
 export const defaultValue: Readonly<IEventPaasho> = {};

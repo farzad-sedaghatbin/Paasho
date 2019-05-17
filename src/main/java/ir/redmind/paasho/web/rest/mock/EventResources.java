@@ -100,7 +100,7 @@ public class EventResources {
         eventDTO.setLatitude(event.getLatitude());
         eventDTO.setLongitude(event.getLongitude());
         eventDTO.setCapacity(Math.toIntExact(event.getCapacity()));
-
+        eventDTO.setId(event.getId());
         eventDTO.setAgeLimitFrom(event.getMinAge());
         eventDTO.setAgeLimitTo(event.getMaxAge());
         if (event.getParticipants().stream().anyMatch(u -> u.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get())))
@@ -254,7 +254,7 @@ public class EventResources {
         event.setCode(UUID.randomUUID().toString());
         event.setDescription(createEventDTO.getDescription());
         if (createEventDTO.getCustomTitle() == null || createEventDTO.getCustomTitle().length() == 0)
-            event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle()) + 1).getTitle());
+            event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle())-1).getTitle());
         else {
             event.setTitle(createEventDTO.getCustomTitle());
         }

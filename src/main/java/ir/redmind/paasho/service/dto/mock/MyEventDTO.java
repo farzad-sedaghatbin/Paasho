@@ -4,6 +4,7 @@ public class MyEventDTO {
     private String code;
     private String title;
     private String color;
+    private Long id;
 
     public String getCode() {
         return code;
@@ -27,5 +28,13 @@ public class MyEventDTO {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

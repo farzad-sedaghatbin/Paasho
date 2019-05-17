@@ -7,12 +7,7 @@
         Added the constraints for entity Rating.
     -->
     <changeSet id="20190416144510-2" author="jhipster">
-        
-        <addForeignKeyConstraint baseColumnNames="event_id"
-                                 baseTableName="rating"
-                                 constraintName="fk_rating_event_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="createdEvents"/>
+
 
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="rating"

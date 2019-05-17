@@ -41,6 +41,7 @@ public class HomeResource {
             MyEventDTO event1 = new MyEventDTO();
             event1.setCode(event.getCode());
             event1.setTitle(event.getTitle());
+            event1.setId(event.getId());
             myEventDTOS.add(event1);
         });
         return ResponseEntity.ok(myEventDTOS);
@@ -58,6 +59,7 @@ public class HomeResource {
             event1.setCode(event.getCode());
 //            event1.setPic(event.getMedias().iterator().);
             event1.setTitle(event.getTitle());
+            event1.setId(event.getId());
             event1.setPricing(PriceType.FREE);
             event1.setScore(event.getCreator().getScore().floatValue());
             event1.setTime(event.getTimeString());

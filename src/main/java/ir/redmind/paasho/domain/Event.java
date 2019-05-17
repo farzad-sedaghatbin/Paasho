@@ -1,18 +1,22 @@
 package ir.redmind.paasho.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import ir.redmind.paasho.domain.enumeration.EventStatus;
-import ir.redmind.paasho.domain.enumeration.PriceType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+import java.util.Objects;
+
+import ir.redmind.paasho.domain.enumeration.PriceType;
+
+import ir.redmind.paasho.domain.enumeration.EventStatus;
 
 /**
  * A Event.
@@ -59,7 +63,7 @@ public class Event implements Serializable {
     private String address;
 
     @Column(name = "visit_count")
-    private Integer visitCount=0;
+    private Integer visitCount;
 
     @Column(name = "latitude")
     private Double latitude;
@@ -129,6 +133,9 @@ public class Event implements Serializable {
     @JsonIgnoreProperties("events")
     private User creator;
 
+    @OneToMany(mappedBy = "event")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Comment> comments = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -256,7 +263,7 @@ public class Event implements Serializable {
     }
 
     public Integer getVisitCount() {
-        return visitCount;
+        return visitCount=0;
     }
 
     public Event visitCount(Integer visitCount) {
@@ -571,6 +578,31 @@ public class Event implements Serializable {
 
     public void setCreator(User user) {
         this.creator = user;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public Event comments(Set<Comment> comments) {
+        this.comments = comments;
+        return this;
+    }
+
+    public Event addComments(Comment comment) {
+        this.comments.add(comment);
+        comment.setEvent(this);
+        return this;
+    }
+
+    public Event removeComments(Comment comment) {
+        this.comments.remove(comment);
+        comment.setEvent(null);
+        return this;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

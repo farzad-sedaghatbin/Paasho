@@ -25,11 +25,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
-        <addForeignKeyConstraint baseColumnNames="related_event_id"
-                                 baseTableName="notification"
-                                 constraintName="fk_notification_related_event_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="createdEvents"/>
-
     </changeSet>
 </databaseChangeLog>

@@ -29,6 +29,7 @@ public class DetailEventDTO {
     private JoinStatus joinStatus;
     private String creator;
     private int capacity;
+    private Long id;
 
 
     public String getCode() {
@@ -214,5 +215,13 @@ public class DetailEventDTO {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
