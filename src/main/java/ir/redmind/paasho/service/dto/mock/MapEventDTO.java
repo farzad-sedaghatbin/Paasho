@@ -13,6 +13,7 @@ public class MapEventDTO {
     private double latitude;
     private double longitude;
     private int categoryId;
+    private Long view;
 
 
     public String getDate() {
@@ -93,5 +94,13 @@ public class MapEventDTO {
 
     public int getCategoryId() {
         return categoryId;
+    }
+
+    public void setView(Long view) {
+        this.view = view;
+    }
+
+    public Long getView() {
+        return view;
     }
 }

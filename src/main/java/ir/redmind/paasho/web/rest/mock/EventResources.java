@@ -29,6 +29,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +47,18 @@ public class EventResources {
     private final NotificationMapper notificationMapper;
     private final EventMapper eventMapper;
     private final CategoryMapper categoryMapper;
-    static List<titleDTO>  titles = new ArrayList<>();
+
+    @PersistenceContext
+    private EntityManager em;
+    static List<titleDTO> titles = new ArrayList<>();
+
     static {
         titles.add(new titleDTO("پایه ای بریم فوتبال", 1l));
         titles.add(new titleDTO("پایه ای بریم دورهمی", 2l));
         titles.add(new titleDTO("پایه ای بریم سینما", 3l));
         titles.add(new titleDTO("پایه ای بریم کوه", 4l));
     }
+
     public EventResources(EventService eventService, UserService userService, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper) {
         this.eventService = eventService;
         this.userService = userService;
@@ -77,7 +84,7 @@ public class EventResources {
         DetailEventDTO eventDTO = new DetailEventDTO();
         eventDTO.setCode(code);
 //        eventDTO.setPic("");
-        eventDTO.setTitle(titles.get(Integer.parseInt(event.getTitle())+1).getTitle());
+        eventDTO.setTitle(titles.get(Integer.parseInt(event.getTitle()) + 1).getTitle());
         eventDTO.setPricing(event.getPriceType());
         eventDTO.setScore(event.getCreator().getScore().floatValue());
         eventDTO.setTime(event.getTimeString());
@@ -96,12 +103,12 @@ public class EventResources {
 
         eventDTO.setAgeLimitFrom(event.getMinAge());
         eventDTO.setAgeLimitTo(event.getMaxAge());
-        if(event.getParticipants().stream().anyMatch(u->u.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get())))
+        if (event.getParticipants().stream().anyMatch(u -> u.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get())))
             eventDTO.setJoinStatus(JoinStatus.JOINED);
         else eventDTO.setJoinStatus(JoinStatus.NOT_JOINED);
         eventDTO.setLatitude(event.getLatitude());
         eventDTO.setLongitude(event.getLongitude());
-        eventDTO.setCreator(event.getCreator().getFirstName() +" "+ event.getCreator().getLastName());
+        eventDTO.setCreator(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
         return eventDTO;
     }
 
@@ -127,10 +134,10 @@ public class EventResources {
         EventDTO event = new EventDTO();
         event.setCode(e.getCode());
 //            event.setPic(e.);
-        event.setTitle(titles.get(Integer.parseInt(event.getTitle())+1).getTitle());
+        event.setTitle(titles.get(Integer.parseInt(event.getTitle()) + 1).getTitle());
         event.setPricing(PriceType.FREE);
-            event.setTime(e.getTimeString());
-            event.setDate(e.getDateString());
+        event.setTime(e.getTimeString());
+        event.setDate(e.getDateString());
         event.setCategoryId(Math.toIntExact(e.getCategories().iterator().next().getId()));
         User creator = userService.getUserWithAuthorities(e.getCreatorId()).get();
         event.setScore(creator.getScore().floatValue());
@@ -144,10 +151,10 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<titleDTO>> getTitles(@PathVariable("category") String category) {
         List<titleDTO> titles = new ArrayList<>();
-        titles.add(new titleDTO("پایه ای بریم فوتبال",1l));
-        titles.add(new titleDTO("پایه ای بریم دورهمی",2l));
-        titles.add(new titleDTO("پایه ای بریم سینما",3l));
-        titles.add(new titleDTO("پایه ای بریم کوه",4l));
+        titles.add(new titleDTO("پایه ای بریم فوتبال", 1l));
+        titles.add(new titleDTO("پایه ای بریم دورهمی", 2l));
+        titles.add(new titleDTO("پایه ای بریم سینما", 3l));
+        titles.add(new titleDTO("پایه ای بریم کوه", 4l));
         return ResponseEntity.ok(titles);
 
     }
@@ -164,7 +171,7 @@ public class EventResources {
             ProfileDTO profileDTO = getProfileDTO(p);
             profileDTOS.add(profileDTO);
         });
-        Page<ProfileDTO> page = new PageImpl(profileDTOS, PageRequest.of(pageable.getPageNumber() + 1, profileDTOS.size()+1), 20);
+        Page<ProfileDTO> page = new PageImpl(profileDTOS, PageRequest.of(pageable.getPageNumber() + 1, profileDTOS.size() + 1), 20);
         return ResponseEntity.ok(page);
 
     }
@@ -191,7 +198,7 @@ public class EventResources {
 
         ShareDTO shareDto = new ShareDTO();
         shareDto.setUser(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
-        shareDto.setContent("میخواد با شما رویداد" + titles.get(Integer.parseInt(event.getTitle())+1).getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
+        shareDto.setContent("میخواد با شما رویداد" + titles.get(Integer.parseInt(event.getTitle()) + 1).getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
         shareDto.setAndroidMarketURL("https://cafebazaar.ir");
         shareDto.setIosMarketURL("https://sibapp.com");
         return ResponseEntity.ok(shareDto);
@@ -214,9 +221,9 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<HttpStatus> join(@PathVariable("code") String code) {
 //todo create notification
-        Notification notification= new Notification();
+        Notification notification = new Notification();
         Event event = eventService.findByCode(code);
-        notification.setDescription("درخواست شرکت در رویداد : "+ event.getTitle());
+        notification.setDescription("درخواست شرکت در رویداد : " + event.getTitle());
         notification.addUsers(event.getCreator());
         notification.setRelatedEvent(event);
         notification.setFrom(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
@@ -246,9 +253,9 @@ public class EventResources {
         event.setAddress(createEventDTO.getAddress());
         event.setCode(UUID.randomUUID().toString());
         event.setDescription(createEventDTO.getDescription());
-        if(createEventDTO.getCustomTitle()==null || createEventDTO.getCustomTitle().length()==0)
-        event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle())+1).getTitle());
-        else{
+        if (createEventDTO.getCustomTitle() == null || createEventDTO.getCustomTitle().length() == 0)
+            event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle()) + 1).getTitle());
+        else {
             event.setTitle(createEventDTO.getCustomTitle());
         }
         event.setTel(createEventDTO.getTel());
@@ -293,66 +300,35 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<MapEventDTO>> events(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude) {
 
+        String query = "SELECT  code,title,customTitle,priceType,dateString,timeString,latitude,longitude,view FROM event e  WHERE  ((6371 * acos ( cos ( radians(?1) ) * cos( radians( cast(latitude as double precision) ) ) * cos( radians( cast(e.longitude as double precision) ) - radians(?3) ) +sin ( radians(?2) ) * sin( radians( cast(e.latitude as double precision) ) )) < 5)  ";
+//                                    System.out.println(a);
+        javax.persistence.Query query2 = em.createNativeQuery(query);
+        query2.setParameter(1, latitude);
+        query2.setParameter(2, latitude);
+        query2.setParameter(3, longitude);
 
+        List<Object[]> l = query2.getResultList();
         List<MapEventDTO> eventDTOS = new ArrayList<>();
 
-        MapEventDTO event1 = new MapEventDTO();
-        event1.setCode("123");
-        event1.setPic("https://media.glassdoor.com/l/00/05/01/26/mhw-mt-shasta-climbing-event.jpg");
-        event1.setTitle("کوه نوردی");
-        event1.setPricing(PriceType.FREE);
-        event1.setScore(4.5f);
-        event1.setTime("07:00");
-        event1.setTime("07:00");
-        event1.setCategoryId(1);
-        event1.setDate("1397/11/28");
-        event1.setLatitude(35.713107);
-        event1.setLongitude(51.412740);
+        l.forEach(e -> {
+            MapEventDTO event1 = new MapEventDTO();
+            event1.setCode(String.valueOf(e[0]));
+            event1.setPic("https://media.glassdoor.com/l/00/05/01/26/mhw-mt-shasta-climbing-event.jpg");
+            if (e[1] == null || e[1] == "")
+                event1.setTitle(String.valueOf(e[2]));
+            else
+                event1.setTitle(String.valueOf(e[1]));
+            event1.setPricing(PriceType.valueOf(String.valueOf(e[3])));
+//            event1.setScore(4.5f);
+            event1.setTime(String.valueOf(e[5]));
+//            event1.setCategoryId(1);
+            event1.setDate(String.valueOf(e[4]));
+            event1.setLatitude((Double) e[6]);
+            event1.setLongitude((Double) e[7]);
+            event1.setView((Long) e[8]);
 
-        MapEventDTO event2 = new MapEventDTO();
-        MapEventDTO event3 = new MapEventDTO();
-        MapEventDTO event4 = new MapEventDTO();
-
-        event2.setCode("567");
-        event2.setPic("https://www.parship.ie/pics/pictures/en_IE/single-life_dating-for-true-love282x172.jpg");
-        event2.setTitle("قرار دو نفره");
-        event2.setPricing(PriceType.DUTCH);
-        event2.setScore(5f);
-        event2.setTime("20:00");
-        event2.setDate("1397/11/28");
-        event2.setCategoryId(2);
-        event2.setLatitude(35.714558);
-        event2.setLongitude(51.414440);
-
-        event3.setCode("234");
-        event3.setPic("https://d1zpvjny0s6omk.cloudfront.net/media/fileupload/2015/10/12/lombardi_stanzione-3521.jpg");
-        event3.setTitle("کلاس نقاشی");
-        event3.setPricing(PriceType.MONETARY);
-        event3.setScore(3f);
-        event3.setTime("12:30");
-        event3.setDate("1397/11/28");
-        event3.setLatitude(35.716020);
-        event3.setLongitude(51.425097);
-        event3.setCategoryId(3);
-
-
-        event4.setCode("456");
-        event4.setPic("https://www.bransoncc.com/wp-content/uploads/2016/04/Soccer2.jpg");
-        event4.setTitle("فوتبال سالنی");
-        event4.setPricing(PriceType.DUTCH);
-        event4.setScore(4.2f);
-        event4.setTime("21:00");
-        event4.setDate("1397/11/28");
-        event4.setLatitude(35.720862);
-        event4.setLongitude(51.426506);
-        event4.setCategoryId(4);
-
-
-        eventDTOS.add(event1);
-        eventDTOS.add(event2);
-        eventDTOS.add(event3);
-        eventDTOS.add(event4);
-
+            eventDTOS.add(event1);
+        });
         return ResponseEntity.ok(eventDTOS);
 
     }
