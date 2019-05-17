@@ -57,7 +57,7 @@ public class FarzadCommentResource {
         Event event = eventService.findByCode(eventId);
         ir.redmind.paasho.service.dto.CommentDTO c= new ir.redmind.paasho.service.dto.CommentDTO();
         c.setDescription(comment);
-        c.setId(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get().getId());
+        c.setUserId(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get().getId());
         c.setEventId(event.getId());
         commentService.save(c);
         return ResponseEntity.ok(HttpStatus.OK);

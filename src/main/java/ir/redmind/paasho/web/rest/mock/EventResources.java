@@ -84,7 +84,7 @@ public class EventResources {
         DetailEventDTO eventDTO = new DetailEventDTO();
         eventDTO.setCode(code);
 //        eventDTO.setPic("");
-        eventDTO.setTitle(titles.get(Integer.parseInt(event.getTitle()) + 1).getTitle());
+        eventDTO.setTitle(event.getTitle());
         eventDTO.setPricing(event.getPriceType());
         eventDTO.setScore(event.getCreator().getScore().floatValue());
         eventDTO.setTime(event.getTimeString());
@@ -134,7 +134,7 @@ public class EventResources {
         EventDTO event = new EventDTO();
         event.setCode(e.getCode());
 //            event.setPic(e.);
-        event.setTitle(titles.get(Integer.parseInt(event.getTitle()) + 1).getTitle());
+        event.setTitle(e.getTitle());
         event.setPricing(PriceType.FREE);
         event.setTime(e.getTimeString());
         event.setDate(e.getDateString());
@@ -198,7 +198,7 @@ public class EventResources {
 
         ShareDTO shareDto = new ShareDTO();
         shareDto.setUser(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
-        shareDto.setContent("میخواد با شما رویداد" + titles.get(Integer.parseInt(event.getTitle()) + 1).getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
+        shareDto.setContent("میخواد با شما رویداد" + event.getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
         shareDto.setAndroidMarketURL("https://cafebazaar.ir");
         shareDto.setIosMarketURL("https://sibapp.com");
         return ResponseEntity.ok(shareDto);
@@ -300,7 +300,7 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<MapEventDTO>> events(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude) {
 
-        String query = "SELECT  code,title,customTitle,priceType,dateString,timeString,latitude,longitude,view FROM event e  WHERE  ((6371 * acos ( cos ( radians(?1) ) * cos( radians( cast(latitude as double precision) ) ) * cos( radians( cast(e.longitude as double precision) ) - radians(?3) ) +sin ( radians(?2) ) * sin( radians( cast(e.latitude as double precision) ) )) < 5)  ";
+        String query = "SELECT  code,title,custom_Title,price_Type,date_String,time_String,latitude,longitude,visit_count FROM event e  WHERE  ((6371 * acos ( cos ( radians(?1) ) * cos( radians( cast(latitude as double precision) ) ) * cos( radians( cast(e.longitude as double precision) ) - radians(?3) ) +sin ( radians(?2) ) * sin( radians( cast(e.latitude as double precision) ) ))) < 5);  ";
 //                                    System.out.println(a);
         javax.persistence.Query query2 = em.createNativeQuery(query);
         query2.setParameter(1, latitude);
