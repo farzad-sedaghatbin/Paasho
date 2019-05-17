@@ -33,6 +33,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -277,19 +278,37 @@ public class EventResources {
     @PostMapping(value = "/{code}/upload")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<String> uploadFile(@RequestParam MultipartFile[] multipartFile) {
+    public ResponseEntity<String> uploadFile(@RequestParam MultipartFile multipartFile) {
 //todo to ftp end save address to event
 //        createEventDTO.setId(10l);
 //        return ResponseEntity.ok(createEventDTO);
-        return ResponseEntity.ok(multipartFile[0].getName());
+        return ResponseEntity.ok(multipartFile.getName());
     }
 
     @PutMapping("")
-    public ResponseEntity<ir.redmind.paasho.service.dto.EventDTO> updateEvent(@RequestBody ir.redmind.paasho.service.dto.EventDTO eventDTO) throws URISyntaxException {
+    public ResponseEntity<ir.redmind.paasho.service.dto.EventDTO> updateEvent(@RequestBody CreateEventDTO eventDTO) throws URISyntaxException {
         if (eventDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", "EVENT", "idnull");
         }
-        ir.redmind.paasho.service.dto.EventDTO result = eventService.save(eventDTO);
+        Event event = eventService.findByCode(eventDTO.getCode());
+        event.setDateString(eventDTO.getDate());
+        event.setTimeString(eventDTO.getTime());
+        event.setCapacity(eventDTO.getCapacity());
+        event.setPriceType(eventDTO.getPricing());
+        if (eventDTO.getCustomTitle() == null || eventDTO.getCustomTitle().length() == 0)
+            event.setTitle(titles.get(Integer.parseInt(eventDTO.getTitle())-1).getTitle());
+        else {
+            event.setTitle(eventDTO.getCustomTitle());
+        }
+        event.setCategories(new HashSet<>());
+        event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) eventDTO.getCategoryId()).get()));
+        event.setDescription(eventDTO.getDescription());
+        event.setTel(eventDTO.getTel());
+        event.setLatitude(eventDTO.getLatitude());
+        event.setLongitude(eventDTO.getLongitude());
+        event.setMinAge(eventDTO.getAgeLimitFrom());
+        event.setMaxAge(eventDTO.getAgeLimitTo());
+        ir.redmind.paasho.service.dto.EventDTO result = eventService.save(eventMapper.toDto(event));
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("EVENT", eventDTO.getId().toString()))
             .body(result);
