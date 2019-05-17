@@ -2,6 +2,8 @@ package ir.redmind.paasho.web.rest.mock;
 
 
 import io.micrometer.core.annotation.Timed;
+import ir.redmind.paasho.service.NotificationService;
+import ir.redmind.paasho.service.UserService;
 import ir.redmind.paasho.service.dto.mock.NotificationDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,6 +20,14 @@ import java.util.List;
 @RequestMapping("/api/v1/notifications/")
 public class NotificationResources {
 
+
+    private final NotificationService notificationService;
+    private final UserService userService;
+
+    public NotificationResources(NotificationService notificationService, UserService userService) {
+        this.notificationService = notificationService;
+        this.userService = userService;
+    }
 
     @PostMapping(value = "{requestId}/approved")
     @Timed
@@ -45,20 +55,25 @@ public class NotificationResources {
     public ResponseEntity<Page<NotificationDTO>> listNotification(Pageable pageable) {
 
         //todo list notifications
-
+        List<ir.redmind.paasho.service.dto.NotificationDTO> list = notificationService.findAll();
         List<NotificationDTO> notificationDTOS = new ArrayList<>();
-        NotificationDTO notif= new NotificationDTO();
-        notif.setRequestId("UBT123");
-        notif.setPending(true);
-        notif.setText("کاربر فرزاد صداقت بین علاقه دارد به رویداد کوه نوردی ملحق شود");
-        notif.setRelatedEventcode("codeEvent");
-        notif.setRelatedUserId("userId");
-        notificationDTOS.add(notif);
+        list.forEach(l->{
+            NotificationDTO notif= new NotificationDTO();
+            notif.setRequestId(String.valueOf(l.getId()));
+            notif.setPending(true);
+            notif.setText(l.getDescription());
+            notif.setRelatedEventcode(String.valueOf(l.getRelatedEventId()));
+            notif.setRelatedUserId(l.getFromId());
+            notif.setAvatar(userService.getUserWithAuthorities(Long.valueOf(l.getFromId())).get().getAvatar());
+            notificationDTOS.add(notif);
+});
+
+
         NotificationDTO notif1= new NotificationDTO();
         notif1.setPending(false);
-        notif1.setText("یک متن معمولی");
+        notif1.setText("به پاشو خوش آمدید");
         notificationDTOS.add(notif1);
-        return ResponseEntity.ok(new PageImpl<>(notificationDTOS,new PageRequest(0,2),2));
+        return ResponseEntity.ok(new PageImpl<>(notificationDTOS,new PageRequest(0,list.size()+1),list.size()+1));
 
     }
 

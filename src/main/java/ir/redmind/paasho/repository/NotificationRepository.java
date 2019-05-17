@@ -17,6 +17,9 @@ import java.util.Optional;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
+    @Query("select notification from Notification notification where notification.from.login = ?#{principal.username}")
+    List<Notification> findByFromIsCurrentUser();
+
     @Query(value = "select distinct notification from Notification notification left join fetch notification.users",
         countQuery = "select count(distinct notification) from Notification notification")
     Page<Notification> findAllWithEagerRelationships(Pageable pageable);

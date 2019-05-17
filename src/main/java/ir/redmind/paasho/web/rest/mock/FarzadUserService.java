@@ -393,12 +393,12 @@ public ResponseEntity<RecordDTO> ranks() {
     }
 
     private void userToProfile(ProfileDTO profileDTO, User user) {
-//        profileDTO.setBirthYear(Integer.parseInt(user.getBirthDate()));
+        profileDTO.setBirthYear(Integer.parseInt(user.getBirthDate()));
         profileDTO.setEmail(user.getEmail());
         profileDTO.setFirstName(user.getFirstName());
         profileDTO.setGender(user.getGender());
-       // profileDTO.setTelegram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).findFirst().get().getValue());
-        //profileDTO.setInstagram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).findFirst().get().getValue());
+        profileDTO.setTelegram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).findFirst().get().getValue());
+        profileDTO.setInstagram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).findFirst().get().getValue());
         profileDTO.setLastName(user.getLastName());
         profileDTO.setAvatar(user.getAvatar());
         profileDTO.setBirthYear(Integer.parseInt(user.getBirthDate()));

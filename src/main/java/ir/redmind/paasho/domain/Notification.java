@@ -1,16 +1,20 @@
 package ir.redmind.paasho.domain;
 
 
-import ir.redmind.paasho.domain.enumeration.NotificationStatus;
-import ir.redmind.paasho.domain.enumeration.NotificationType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+import java.util.Objects;
+
+import ir.redmind.paasho.domain.enumeration.NotificationType;
+
+import ir.redmind.paasho.domain.enumeration.NotificationStatus;
 
 /**
  * A Notification.
@@ -44,6 +48,14 @@ public class Notification implements Serializable {
                joinColumns = @JoinColumn(name = "notification_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"))
     private Set<User> users = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("notifications")
+    private User from;
+
+    @ManyToOne
+    @JsonIgnoreProperties("notifications")
+    private Event relatedEvent;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -114,6 +126,32 @@ public class Notification implements Serializable {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public User getFrom() {
+        return from;
+    }
+
+    public Notification from(User user) {
+        this.from = user;
+        return this;
+    }
+
+    public void setFrom(User user) {
+        this.from = user;
+    }
+
+    public Event getRelatedEvent() {
+        return relatedEvent;
+    }
+
+    public Notification relatedEvent(Event event) {
+        this.relatedEvent = event;
+        return this;
+    }
+
+    public void setRelatedEvent(Event event) {
+        this.relatedEvent = event;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

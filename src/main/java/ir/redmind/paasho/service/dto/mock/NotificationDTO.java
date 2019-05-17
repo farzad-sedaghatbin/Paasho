@@ -6,6 +6,7 @@ public class NotificationDTO {
     private String relatedEventcode;
     private boolean pending;
     private String text;
+    private String avatar;
 
     public String getRequestId() {
         return requestId;
@@ -45,5 +46,14 @@ public class NotificationDTO {
 
     public void setRelatedEventcode(String relatedEventcode) {
         this.relatedEventcode = relatedEventcode;
+    }
+
+    public void setAvatar(String avatar) {
+
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
     }
 }

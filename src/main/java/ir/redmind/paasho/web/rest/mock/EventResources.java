@@ -3,16 +3,19 @@ package ir.redmind.paasho.web.rest.mock;
 
 import io.micrometer.core.annotation.Timed;
 import ir.redmind.paasho.domain.Event;
+import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.domain.enumeration.ContactType;
 import ir.redmind.paasho.domain.enumeration.PriceType;
 import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.CategoryService;
 import ir.redmind.paasho.service.EventService;
+import ir.redmind.paasho.service.NotificationService;
 import ir.redmind.paasho.service.UserService;
 import ir.redmind.paasho.service.dto.mock.*;
 import ir.redmind.paasho.service.mapper.CategoryMapper;
 import ir.redmind.paasho.service.mapper.EventMapper;
+import ir.redmind.paasho.service.mapper.NotificationMapper;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
 import ir.redmind.paasho.web.rest.util.PaginationUtil;
@@ -38,6 +41,8 @@ public class EventResources {
     private final EventService eventService;
     private final UserService userService;
     private final CategoryService categoryService;
+    private final NotificationService notificationService;
+    private final NotificationMapper notificationMapper;
     private final EventMapper eventMapper;
     private final CategoryMapper categoryMapper;
     static List<titleDTO>  titles = new ArrayList<>();
@@ -47,10 +52,12 @@ public class EventResources {
         titles.add(new titleDTO("پایه ای بریم سینما", 3l));
         titles.add(new titleDTO("پایه ای بریم کوه", 4l));
     }
-    public EventResources(EventService eventService, UserService userService, CategoryService categoryService, EventMapper eventMapper, CategoryMapper categoryMapper) {
+    public EventResources(EventService eventService, UserService userService, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper) {
         this.eventService = eventService;
         this.userService = userService;
         this.categoryService = categoryService;
+        this.notificationService = notificationService;
+        this.notificationMapper = notificationMapper;
         this.eventMapper = eventMapper;
         this.categoryMapper = categoryMapper;
     }
@@ -122,8 +129,8 @@ public class EventResources {
 //            event.setPic(e.);
         event.setTitle(titles.get(Integer.parseInt(event.getTitle())+1).getTitle());
         event.setPricing(PriceType.FREE);
-//            event.setTime(e.get);
-//            event.setDate("1397/11/28");
+            event.setTime(e.getTimeString());
+            event.setDate(e.getDateString());
         event.setCategoryId(Math.toIntExact(e.getCategories().iterator().next().getId()));
         User creator = userService.getUserWithAuthorities(e.getCreatorId()).get();
         event.setScore(creator.getScore().floatValue());
@@ -207,6 +214,15 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<HttpStatus> join(@PathVariable("code") String code) {
 //todo create notification
+        Notification notification= new Notification();
+        Event event = eventService.findByCode(code);
+        notification.setDescription("درخواست شرکت در رویداد : "+ event.getTitle());
+        notification.addUsers(event.getCreator());
+        notification.setRelatedEvent(event);
+        notification.setFrom(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
+        notificationService.save(notificationMapper.toDto(notification));
+//        notification.setStatus(NotificationStatus.READ);
+//        notification.setType(NotificationType.NEWS);
         return ResponseEntity.ok(HttpStatus.OK);
 
     }

@@ -51,6 +51,10 @@ export class NotificationPaashoDetail extends React.Component<INotificationPaash
                   ))
                 : null}{' '}
             </dd>
+            <dt>From</dt>
+            <dd>{notificationEntity.fromLogin ? notificationEntity.fromLogin : ''}</dd>
+            <dt>Related Event</dt>
+            <dd>{notificationEntity.relatedEventId ? notificationEntity.relatedEventId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/notification-paasho" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

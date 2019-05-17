@@ -79,6 +79,8 @@ export class NotificationPaasho extends React.Component<INotificationPaashoProps
                 <th>Type</th>
                 <th>Status</th>
                 <th>Users</th>
+                <th>From</th>
+                <th>Related Event</th>
                 <th />
               </tr>
             </thead>
@@ -102,6 +104,14 @@ export class NotificationPaasho extends React.Component<INotificationPaashoProps
                           </span>
                         ))
                       : null}
+                  </td>
+                  <td>{notification.fromLogin ? notification.fromLogin : ''}</td>
+                  <td>
+                    {notification.relatedEventId ? (
+                      <Link to={`event-paasho/${notification.relatedEventId}`}>{notification.relatedEventId}</Link>
+                    ) : (
+                      ''
+                    )}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

@@ -10,6 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+import { IEventPaasho } from 'app/shared/model/event-paasho.model';
+import { getEntities as getEvents } from 'app/entities/event-paasho/event-paasho.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './notification-paasho.reducer';
 import { INotificationPaasho } from 'app/shared/model/notification-paasho.model';
 // tslint:disable-next-line:no-unused-variable
@@ -21,6 +23,8 @@ export interface INotificationPaashoUpdateProps extends StateProps, DispatchProp
 export interface INotificationPaashoUpdateState {
   isNew: boolean;
   idsusers: any[];
+  fromId: string;
+  relatedEventId: string;
 }
 
 export class NotificationPaashoUpdate extends React.Component<INotificationPaashoUpdateProps, INotificationPaashoUpdateState> {
@@ -28,6 +32,8 @@ export class NotificationPaashoUpdate extends React.Component<INotificationPaash
     super(props);
     this.state = {
       idsusers: [],
+      fromId: '0',
+      relatedEventId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -46,6 +52,7 @@ export class NotificationPaashoUpdate extends React.Component<INotificationPaash
     }
 
     this.props.getUsers();
+    this.props.getEvents();
   }
 
   saveEntity = (event, errors, values) => {
@@ -70,7 +77,7 @@ export class NotificationPaashoUpdate extends React.Component<INotificationPaash
   };
 
   render() {
-    const { notificationEntity, users, loading, updating } = this.props;
+    const { notificationEntity, users, events, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -142,6 +149,32 @@ export class NotificationPaashoUpdate extends React.Component<INotificationPaash
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="from.login">From</Label>
+                  <AvInput id="notification-paasho-from" type="select" className="form-control" name="fromId">
+                    <option value="" key="0" />
+                    {users
+                      ? users.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.login}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="relatedEvent.id">Related Event</Label>
+                  <AvInput id="notification-paasho-relatedEvent" type="select" className="form-control" name="relatedEventId">
+                    <option value="" key="0" />
+                    {events
+                      ? events.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/notification-paasho" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
@@ -163,6 +196,7 @@ export class NotificationPaashoUpdate extends React.Component<INotificationPaash
 
 const mapStateToProps = (storeState: IRootState) => ({
   users: storeState.userManagement.users,
+  events: storeState.event.entities,
   notificationEntity: storeState.notification.entity,
   loading: storeState.notification.loading,
   updating: storeState.notification.updating,
@@ -171,6 +205,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getUsers,
+  getEvents,
   getEntity,
   updateEntity,
   createEntity,

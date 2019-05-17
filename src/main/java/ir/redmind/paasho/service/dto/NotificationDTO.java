@@ -22,6 +22,12 @@ public class NotificationDTO implements Serializable {
 
     private Set<UserDTO> users = new HashSet<>();
 
+    private Long fromId;
+
+    private String fromLogin;
+
+    private Long relatedEventId;
+
     public Long getId() {
         return id;
     }
@@ -62,6 +68,30 @@ public class NotificationDTO implements Serializable {
         this.users = users;
     }
 
+    public String getFromId() {
+        return fromId;
+    }
+
+    public void setFromId(Long userId) {
+        this.fromId = userId;
+    }
+
+    public String getFromLogin() {
+        return fromLogin;
+    }
+
+    public void setFromLogin(String userLogin) {
+        this.fromLogin = userLogin;
+    }
+
+    public Long getRelatedEventId() {
+        return relatedEventId;
+    }
+
+    public void setRelatedEventId(Long eventId) {
+        this.relatedEventId = eventId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -90,6 +120,9 @@ public class NotificationDTO implements Serializable {
             ", description='" + getDescription() + "'" +
             ", type='" + getType() + "'" +
             ", status='" + getStatus() + "'" +
+            ", from=" + getFromId() +
+            ", from='" + getFromLogin() + "'" +
+            ", relatedEvent=" + getRelatedEventId() +
             "}";
     }
 }

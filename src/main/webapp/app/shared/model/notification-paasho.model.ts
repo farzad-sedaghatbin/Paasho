@@ -14,6 +14,9 @@ export interface INotificationPaasho {
   type?: NotificationType;
   status?: NotificationStatus;
   users?: IUser[];
+  fromLogin?: string;
+  fromId?: number;
+  relatedEventId?: number;
 }
 
 export const defaultValue: Readonly<INotificationPaasho> = {};

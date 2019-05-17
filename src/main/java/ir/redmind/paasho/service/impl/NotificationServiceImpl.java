@@ -1,12 +1,13 @@
 package ir.redmind.paasho.service.impl;
 
+import ir.redmind.paasho.service.NotificationService;
 import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.repository.NotificationRepository;
-import ir.redmind.paasho.service.NotificationService;
 import ir.redmind.paasho.service.dto.NotificationDTO;
 import ir.redmind.paasho.service.mapper.NotificationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-;
 
 /**
  * Service Implementation for managing Notification.
@@ -76,7 +75,7 @@ public class NotificationServiceImpl implements NotificationService {
     public Page<NotificationDTO> findAllWithEagerRelationships(Pageable pageable) {
         return notificationRepository.findAllWithEagerRelationships(pageable).map(notificationMapper::toDto);
     }
-
+    
 
     /**
      * Get one notification by id.
