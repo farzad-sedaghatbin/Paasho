@@ -278,11 +278,11 @@ public class EventResources {
     @PostMapping(value = "/{code}/upload")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile, @PathVariable String code) {
 //todo to ftp end save address to event
 //        createEventDTO.setId(10l);
 //        return ResponseEntity.ok(createEventDTO);
-        return ResponseEntity.ok(multipartFile.getName());
+        return ResponseEntity.ok(multipartFile.getOriginalFilename());
     }
 
     @PutMapping("")
