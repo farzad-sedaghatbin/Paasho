@@ -42,6 +42,8 @@ public class HomeResource {
             event1.setCode(event.getCode());
             event1.setTitle(event.getTitle());
             event1.setId(event.getId());
+            event1.setScore(event.getCreator().getScore().floatValue());
+//            event1.setPic(event.getp);
             myEventDTOS.add(event1);
         });
         return ResponseEntity.ok(myEventDTOS);

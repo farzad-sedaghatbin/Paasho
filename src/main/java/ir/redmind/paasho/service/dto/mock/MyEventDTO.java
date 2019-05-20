@@ -3,7 +3,8 @@ package ir.redmind.paasho.service.dto.mock;
 public class MyEventDTO {
     private String code;
     private String title;
-    private String color;
+    private float score;
+    private String pic;
     private Long id;
 
     public String getCode() {
@@ -22,12 +23,20 @@ public class MyEventDTO {
         this.title = title;
     }
 
-    public String getColor() {
-        return color;
+    public float getScore() {
+        return score;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 
     public void setId(Long id) {
