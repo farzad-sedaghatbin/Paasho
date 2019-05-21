@@ -1,5 +1,8 @@
 package ir.redmind.paasho.service;
 
+import ir.redmind.paasho.domain.Event;
+import ir.redmind.paasho.domain.Notification;
+import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.service.dto.NotificationDTO;
 
 import org.springframework.data.domain.Page;
@@ -58,4 +61,7 @@ public interface NotificationService {
      * @return the list of entities
      */
     List<NotificationDTO> search(String query);
+
+
+    Notification findByFromAndRelatedEvent(Optional<User> userWithAuthoritiesByLogin, Event event);
 }

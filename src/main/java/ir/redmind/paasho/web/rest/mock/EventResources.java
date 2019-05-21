@@ -6,6 +6,7 @@ import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.domain.enumeration.ContactType;
+import ir.redmind.paasho.domain.enumeration.NotificationStatus;
 import ir.redmind.paasho.domain.enumeration.PriceType;
 import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.CategoryService;
@@ -104,8 +105,13 @@ public class EventResources {
         eventDTO.setId(event.getId());
         eventDTO.setAgeLimitFrom(event.getMinAge());
         eventDTO.setAgeLimitTo(event.getMaxAge());
-        if (event.getParticipants().stream().anyMatch(u -> u.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get())))
+        Notification notification = notificationService.findByFromAndRelatedEvent(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()), event);
+        if (event.getParticipants().stream().anyMatch(u -> u.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()))) {
             eventDTO.setJoinStatus(JoinStatus.JOINED);
+        }
+        else if(notification!=null && notification.getStatus().equals(NotificationStatus.REJECTED) ){
+            eventDTO.setJoinStatus(JoinStatus.REQUESTED);
+        }
         else eventDTO.setJoinStatus(JoinStatus.NOT_JOINED);
         eventDTO.setLatitude(event.getLatitude());
         eventDTO.setLongitude(event.getLongitude());

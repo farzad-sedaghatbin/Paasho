@@ -1,6 +1,8 @@
 package ir.redmind.paasho.repository;
 
+import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.Notification;
+import ir.redmind.paasho.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -30,4 +32,5 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Query("select notification from Notification notification left join fetch notification.users where notification.id =:id")
     Optional<Notification> findOneWithEagerRelationships(@Param("id") Long id);
 
+    Notification findByFromAndRelatedEvent(User user, Event event);
 }

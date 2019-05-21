@@ -1,5 +1,7 @@
 package ir.redmind.paasho.service.impl;
 
+import ir.redmind.paasho.domain.Event;
+import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.service.NotificationService;
 import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.repository.NotificationRepository;
@@ -113,5 +115,12 @@ public class NotificationServiceImpl implements NotificationService {
     public List<NotificationDTO> search(String query) {
         log.debug("Request to search Notifications for query {}", query);
         return null;
+    }
+
+
+
+    @Override
+    public Notification findByFromAndRelatedEvent(Optional<User> userWithAuthoritiesByLogin, Event event) {
+        return notificationRepository.findByFromAndRelatedEvent(userWithAuthoritiesByLogin.get(),event);
     }
 }

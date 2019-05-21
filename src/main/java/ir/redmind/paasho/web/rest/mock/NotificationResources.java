@@ -2,9 +2,14 @@ package ir.redmind.paasho.web.rest.mock;
 
 
 import io.micrometer.core.annotation.Timed;
+import ir.redmind.paasho.domain.Notification;
+import ir.redmind.paasho.domain.enumeration.NotificationStatus;
+import ir.redmind.paasho.service.EventService;
 import ir.redmind.paasho.service.NotificationService;
 import ir.redmind.paasho.service.UserService;
 import ir.redmind.paasho.service.dto.mock.NotificationDTO;
+import ir.redmind.paasho.service.mapper.EventMapper;
+import ir.redmind.paasho.service.mapper.NotificationMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -23,10 +28,16 @@ public class NotificationResources {
 
     private final NotificationService notificationService;
     private final UserService userService;
+    private final EventService eventService;
+    private final EventMapper eventMapper;
+    private final NotificationMapper notificationMapper;
 
-    public NotificationResources(NotificationService notificationService, UserService userService) {
+    public NotificationResources(NotificationService notificationService, UserService userService, EventService eventService, EventMapper eventMapper, NotificationMapper notificationMapper) {
         this.notificationService = notificationService;
         this.userService = userService;
+        this.eventService = eventService;
+        this.eventMapper = eventMapper;
+        this.notificationMapper = notificationMapper;
     }
 
     @PostMapping(value = "{requestId}/approved")
@@ -35,6 +46,12 @@ public class NotificationResources {
     public ResponseEntity<HttpStatus> approved(@PathVariable("requestId") String requestId) {
 
         // todo join user to participants
+
+        Notification n =  notificationMapper.toEntity( notificationService.findOne(Long.valueOf(requestId)).get());
+        n.getRelatedEvent().addParticipants(n.getFrom());
+        n.setStatus(NotificationStatus.ACCEPTED);
+        eventService.save(eventMapper.toDto(n.getRelatedEvent()));
+        notificationService.save(notificationMapper.toDto(n));
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
@@ -43,7 +60,10 @@ public class NotificationResources {
     @Timed
     @CrossOrigin(origins = "*")
     public ResponseEntity<HttpStatus> cancel(@PathVariable("requestId") String requestId) {
-// todo refuse user request
+        Notification n =  notificationMapper.toEntity( notificationService.findOne(Long.valueOf(requestId)).get());
+        n.getRelatedEvent().addParticipants(n.getFrom());
+        n.setStatus(NotificationStatus.REJECTED);
+        notificationService.save(notificationMapper.toDto(n));
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
@@ -55,10 +75,10 @@ public class NotificationResources {
     public ResponseEntity<Page<NotificationDTO>> listNotification(Pageable pageable) {
 
         //todo list notifications
-        List<ir.redmind.paasho.service.dto.NotificationDTO> list = notificationService.findAll();
+        Page<ir.redmind.paasho.service.dto.NotificationDTO> list = notificationService.findAllWithEagerRelationships(pageable);
         List<NotificationDTO> notificationDTOS = new ArrayList<>();
-        list.forEach(l->{
-            NotificationDTO notif= new NotificationDTO();
+        list.getContent().forEach(l -> {
+            NotificationDTO notif = new NotificationDTO();
             notif.setRequestId(String.valueOf(l.getId()));
             notif.setPending(true);
             notif.setText(l.getDescription());
@@ -66,14 +86,14 @@ public class NotificationResources {
             notif.setRelatedUserId(String.valueOf(l.getFromId()));
             notif.setAvatar(userService.getUserWithAuthorities(l.getFromId()).get().getAvatar());
             notificationDTOS.add(notif);
-});
+        });
 
 
-        NotificationDTO notif1= new NotificationDTO();
+        NotificationDTO notif1 = new NotificationDTO();
         notif1.setPending(false);
         notif1.setText("به پاشو خوش آمدید");
         notificationDTOS.add(notif1);
-        return ResponseEntity.ok(new PageImpl<>(notificationDTOS,new PageRequest(0,list.size()+1),list.size()+1));
+        return ResponseEntity.ok(new PageImpl<>(notificationDTOS, new PageRequest(pageable.getPageNumber(), list.getSize() + 1), list.getTotalElements() + 1));
 
     }
 
