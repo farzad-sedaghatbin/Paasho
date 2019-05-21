@@ -132,6 +132,7 @@ public class EventResources {
             eventDTOS.add(event);
 
         });
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(events, String.format("/api/v1/search"));
         return ResponseEntity.ok().headers(headers).body(eventDTOS);
 
@@ -169,7 +170,7 @@ public class EventResources {
     @GetMapping(value = "{code}/participants")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<Page<ProfileDTO>> participants(@PathVariable("code") String code, Pageable pageable) {
+    public ResponseEntity<List<ProfileDTO>> participants(@PathVariable("code") String code) {
 
         Event event = eventService.findByCode(code);
         List<ProfileDTO> profileDTOS = new ArrayList<>();
@@ -178,8 +179,7 @@ public class EventResources {
             ProfileDTO profileDTO = getProfileDTO(p);
             profileDTOS.add(profileDTO);
         });
-        Page<ProfileDTO> page = new PageImpl(profileDTOS, PageRequest.of(pageable.getPageNumber() + 1, profileDTOS.size() + 1), 20);
-        return ResponseEntity.ok(page);
+        return ResponseEntity.ok(profileDTOS);
 
     }
 
