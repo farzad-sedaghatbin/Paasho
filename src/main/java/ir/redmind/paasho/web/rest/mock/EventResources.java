@@ -202,9 +202,9 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<ShareDTO> share(@PathVariable("code") String code) {
         Event event = eventService.findByCode(code);
-
+        User user= userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
         ShareDTO shareDto = new ShareDTO();
-        shareDto.setUser(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
+        shareDto.setUser(user.getFirstName() + " " + user.getLastName());
         shareDto.setContent("میخواد با شما رویداد" + event.getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
         shareDto.setAndroidMarketURL("https://cafebazaar.ir");
         shareDto.setIosMarketURL("https://sibapp.com");
