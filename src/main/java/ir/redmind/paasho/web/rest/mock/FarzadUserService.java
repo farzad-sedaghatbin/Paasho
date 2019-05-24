@@ -405,6 +405,7 @@ public ResponseEntity<RecordDTO> ranks() {
         profileDTO.setAvatar(user.getAvatar());
         profileDTO.setBirthYear(Integer.parseInt(user.getBirthDate()));
         profileDTO.setGender(user.getGender());
+        profileDTO.setCode("psh"+(user.getId()*10+5));
     }
 
 

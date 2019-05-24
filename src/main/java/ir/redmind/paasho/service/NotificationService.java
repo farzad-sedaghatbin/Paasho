@@ -37,7 +37,9 @@ public interface NotificationService {
      * @return the list of entities
      */
     Page<NotificationDTO> findAllWithEagerRelationships(Pageable pageable);
-    
+
+    List<NotificationDTO> findAllForMe(Pageable pageable);
+
     /**
      * Get the "id" notification.
      *

@@ -7,6 +7,7 @@ import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.domain.enumeration.ContactType;
 import ir.redmind.paasho.domain.enumeration.NotificationStatus;
+import ir.redmind.paasho.domain.enumeration.NotificationType;
 import ir.redmind.paasho.domain.enumeration.PriceType;
 import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.CategoryService;
@@ -124,17 +125,16 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<EventDTO>> events(@RequestParam("key") String key, Pageable pageable) {
 //        SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(multiMatchQuery("key").field("title").field("description").type(MultiMatchQueryBuilder.Type.BEST_FIELDS)).build();
-        Page<ir.redmind.paasho.service.dto.EventDTO> events = eventService.searchByBuilder("", PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
+        List<ir.redmind.paasho.service.dto.EventDTO> events = eventMapper.toDto(eventService.searchByTitleOrDescription(key));
         List<EventDTO> eventDTOS = new ArrayList<>();
 
-        events.getContent().forEach(e -> {
+        events.forEach(e -> {
             EventDTO event = getEventDTO(e);
             eventDTOS.add(event);
 
         });
 
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(events, String.format("/api/v1/search"));
-        return ResponseEntity.ok().headers(headers).body(eventDTOS);
+        return ResponseEntity.ok().body(eventDTOS);
 
     }
 
@@ -234,9 +234,9 @@ public class EventResources {
         notification.addUsers(event.getCreator());
         notification.setRelatedEvent(event);
         notification.setFrom(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
+        notification.setStatus(NotificationStatus.PENDING);
+        notification.setType(NotificationType.REQUEST);
         notificationService.save(notificationMapper.toDto(notification));
-//        notification.setStatus(NotificationStatus.READ);
-//        notification.setType(NotificationType.NEWS);
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
@@ -273,7 +273,7 @@ public class EventResources {
         event.setPriceType(createEventDTO.getPricing());
         event.setDateString(createEventDTO.getDate());
         event.setTimeString(createEventDTO.getTime());
-        event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId()).get()));
+        event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId()-1).get()));
 //        event.setTelegram(createEventDTO.gett);
         event.setCreator(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
         event.setCapacity(createEventDTO.getCapacity());
@@ -335,7 +335,7 @@ public class EventResources {
         List<Object[]> l = query2.getResultList();
         List<MapEventDTO> eventDTOS = new ArrayList<>();
 
-        l.forEach(e -> {
+        for (Object[] e : l) {
             MapEventDTO event1 = new MapEventDTO();
             event1.setCode(String.valueOf(e[0]));
             event1.setPic("https://media.glassdoor.com/l/00/05/01/26/mhw-mt-shasta-climbing-event.jpg");
@@ -344,16 +344,18 @@ public class EventResources {
             else
                 event1.setTitle(String.valueOf(e[1]));
             event1.setPricing(PriceType.valueOf(String.valueOf(e[3])));
-//            event1.setScore(4.5f);
             event1.setTime(String.valueOf(e[5]));
-//            event1.setCategoryId(1);
+            Event ee = eventService.findByCode(event1.getCode());
+            event1.setCategoryId(Math.toIntExact(ee.getCategories().iterator().next().getId()));
+            event1.setScore(ee.getCreator().getScore().floatValue());
             event1.setDate(String.valueOf(e[4]));
             event1.setLatitude((Double) e[6]);
             event1.setLongitude((Double) e[7]);
             event1.setView(Long.valueOf((Integer) e[8]));
 
             eventDTOS.add(event1);
-        });
+        }
+
         return ResponseEntity.ok(eventDTOS);
 
     }

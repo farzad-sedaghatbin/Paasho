@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -95,6 +96,11 @@ public class EventServiceImpl implements EventService {
     public void delete(Long id) {
         log.debug("Request to delete Event : {}", id);
         eventRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Event> searchByTitleOrDescription(String key) {
+        return eventRepository.findByTitleIsContainingOrDescriptionContaining(key,key);
     }
 
     /**

@@ -47,7 +47,7 @@ public class NotificationResources {
 
         // todo join user to participants
 
-        Notification n =  notificationMapper.toEntity( notificationService.findOne(Long.valueOf(requestId)).get());
+        Notification n = notificationMapper.toEntity(notificationService.findOne(Long.valueOf(requestId)).get());
         n.getRelatedEvent().addParticipants(n.getFrom());
         n.setStatus(NotificationStatus.ACCEPTED);
         eventService.save(eventMapper.toDto(n.getRelatedEvent()));
@@ -60,7 +60,7 @@ public class NotificationResources {
     @Timed
     @CrossOrigin(origins = "*")
     public ResponseEntity<HttpStatus> cancel(@PathVariable("requestId") String requestId) {
-        Notification n =  notificationMapper.toEntity( notificationService.findOne(Long.valueOf(requestId)).get());
+        Notification n = notificationMapper.toEntity(notificationService.findOne(Long.valueOf(requestId)).get());
         n.getRelatedEvent().addParticipants(n.getFrom());
         n.setStatus(NotificationStatus.REJECTED);
         notificationService.save(notificationMapper.toDto(n));
@@ -72,7 +72,7 @@ public class NotificationResources {
     @GetMapping(value = "")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<Page<NotificationDTO>> listNotification(Pageable pageable) {
+    public ResponseEntity<List<NotificationDTO>> listNotification(Pageable pageable) {
 
         //todo list notifications
         Page<ir.redmind.paasho.service.dto.NotificationDTO> list = notificationService.findAllWithEagerRelationships(pageable);
@@ -93,8 +93,8 @@ public class NotificationResources {
         notif1.setPending(false);
         notif1.setText("به پاشو خوش آمدید");
         notificationDTOS.add(notif1);
-        return ResponseEntity.ok(new PageImpl<>(notificationDTOS, new PageRequest(pageable.getPageNumber(), list.getSize() + 1), list.getTotalElements() + 1));
-
+//        return ResponseEntity.ok(new PageImpl<>(notificationDTOS, new PageRequest(pageable.getPageNumber(), list.getSize() + 1), list.getTotalElements() + 1));
+        return ResponseEntity.ok(notificationDTOS);
     }
 
 

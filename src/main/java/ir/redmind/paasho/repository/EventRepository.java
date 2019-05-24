@@ -1,6 +1,7 @@
 package ir.redmind.paasho.repository;
 
 import ir.redmind.paasho.domain.Event;
+import ir.redmind.paasho.service.dto.EventDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -31,4 +32,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     Optional<Event> findOneWithEagerRelationships(@Param("id") Long id);
 
     Event findByCode(String code);
+
+    List<Event> findByTitleIsContainingOrDescriptionContaining(String key,String key2);
 }

@@ -33,4 +33,8 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     Optional<Notification> findOneWithEagerRelationships(@Param("id") Long id);
 
     Notification findByFromAndRelatedEvent(User user, Event event);
+
+
+    List<Notification> findByUsersIn(List<User> users);
+
 }

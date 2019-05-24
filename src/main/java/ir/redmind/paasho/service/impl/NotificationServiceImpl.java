@@ -1,10 +1,13 @@
 package ir.redmind.paasho.service.impl;
 
+import com.google.common.collect.Lists;
 import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.User;
+import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.NotificationService;
 import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.repository.NotificationRepository;
+import ir.redmind.paasho.service.UserService;
 import ir.redmind.paasho.service.dto.NotificationDTO;
 import ir.redmind.paasho.service.mapper.NotificationMapper;
 import org.slf4j.Logger;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -33,11 +37,13 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
 
     private final NotificationMapper notificationMapper;
+    private final UserService userService;
 
 
-    public NotificationServiceImpl(NotificationRepository notificationRepository, NotificationMapper notificationMapper) {
+    public NotificationServiceImpl(NotificationRepository notificationRepository, NotificationMapper notificationMapper, UserService userService) {
         this.notificationRepository = notificationRepository;
         this.notificationMapper = notificationMapper;
+        this.userService = userService;
     }
 
     /**
@@ -77,7 +83,14 @@ public class NotificationServiceImpl implements NotificationService {
     public Page<NotificationDTO> findAllWithEagerRelationships(Pageable pageable) {
         return notificationRepository.findAllWithEagerRelationships(pageable).map(notificationMapper::toDto);
     }
-    
+
+    @Override
+    public List<NotificationDTO> findAllForMe(Pageable pageable) {
+        List<User> users = new ArrayList<>();
+        users.add(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
+         return  notificationMapper.toDto( notificationRepository.findByUsersIn(users));
+    }
+
 
     /**
      * Get one notification by id.

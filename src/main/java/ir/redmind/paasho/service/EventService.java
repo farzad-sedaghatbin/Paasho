@@ -5,6 +5,7 @@ import ir.redmind.paasho.service.dto.EventDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -53,11 +54,10 @@ public interface EventService {
     /**
      * Search for the event corresponding to the query.
      *
-     * @param query the query of the search
-     * 
-     * @param pageable the pagination information
      * @return the list of entities
      */
+    List<Event> searchByTitleOrDescription(String key);
+
     Page<EventDTO> search(String query, Pageable pageable);
 
     Page<EventDTO> searchByBuilder(String query, Pageable pageable);

@@ -14,6 +14,7 @@ public class ProfileDTO {
     private String avatar;
     private String instagram;
     private String email;
+    private String code;
     private GenderType gender;
     private int birthYear;
     private long id;
@@ -90,5 +91,13 @@ public class ProfileDTO {
 
     public long getId() {
         return id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
