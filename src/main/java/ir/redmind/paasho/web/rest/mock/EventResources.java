@@ -347,6 +347,8 @@ public class EventResources {
             event1.setTime(String.valueOf(e[5]));
             Event ee = eventService.findByCode(event1.getCode());
             event1.setCategoryId(Math.toIntExact(ee.getCategories().iterator().next().getId()));
+            event1.setEditable(ee.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
+
             event1.setScore(ee.getCreator().getScore().floatValue());
             event1.setDate(String.valueOf(e[4]));
             event1.setLatitude((Double) e[6]);

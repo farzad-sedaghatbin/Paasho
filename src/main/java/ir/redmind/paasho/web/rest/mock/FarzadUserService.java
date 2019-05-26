@@ -372,6 +372,8 @@ public ResponseEntity<RecordDTO> ranks() {
 
         contactRepository.save(contact);
         contactRepository.save(contact1);
+        user.getContacts().add(contact);
+        user.getContacts().add(contact1);
         userRepository.save(user);
         return ResponseEntity.ok(profileDTO);
 

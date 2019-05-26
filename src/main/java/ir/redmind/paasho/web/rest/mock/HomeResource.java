@@ -43,6 +43,8 @@ public class HomeResource {
             event1.setTitle(event.getTitle());
             event1.setId(event.getId());
             event1.setScore(event.getCreator().getScore().floatValue());
+            event1.setEditable(event.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
+
 //            event1.setPic(event.getp);
             myEventDTOS.add(event1);
         });

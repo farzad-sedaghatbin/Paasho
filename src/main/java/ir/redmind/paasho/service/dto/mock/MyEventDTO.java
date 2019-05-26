@@ -6,6 +6,7 @@ public class MyEventDTO {
     private float score;
     private String pic;
     private Long id;
+    private boolean editable;
 
     public String getCode() {
         return code;
@@ -45,5 +46,13 @@ public class MyEventDTO {
 
     public Long getId() {
         return id;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public boolean getEditable() {
+        return editable;
     }
 }

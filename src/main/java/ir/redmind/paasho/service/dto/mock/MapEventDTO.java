@@ -14,6 +14,7 @@ public class MapEventDTO {
     private double longitude;
     private int categoryId;
     private Long view;
+    private boolean editable;
 
 
     public String getDate() {
@@ -102,5 +103,13 @@ public class MapEventDTO {
 
     public Long getView() {
         return view;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public boolean getEditable() {
+        return editable;
     }
 }
