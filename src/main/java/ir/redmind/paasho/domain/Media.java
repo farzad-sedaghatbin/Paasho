@@ -38,6 +38,16 @@ public class Media implements Serializable {
     @JsonIgnoreProperties("medias")
     private Event event;
 
+    public Media(String url, MediaType photo, Event event) {
+        this.path=url;
+        type=photo;
+        this.event=event;
+    }
+
+    public Media() {
+
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;

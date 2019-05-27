@@ -1,5 +1,6 @@
 package ir.redmind.paasho.repository;
 
+import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.Media;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
@@ -12,4 +13,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MediaRepository extends JpaRepository<Media, Long> {
 
+    void deleteByEvent(Event event);
 }

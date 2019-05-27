@@ -3,29 +3,22 @@ package ir.redmind.paasho.web.rest.mock;
 
 import io.micrometer.core.annotation.Timed;
 import ir.redmind.paasho.domain.Event;
+import ir.redmind.paasho.domain.Media;
 import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.domain.User;
-import ir.redmind.paasho.domain.enumeration.ContactType;
-import ir.redmind.paasho.domain.enumeration.NotificationStatus;
-import ir.redmind.paasho.domain.enumeration.NotificationType;
-import ir.redmind.paasho.domain.enumeration.PriceType;
+import ir.redmind.paasho.domain.enumeration.*;
 import ir.redmind.paasho.security.SecurityUtils;
-import ir.redmind.paasho.service.CategoryService;
-import ir.redmind.paasho.service.EventService;
-import ir.redmind.paasho.service.NotificationService;
-import ir.redmind.paasho.service.UserService;
+import ir.redmind.paasho.service.*;
 import ir.redmind.paasho.service.dto.mock.*;
 import ir.redmind.paasho.service.mapper.CategoryMapper;
 import ir.redmind.paasho.service.mapper.EventMapper;
+import ir.redmind.paasho.service.mapper.MediaMapper;
 import ir.redmind.paasho.service.mapper.NotificationMapper;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
+import ir.redmind.paasho.web.rest.util.FileUpload;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
-import ir.redmind.paasho.web.rest.util.PaginationUtil;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,17 +26,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/events/")
 public class EventResources {
 
     private final EventService eventService;
+    private final MediaService mediaService;
+    private final MediaMapper mediaMapper;
     private final UserService userService;
     private final CategoryService categoryService;
     private final NotificationService notificationService;
@@ -62,8 +57,10 @@ public class EventResources {
         titles.add(new titleDTO("پایه ای بریم کوه", 4l));
     }
 
-    public EventResources(EventService eventService, UserService userService, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper) {
+    public EventResources(EventService eventService, MediaService mediaService, MediaMapper mediaMapper, UserService userService, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper) {
         this.eventService = eventService;
+        this.mediaService = mediaService;
+        this.mediaMapper = mediaMapper;
         this.userService = userService;
         this.categoryService = categoryService;
         this.notificationService = notificationService;
@@ -86,7 +83,8 @@ public class EventResources {
     private DetailEventDTO getDetailEventDTO(@PathVariable("code") String code, Event event) {
         DetailEventDTO eventDTO = new DetailEventDTO();
         eventDTO.setCode(code);
-//        eventDTO.setPic("");
+        if (event.getMedias().iterator().hasNext())
+            eventDTO.setPic(event.getMedias().iterator().next().getPath());
         eventDTO.setTitle(event.getTitle());
         eventDTO.setPricing(event.getPriceType());
         eventDTO.setScore(event.getCreator().getScore().floatValue());
@@ -109,11 +107,9 @@ public class EventResources {
         Notification notification = notificationService.findByFromAndRelatedEvent(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()), event);
         if (event.getParticipants().stream().anyMatch(u -> u.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()))) {
             eventDTO.setJoinStatus(JoinStatus.JOINED);
-        }
-        else if(notification!=null && notification.getStatus().equals(NotificationStatus.REJECTED) ){
+        } else if (notification != null && !notification.getStatus().equals(NotificationStatus.REJECTED)) {
             eventDTO.setJoinStatus(JoinStatus.REQUESTED);
-        }
-        else eventDTO.setJoinStatus(JoinStatus.NOT_JOINED);
+        } else eventDTO.setJoinStatus(JoinStatus.NOT_JOINED);
         eventDTO.setLatitude(event.getLatitude());
         eventDTO.setLongitude(event.getLongitude());
         eventDTO.setCreator(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
@@ -141,7 +137,8 @@ public class EventResources {
     private EventDTO getEventDTO(ir.redmind.paasho.service.dto.EventDTO e) {
         EventDTO event = new EventDTO();
         event.setCode(e.getCode());
-//            event.setPic(e.);
+        if (e.getMedias().iterator().hasNext())
+            event.setPic(e.getMedias().iterator().next().getPath());
         event.setTitle(e.getTitle());
         event.setPricing(PriceType.FREE);
         event.setTime(e.getTimeString());
@@ -202,7 +199,7 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<ShareDTO> share(@PathVariable("code") String code) {
         Event event = eventService.findByCode(code);
-        User user= userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
         ShareDTO shareDto = new ShareDTO();
         shareDto.setUser(user.getFirstName() + " " + user.getLastName());
         shareDto.setContent("میخواد با شما رویداد" + event.getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
@@ -227,13 +224,13 @@ public class EventResources {
     @Timed
     @CrossOrigin(origins = "*")
     public ResponseEntity<HttpStatus> join(@PathVariable("code") String code) {
-//todo create notification
+        Optional<User> user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get());
         Notification notification = new Notification();
         Event event = eventService.findByCode(code);
-        notification.setDescription("درخواست شرکت در رویداد : " + event.getTitle());
+        notification.setDescription(user.get().getFirstName() + " " + user.get().getLastName() + " درخواست شرکت در رویداد : " + event.getTitle());
         notification.addUsers(event.getCreator());
         notification.setRelatedEvent(event);
-        notification.setFrom(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
+        notification.setFrom(user.get());
         notification.setStatus(NotificationStatus.PENDING);
         notification.setType(NotificationType.REQUEST);
         notificationService.save(notificationMapper.toDto(notification));
@@ -261,7 +258,7 @@ public class EventResources {
         event.setCode(UUID.randomUUID().toString());
         event.setDescription(createEventDTO.getDescription());
         if (createEventDTO.getCustomTitle() == null || createEventDTO.getCustomTitle().length() == 0)
-            event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle())-1).getTitle());
+            event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle()) - 1).getTitle());
         else {
             event.setTitle(createEventDTO.getCustomTitle());
         }
@@ -273,7 +270,7 @@ public class EventResources {
         event.setPriceType(createEventDTO.getPricing());
         event.setDateString(createEventDTO.getDate());
         event.setTimeString(createEventDTO.getTime());
-        event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId()-1).get()));
+        event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId() - 1).get()));
 //        event.setTelegram(createEventDTO.gett);
         event.setCreator(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
         event.setCapacity(createEventDTO.getCapacity());
@@ -284,10 +281,20 @@ public class EventResources {
     @PostMapping(value = "/{code}/upload")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile, @PathVariable String code) {
-//todo to ftp end save address to event
-//        createEventDTO.setId(10l);
-//        return ResponseEntity.ok(createEventDTO);
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile, @PathVariable String code) throws IOException {
+        Event event = eventService.findByCode(code);
+        Path testFile = Files.createTempFile(UUID.randomUUID().toString(),"."+ multipartFile.getOriginalFilename().split("\\.")[1]);
+        System.out.println("Creating and Uploading Test File: " + testFile);
+        //todo remove this code
+
+        mediaService.removeByEvent(event);
+        Files.write(testFile, "Hello World !!, This is a test file.".getBytes());
+        String url = FileUpload.uploadFile(new FileSystemResource(testFile.toFile()));
+        Media media = new Media(url, MediaType.PHOTO, event);
+        mediaService.save(mediaMapper.toDto(media));
+        event.setMedias(new HashSet<>());
+        event.getMedias().add(media);
+        eventService.save(eventMapper.toDto(event));
         return ResponseEntity.ok(multipartFile.getOriginalFilename());
     }
 
@@ -302,7 +309,7 @@ public class EventResources {
         event.setCapacity(eventDTO.getCapacity());
         event.setPriceType(eventDTO.getPricing());
         if (eventDTO.getCustomTitle() == null || eventDTO.getCustomTitle().length() == 0)
-            event.setTitle(titles.get(Integer.parseInt(eventDTO.getTitle())-1).getTitle());
+            event.setTitle(titles.get(Integer.parseInt(eventDTO.getTitle()) - 1).getTitle());
         else {
             event.setTitle(eventDTO.getCustomTitle());
         }
@@ -338,7 +345,6 @@ public class EventResources {
         for (Object[] e : l) {
             MapEventDTO event1 = new MapEventDTO();
             event1.setCode(String.valueOf(e[0]));
-            event1.setPic("https://media.glassdoor.com/l/00/05/01/26/mhw-mt-shasta-climbing-event.jpg");
             if (e[1] == null || e[1] == "")
                 event1.setTitle(String.valueOf(e[2]));
             else
@@ -348,6 +354,8 @@ public class EventResources {
             Event ee = eventService.findByCode(event1.getCode());
             event1.setCategoryId(Math.toIntExact(ee.getCategories().iterator().next().getId()));
             event1.setEditable(ee.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
+            if (ee.getMedias().iterator().hasNext())
+                event1.setPic(ee.getMedias().iterator().next().getPath());
 
             event1.setScore(ee.getCreator().getScore().floatValue());
             event1.setDate(String.valueOf(e[4]));

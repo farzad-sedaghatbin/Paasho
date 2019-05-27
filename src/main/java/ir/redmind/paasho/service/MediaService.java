@@ -1,5 +1,6 @@
 package ir.redmind.paasho.service;
 
+import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.service.dto.MediaDTO;
 
 import java.util.List;
@@ -49,4 +50,6 @@ public interface MediaService {
      * @return the list of entities
      */
     List<MediaDTO> search(String query);
+
+    void removeByEvent(Event event);
 }

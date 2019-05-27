@@ -66,6 +66,8 @@ public class EventDTO implements Serializable {
 
     private Set<UserDTO> participants = new HashSet<>();
 
+    private Set<MediaDTO> medias = new HashSet<>();
+
     private Long creatorId;
 
     private String creatorLogin;
@@ -292,6 +294,14 @@ public class EventDTO implements Serializable {
 
     public void setCreatorLogin(String userLogin) {
         this.creatorLogin = userLogin;
+    }
+
+    public Set<MediaDTO> getMedias() {
+        return medias;
+    }
+
+    public void setMedias(Set<MediaDTO> medias) {
+        this.medias = medias;
     }
 
     @Override

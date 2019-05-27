@@ -1,5 +1,6 @@
 package ir.redmind.paasho.service.impl;
 
+import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.service.MediaService;
 import ir.redmind.paasho.domain.Media;
 import ir.redmind.paasho.repository.MediaRepository;
@@ -102,5 +103,11 @@ public class MediaServiceImpl implements MediaService {
     public List<MediaDTO> search(String query) {
         log.debug("Request to search Media for query {}", query);
         return null;
+    }
+
+    @Override
+    public void removeByEvent(Event event) {
+        mediaRepository.deleteByEvent(event);
+
     }
 }
