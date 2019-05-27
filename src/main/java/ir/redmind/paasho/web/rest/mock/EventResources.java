@@ -298,6 +298,23 @@ public class EventResources {
         return ResponseEntity.ok(multipartFile.getOriginalFilename());
     }
 
+
+    @PutMapping(value = "/{code}/url")
+    @Timed
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<String> addUrlToEvent(@RequestParam("url") String url, @PathVariable String code) throws IOException {
+        Event event = eventService.findByCode(code);
+        //todo remove this code
+
+        mediaService.removeByEvent(event);
+        Media media = new Media(url, MediaType.PHOTO, event);
+        mediaService.save(mediaMapper.toDto(media));
+        event.setMedias(new HashSet<>());
+        event.getMedias().add(media);
+        eventService.save(eventMapper.toDto(event));
+        return ResponseEntity.ok(url);
+    }
+
     @PutMapping("")
     public ResponseEntity<ir.redmind.paasho.service.dto.EventDTO> updateEvent(@RequestBody CreateEventDTO eventDTO) throws URISyntaxException {
         if (eventDTO.getId() == null) {
