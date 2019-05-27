@@ -288,7 +288,7 @@ public class EventResources {
         //todo remove this code
 
         mediaService.removeByEvent(event);
-        Files.write(testFile, "Hello World !!, This is a test file.".getBytes());
+        Files.write(testFile, multipartFile.getBytes());
         String url = FileUpload.uploadFile(new FileSystemResource(testFile.toFile()));
         Media media = new Media(url, MediaType.PHOTO, event);
         mediaService.save(mediaMapper.toDto(media));
