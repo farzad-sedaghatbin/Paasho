@@ -308,9 +308,10 @@ public class EventResources {
         //todo remove this code
 
         mediaService.removeByEvent(event);
+        event.setMedias(new HashSet<>());
+        eventService.save(eventMapper.toDto(event));
         Media media = new Media(url, MediaType.PHOTO, event);
         mediaService.save(mediaMapper.toDto(media));
-        event.setMedias(new HashSet<>());
         event.getMedias().add(media);
         eventService.save(eventMapper.toDto(event));
         return ResponseEntity.ok(url);
