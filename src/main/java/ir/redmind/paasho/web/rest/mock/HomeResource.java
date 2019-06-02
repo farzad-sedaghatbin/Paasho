@@ -3,6 +3,7 @@ package ir.redmind.paasho.web.rest.mock;
 
 import io.micrometer.core.annotation.Timed;
 import ir.redmind.paasho.domain.Event;
+import ir.redmind.paasho.domain.enumeration.EventStatus;
 import ir.redmind.paasho.domain.enumeration.PriceType;
 import ir.redmind.paasho.repository.EventRepository;
 import ir.redmind.paasho.security.SecurityUtils;
@@ -33,11 +34,11 @@ public class HomeResource {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<MyEventDTO>> myEvents(Pageable pageable) {
 
-        Page<Event> events = eventRepository.findAll(pageable);
+        List<Event> events = eventRepository.findByStatus(EventStatus.APPROVED);
 
         List<MyEventDTO> myEventDTOS = new ArrayList<>();
 
-        events.getContent().forEach(event -> {
+        events.forEach(event -> {
             MyEventDTO event1 = new MyEventDTO();
             event1.setCode(event.getCode());
             event1.setTitle(event.getTitle());
@@ -57,8 +58,8 @@ public class HomeResource {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<EventDTO>> events(@RequestParam("type") EventType eventType, Pageable pageable) {
         List<EventDTO> eventDTOS = new ArrayList<>();
-        Page<Event> events = eventRepository.findAll(pageable);
-        events.getContent().forEach(event -> {
+        List<Event> events = eventRepository.findByStatus(EventStatus.APPROVED);
+        events.forEach(event -> {
             EventDTO event1 = new EventDTO();
             event1.setCode(event.getCode());
             if (event.getMedias().iterator().hasNext())

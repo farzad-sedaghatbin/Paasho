@@ -257,9 +257,11 @@ public class EventResources {
         event.setAddress(createEventDTO.getAddress());
         event.setCode(UUID.randomUUID().toString());
         event.setDescription(createEventDTO.getDescription());
-        if (createEventDTO.getCustomTitle() == null || createEventDTO.getCustomTitle().length() == 0)
+        if (createEventDTO.getCustomTitle() == null || createEventDTO.getCustomTitle().length() == 0) {
+            event.status(EventStatus.APPROVED);
             event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle()) - 1).getTitle());
-        else {
+        }else {
+            event.status(EventStatus.PENDING);
             event.setTitle(createEventDTO.getCustomTitle());
         }
         event.setTel(createEventDTO.getTel());
@@ -307,12 +309,15 @@ public class EventResources {
         Event event = eventService.findByCode(code);
         //todo remove this code
 
-        mediaService.removeByEvent(event);
-        event.setMedias(new HashSet<>());
-        eventService.save(eventMapper.toDto(event));
-        Media media = new Media(url, MediaType.PHOTO, event);
+//        mediaService.removeByEvent(event);
+//        event.setMedias(new HashSet<>());
+//        eventService.save(eventMapper.toDto(event));
+        String newUrl = url.replace("http://yekupload.ir/", "");
+        String prefix="https://s4.yekupload.ir/images/direct/";
+        Media media = new Media(prefix+url, MediaType.PHOTO, event);
         mediaService.save(mediaMapper.toDto(media));
         event.getMedias().add(media);
+
         eventService.save(eventMapper.toDto(event));
         return ResponseEntity.ok(url);
     }
@@ -327,9 +332,11 @@ public class EventResources {
         event.setTimeString(eventDTO.getTime());
         event.setCapacity(eventDTO.getCapacity());
         event.setPriceType(eventDTO.getPricing());
-        if (eventDTO.getCustomTitle() == null || eventDTO.getCustomTitle().length() == 0)
+        if (eventDTO.getCustomTitle() == null || eventDTO.getCustomTitle().length() == 0) {
+            event.status(EventStatus.APPROVED);
             event.setTitle(titles.get(Integer.parseInt(eventDTO.getTitle()) - 1).getTitle());
-        else {
+        }else {
+            event.status(EventStatus.PENDING);
             event.setTitle(eventDTO.getCustomTitle());
         }
         event.setCategories(new HashSet<>());

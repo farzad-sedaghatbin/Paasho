@@ -4,12 +4,14 @@ package ir.redmind.paasho.service.dto.mock;
 import ir.redmind.paasho.domain.enumeration.GenderType;
 import ir.redmind.paasho.domain.enumeration.PriceType;
 
+import java.util.List;
+
 public class DetailEventDTO {
 
     private String code;
     private String title;
     private String category;
-    private String pic;
+    private List<String> pic;
     private String date;
     private String time;
     private String description;
@@ -54,14 +56,6 @@ public class DetailEventDTO {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic;
     }
 
     public String getDate() {
