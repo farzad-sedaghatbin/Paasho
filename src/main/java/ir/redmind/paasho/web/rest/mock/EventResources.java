@@ -317,7 +317,7 @@ public class EventResources {
 //        eventService.save(eventMapper.toDto(event));
         String newUrl = url.replace("http://yekupload.ir/", "");
         String prefix="https://s4.yekupload.ir/images/direct/";
-        Media media = new Media(prefix+url, MediaType.PHOTO, event);
+        Media media = new Media(prefix+newUrl, MediaType.PHOTO, event);
         mediaService.save(mediaMapper.toDto(media));
         event.getMedias().add(media);
 
