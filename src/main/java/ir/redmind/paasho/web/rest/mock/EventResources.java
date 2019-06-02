@@ -83,10 +83,13 @@ public class EventResources {
     private DetailEventDTO getDetailEventDTO( String code, Event event) {
         DetailEventDTO eventDTO = new DetailEventDTO();
         eventDTO.setCode(code);
-        while (event.getMedias()!=null  && event.getMedias().size()!=0 && event.getMedias().iterator().hasNext()) {
-            Media ss = event.getMedias().iterator().next();
+        if(event.getMedias()!=null  && event.getMedias().size()!=0 ) {
+            Iterator<Media> it = event.getMedias().iterator();
+            while (it.hasNext()) {
+            Media ss = it.next();
             System.out.println(ss.getPath());
             eventDTO.getPic().add(ss.getPath());
+        }
         }
         eventDTO.setTitle(event.getTitle());
         eventDTO.setPricing(event.getPriceType());
