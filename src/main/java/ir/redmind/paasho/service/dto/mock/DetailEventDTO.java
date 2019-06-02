@@ -4,6 +4,7 @@ package ir.redmind.paasho.service.dto.mock;
 import ir.redmind.paasho.domain.enumeration.GenderType;
 import ir.redmind.paasho.domain.enumeration.PriceType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailEventDTO {
@@ -11,7 +12,7 @@ public class DetailEventDTO {
     private String code;
     private String title;
     private String category;
-    private List<String> pic;
+    private List<String> pic=new ArrayList<>();
     private String date;
     private String time;
     private String description;
@@ -217,5 +218,13 @@ public class DetailEventDTO {
 
     public Long getId() {
         return id;
+    }
+
+    public List<String> getPic() {
+        return pic;
+    }
+
+    public void setPic(List<String> pic) {
+        this.pic = pic;
     }
 }
