@@ -80,16 +80,16 @@ public class EventResources {
 
     }
 
-    private DetailEventDTO getDetailEventDTO( String code, Event event) {
+    private DetailEventDTO getDetailEventDTO(String code, Event event) {
         DetailEventDTO eventDTO = new DetailEventDTO();
         eventDTO.setCode(code);
-        if(event.getMedias()!=null  && event.getMedias().size()!=0 ) {
+        if (event.getMedias() != null && event.getMedias().size() != 0) {
             Iterator<Media> it = event.getMedias().iterator();
             while (it.hasNext()) {
-            Media ss = it.next();
-            System.out.println(ss.getPath());
-            eventDTO.getPic().add(ss.getPath());
-        }
+                Media ss = it.next();
+                System.out.println(ss.getPath());
+                eventDTO.getPic().add(ss.getPath());
+            }
         }
         eventDTO.setTitle(event.getTitle());
         eventDTO.setPricing(event.getPriceType());
@@ -118,6 +118,8 @@ public class EventResources {
         } else eventDTO.setJoinStatus(JoinStatus.NOT_JOINED);
         eventDTO.setLatitude(event.getLatitude());
         eventDTO.setLongitude(event.getLongitude());
+        eventDTO.setTelegram(event.getCreator().getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).findFirst().get().getValue());
+        eventDTO.setInstagram(event.getCreator().getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).findFirst().get().getValue());
         eventDTO.setCreator(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
         return eventDTO;
     }
@@ -266,7 +268,7 @@ public class EventResources {
         if (createEventDTO.getCustomTitle() == null || createEventDTO.getCustomTitle().length() == 0) {
             event.status(EventStatus.APPROVED);
             event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle()) - 1).getTitle());
-        }else {
+        } else {
             event.status(EventStatus.PENDING);
             event.setTitle(createEventDTO.getCustomTitle());
         }
@@ -279,7 +281,6 @@ public class EventResources {
         event.setDateString(createEventDTO.getDate());
         event.setTimeString(createEventDTO.getTime());
         event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId() - 1).get()));
-//        event.setTelegram(createEventDTO.gett);
         event.setCreator(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
         event.setCapacity(createEventDTO.getCapacity());
         eventService.save(eventMapper.toDto(event));
@@ -291,7 +292,7 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile, @PathVariable String code) throws IOException {
         Event event = eventService.findByCode(code);
-        Path testFile = Files.createTempFile(UUID.randomUUID().toString(),"."+ multipartFile.getOriginalFilename().split("\\.")[1]);
+        Path testFile = Files.createTempFile(UUID.randomUUID().toString(), "." + multipartFile.getOriginalFilename().split("\\.")[1]);
         System.out.println("Creating and Uploading Test File: " + testFile);
         //todo remove this code
 
@@ -319,10 +320,27 @@ public class EventResources {
 //        event.setMedias(new HashSet<>());
 //        eventService.save(eventMapper.toDto(event));
         String newUrl = url.replace("http://yekupload.ir/", "");
-        String prefix="https://s4.yekupload.ir/images/direct/";
-        Media media = new Media(prefix+newUrl, MediaType.PHOTO, event);
+        String prefix = "https://s4.yekupload.ir/images/direct/";
+        Media media = new Media(prefix + newUrl, MediaType.PHOTO, event);
         mediaService.save(mediaMapper.toDto(media));
         event.getMedias().add(media);
+
+        eventService.save(eventMapper.toDto(event));
+        return ResponseEntity.ok(url);
+    }
+
+
+    @DeleteMapping(value = "/{code}/url")
+    @Timed
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<String> removeUrlToEvent(@RequestParam("url") String url, @PathVariable String code) throws IOException {
+        Event event = eventService.findByCode(code);
+        //todo remove this code
+
+        Media media = mediaService.findByPath(url);
+
+        mediaService.delete(media.getId());
+        event.getMedias().remove(event.getMedias().stream().filter(m -> m.getId().equals(media.getId())).findFirst().get());
 
         eventService.save(eventMapper.toDto(event));
         return ResponseEntity.ok(url);
@@ -341,7 +359,7 @@ public class EventResources {
         if (eventDTO.getCustomTitle() == null || eventDTO.getCustomTitle().length() == 0) {
             event.status(EventStatus.APPROVED);
             event.setTitle(titles.get(Integer.parseInt(eventDTO.getTitle()) - 1).getTitle());
-        }else {
+        } else {
             event.status(EventStatus.PENDING);
             event.setTitle(eventDTO.getCustomTitle());
         }

@@ -110,4 +110,9 @@ public class MediaServiceImpl implements MediaService {
         mediaRepository.deleteByEvent(event);
 
     }
+
+    @Override
+    public Media findByPath(String url) {
+        return mediaRepository.findByPath(url);
+    }
 }

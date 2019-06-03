@@ -14,4 +14,6 @@ import org.springframework.stereotype.Repository;
 public interface MediaRepository extends JpaRepository<Media, Long> {
 
     void deleteByEvent(Event event);
+
+    Media findByPath(String url);
 }
