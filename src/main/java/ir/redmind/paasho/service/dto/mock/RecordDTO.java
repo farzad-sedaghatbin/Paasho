@@ -35,6 +35,34 @@ public class RecordDTO {
         public int index;
         public String user;
 
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public long getScore() {
+            return score;
+        }
+
+        public void setScore(long score) {
+            this.score = score;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
+
+        public String getUser() {
+            return user;
+        }
+
+        public void setUser(String user) {
+            this.user = user;
+        }
+
         public void setAvatar(String s) {
             this.avatar=s;
 

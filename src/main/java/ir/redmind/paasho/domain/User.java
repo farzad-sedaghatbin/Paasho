@@ -136,6 +136,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private Double score;
 
 
+
+
+
     public Long getId() {
         return id;
     }

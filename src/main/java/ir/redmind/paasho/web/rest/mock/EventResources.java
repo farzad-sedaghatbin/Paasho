@@ -7,13 +7,11 @@ import ir.redmind.paasho.domain.Media;
 import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.domain.enumeration.*;
+import ir.redmind.paasho.repository.UserRepository;
 import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.*;
 import ir.redmind.paasho.service.dto.mock.*;
-import ir.redmind.paasho.service.mapper.CategoryMapper;
-import ir.redmind.paasho.service.mapper.EventMapper;
-import ir.redmind.paasho.service.mapper.MediaMapper;
-import ir.redmind.paasho.service.mapper.NotificationMapper;
+import ir.redmind.paasho.service.mapper.*;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
 import ir.redmind.paasho.web.rest.util.FileUpload;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
@@ -40,11 +38,13 @@ public class EventResources {
     private final MediaService mediaService;
     private final MediaMapper mediaMapper;
     private final UserService userService;
+    private final UserRepository userRepository;
     private final CategoryService categoryService;
     private final NotificationService notificationService;
     private final NotificationMapper notificationMapper;
     private final EventMapper eventMapper;
     private final CategoryMapper categoryMapper;
+    private final UserMapper userMapper;
 
     @PersistenceContext
     private EntityManager em;
@@ -57,16 +57,18 @@ public class EventResources {
         titles.add(new titleDTO("پایه ای بریم کوه", 4l));
     }
 
-    public EventResources(EventService eventService, MediaService mediaService, MediaMapper mediaMapper, UserService userService, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper) {
+    public EventResources(EventService eventService, MediaService mediaService, MediaMapper mediaMapper, UserService userService, UserRepository userRepository, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper, UserMapper userMapper) {
         this.eventService = eventService;
         this.mediaService = mediaService;
         this.mediaMapper = mediaMapper;
         this.userService = userService;
+        this.userRepository = userRepository;
         this.categoryService = categoryService;
         this.notificationService = notificationService;
         this.notificationMapper = notificationMapper;
         this.eventMapper = eventMapper;
         this.categoryMapper = categoryMapper;
+        this.userMapper = userMapper;
     }
 
     @GetMapping(value = "{code}/detail")
@@ -263,6 +265,7 @@ public class EventResources {
 
         Event event = new Event();
         event.setAddress(createEventDTO.getAddress());
+        event.setAddress(createEventDTO.getAddress());
         event.setCode(UUID.randomUUID().toString());
         event.setDescription(createEventDTO.getDescription());
         if (createEventDTO.getCustomTitle() == null || createEventDTO.getCustomTitle().length() == 0) {
@@ -280,10 +283,14 @@ public class EventResources {
         event.setPriceType(createEventDTO.getPricing());
         event.setDateString(createEventDTO.getDate());
         event.setTimeString(createEventDTO.getTime());
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
         event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId() - 1).get()));
-        event.setCreator(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
+        event.setCreator(user);
         event.setCapacity(createEventDTO.getCapacity());
         eventService.save(eventMapper.toDto(event));
+
+        user.setScore(user.getScore()+10);
+        userRepository.save(user);
         return ResponseEntity.ok(eventMapper.toDto(event));
     }
 
@@ -339,10 +346,10 @@ public class EventResources {
 
         Media media = mediaService.findByPath(url);
 
-        mediaService.delete(media.getId());
         event.getMedias().remove(event.getMedias().stream().filter(m -> m.getId().equals(media.getId())).findFirst().get());
-
         eventService.save(eventMapper.toDto(event));
+        mediaService.delete(media.getId());
+
         return ResponseEntity.ok(url);
     }
 
