@@ -97,7 +97,8 @@ export class EventPaasho extends React.Component<IEventPaashoProps, IEventPaasho
         <h2 id="event-paasho-heading">
           Events
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Event
+            <FontAwesomeIcon icon="plus" />
+            &nbsp; Create new Event
           </Link>
         </h2>
         <Row>
@@ -259,6 +260,10 @@ export class EventPaasho extends React.Component<IEventPaashoProps, IEventPaasho
                         </Button>
                         <Button tag={Link} to={`${match.url}/${event.id}/delete`} color="danger" size="sm">
                           <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                        </Button>
+
+                        <Button tag={Link} to={`${match.url}/${event.id}/approved`} color="green" size="sm">
+                          <FontAwesomeIcon icon="check" /> <span className="d-none d-md-inline">Approved</span>
                         </Button>
                       </div>
                     </td>

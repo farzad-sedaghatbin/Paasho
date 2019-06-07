@@ -267,9 +267,9 @@ public class FarzadUserService {
     @Timed
     @CrossOrigin(origins = "*")
 
-    public ResponseEntity<HttpStatus> inviteFriend(@RequestParam("data") String data) {
+    public ResponseEntity<HttpStatus> inviteFriend(@RequestBody String data) {
 
-        Long id = Long.valueOf(data.substring(4));
+        Long id = Long.valueOf(data.substring(4,data.length()-1));
         id = (id - 5) / 10;
         Optional<User> u = userRepository.findById(id);
         if (u.isPresent()) {
@@ -496,7 +496,7 @@ public class FarzadUserService {
         recordDTOS.setHelp("دعوت از دوستان 5 امتیاز\n" +
             "ایجاد رویداد به ازای هر شرکت کننده 1 امتیاز \n" +
             "شرکت در هر رویداد 1 امتیاز");
-        recordDTOS.setPrizeDescription("جایزه پرداخت میشه نفر اول 200000 تومان هر هفته");
+        recordDTOS.setPrizeDescription("هر هفته 200000 تومان به نفر اول پرداخت می شود");
         recordDTOS.users = new ArrayList<>();
         List<RecordDTO.User> userList = recordDTOS.users;
         int i = 1;

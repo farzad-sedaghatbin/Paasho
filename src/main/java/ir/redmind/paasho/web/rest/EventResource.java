@@ -3,6 +3,7 @@ package ir.redmind.paasho.web.rest;
 import io.github.jhipster.web.util.ResponseUtil;
 import ir.redmind.paasho.service.EventService;
 import ir.redmind.paasho.service.dto.EventDTO;
+import ir.redmind.paasho.service.mapper.EventMapper;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
 import ir.redmind.paasho.web.rest.util.PaginationUtil;
@@ -32,9 +33,11 @@ public class EventResource {
     private static final String ENTITY_NAME = "event";
 
     private final EventService eventService;
+    private final EventMapper eventMapper;
 
-    public EventResource(EventService eventService) {
+    public EventResource(EventService eventService, EventMapper eventMapper) {
         this.eventService = eventService;
+        this.eventMapper = eventMapper;
     }
 
     /**
@@ -106,8 +109,8 @@ public class EventResource {
     @GetMapping("/events/{id}")
     public ResponseEntity<EventDTO> getEvent(@PathVariable Long id) {
         log.debug("REST request to get Event : {}", id);
-        Optional<EventDTO> eventDTO = eventService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(eventDTO);
+        EventDTO eventDTO =eventMapper.toDto( eventService.findOne(id).get());
+        return ResponseUtil.wrapOrNotFound(Optional.of(eventDTO));
     }
 
     /**
@@ -118,6 +121,14 @@ public class EventResource {
      */
     @DeleteMapping("/events/{id}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
+        log.debug("REST request to delete Event : {}", id);
+        eventService.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+
+    @PutMapping("/events/{id}/approved")
+    public ResponseEntity<Void> approvedEvent(@PathVariable Long id) {
         log.debug("REST request to delete Event : {}", id);
         eventService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

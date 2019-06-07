@@ -21,6 +21,7 @@ export const ACTION_TYPES = {
   CREATE_EVENT: 'event/CREATE_EVENT',
   UPDATE_EVENT: 'event/UPDATE_EVENT',
   DELETE_EVENT: 'event/DELETE_EVENT',
+  APPROVE_EVENT: 'event/APPROVE_EVENT',
   SET_BLOB: 'event/SET_BLOB',
   RESET: 'event/RESET'
 };
@@ -54,6 +55,7 @@ export default (state: EventPaashoState = initialState, action): EventPaashoStat
     case REQUEST(ACTION_TYPES.CREATE_EVENT):
     case REQUEST(ACTION_TYPES.UPDATE_EVENT):
     case REQUEST(ACTION_TYPES.DELETE_EVENT):
+    case REQUEST(ACTION_TYPES.APPROVE_EVENT):
       return {
         ...state,
         errorMessage: null,
@@ -66,6 +68,7 @@ export default (state: EventPaashoState = initialState, action): EventPaashoStat
     case FAILURE(ACTION_TYPES.CREATE_EVENT):
     case FAILURE(ACTION_TYPES.UPDATE_EVENT):
     case FAILURE(ACTION_TYPES.DELETE_EVENT):
+    case FAILURE(ACTION_TYPES.APPROVE_EVENT):
       return {
         ...state,
         loading: false,
@@ -98,6 +101,13 @@ export default (state: EventPaashoState = initialState, action): EventPaashoStat
         entity: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.DELETE_EVENT):
+      return {
+        ...state,
+        updating: false,
+        updateSuccess: true,
+        entity: {}
+      };
+    case SUCCESS(ACTION_TYPES.APPROVE_EVENT):
       return {
         ...state,
         updating: false,
@@ -170,6 +180,15 @@ export const deleteEntity: ICrudDeleteAction<IEventPaasho> = id => async dispatc
   const result = await dispatch({
     type: ACTION_TYPES.DELETE_EVENT,
     payload: axios.delete(requestUrl)
+  });
+  return result;
+};
+
+export const ApprovedEntity: ICrudDeleteAction<IEventPaasho> = id => async dispatch => {
+  const requestUrl = `${apiUrl}/${id}/approved`;
+  const result = await dispatch({
+    type: ACTION_TYPES.APPROVE_EVENT,
+    payload: axios.put(requestUrl)
   });
   return result;
 };

@@ -124,7 +124,7 @@ jhipster:
                 base64-secret: YmZiNTFhYTQ4MDQzNDJmOGUxYzVlODYzN2Q0NTYwYWRlYWY3YzYxNDU5YzI4YWQ3YzRiYmNhNjM4ODdjZTRkYzc3YjQ0ZmIwYmMyNTJkZmM3MDE2M2YwYmJhMTUwZGJiZmVjMjY4NjY2NjZhZGFjYzg4MzQyZWQ4OGVjNTcyMGI=
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
-                token-validity-in-seconds-for-remember-me: 2592000
+                token-validity-in-seconds-for-remember-me: 31104000
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: Paasho@localhost
         base-url: http://127.0.0.1:9090

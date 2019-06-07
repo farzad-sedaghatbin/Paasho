@@ -42,7 +42,7 @@ public interface EventService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<EventDTO> findOne(Long id);
+    Optional<Event> findOne(Long id);
 
     /**
      * Delete the "id" event.
@@ -50,6 +50,7 @@ public interface EventService {
      * @param id the id of the entity
      */
     void delete(Long id);
+    void approve(Long id);
 
     /**
      * Search for the event corresponding to the query.

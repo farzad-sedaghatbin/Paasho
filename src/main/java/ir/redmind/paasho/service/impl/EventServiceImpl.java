@@ -1,6 +1,7 @@
 package ir.redmind.paasho.service.impl;
 
 import ir.redmind.paasho.domain.Event;
+import ir.redmind.paasho.domain.enumeration.EventStatus;
 import ir.redmind.paasho.repository.EventRepository;
 import ir.redmind.paasho.service.EventService;
 import ir.redmind.paasho.service.dto.EventDTO;
@@ -81,10 +82,9 @@ public class EventServiceImpl implements EventService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<EventDTO> findOne(Long id) {
+    public Optional<Event> findOne(Long id) {
         log.debug("Request to get Event : {}", id);
-        return eventRepository.findOneWithEagerRelationships(id)
-            .map(eventMapper::toDto);
+        return eventRepository.findOneWithEagerRelationships(id);
     }
 
     /**
@@ -96,6 +96,15 @@ public class EventServiceImpl implements EventService {
     public void delete(Long id) {
         log.debug("Request to delete Event : {}", id);
         eventRepository.deleteById(id);
+    }
+
+    @Override
+    public void approve(Long id) {
+        log.debug("Request to approve Event : {}", id);
+        Optional<Event> event = eventRepository.findOneWithEagerRelationships(id);
+        Event e = event.get();
+        e.setStatus(EventStatus.APPROVED);
+        eventRepository.save(e);
     }
 
     @Override

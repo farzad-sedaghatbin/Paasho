@@ -2,6 +2,7 @@ package ir.redmind.paasho.web.rest.mock;
 
 
 import io.micrometer.core.annotation.Timed;
+import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.domain.enumeration.NotificationStatus;
@@ -9,6 +10,7 @@ import ir.redmind.paasho.repository.UserRepository;
 import ir.redmind.paasho.service.EventService;
 import ir.redmind.paasho.service.NotificationService;
 import ir.redmind.paasho.service.UserService;
+import ir.redmind.paasho.service.dto.EventDTO;
 import ir.redmind.paasho.service.dto.mock.NotificationDTO;
 import ir.redmind.paasho.service.mapper.EventMapper;
 import ir.redmind.paasho.service.mapper.NotificationMapper;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/notifications/")
@@ -53,13 +56,14 @@ public class NotificationResources {
         // todo join user to participants
 
         Notification n = notificationMapper.toEntity(notificationService.findOne(Long.valueOf(requestId)).get());
-        User user = n.getFrom();
+        User user = userRepository.findById(n.getFrom().getId()).get();
 
         user.setScore(user.getScore()+1);
         userRepository.save(user);
-        n.getRelatedEvent().addParticipants(n.getFrom());
+        Event ev = eventService.findOne(n.getRelatedEvent().getId()).get();
+        ev.addParticipants(n.getFrom());
         n.setStatus(NotificationStatus.ACCEPTED);
-        eventService.save(eventMapper.toDto(n.getRelatedEvent()));
+        eventService.save(eventMapper.toDto(ev));
         notificationService.save(notificationMapper.toDto(n));
         return ResponseEntity.ok(HttpStatus.OK);
 
@@ -84,9 +88,9 @@ public class NotificationResources {
     public ResponseEntity<List<NotificationDTO>> listNotification(Pageable pageable) {
 
         //todo list notifications
-        Page<ir.redmind.paasho.service.dto.NotificationDTO> list = notificationService.findAllWithEagerRelationships(pageable);
+        List<ir.redmind.paasho.service.dto.NotificationDTO> list = notificationService.findAllForMe(pageable);
         List<NotificationDTO> notificationDTOS = new ArrayList<>();
-        list.getContent().forEach(l -> {
+        list.forEach(l -> {
             NotificationDTO notif = new NotificationDTO();
             notif.setRequestId(String.valueOf(l.getId()));
             notif.setPending(true);

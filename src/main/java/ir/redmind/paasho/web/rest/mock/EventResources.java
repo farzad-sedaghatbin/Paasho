@@ -270,7 +270,7 @@ public class EventResources {
         event.setDescription(createEventDTO.getDescription());
         if (createEventDTO.getCustomTitle() == null || createEventDTO.getCustomTitle().length() == 0) {
             event.status(EventStatus.APPROVED);
-            event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle()) - 1).getTitle());
+            event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle())).getTitle());
         } else {
             event.status(EventStatus.PENDING);
             event.setTitle(createEventDTO.getCustomTitle());
@@ -284,7 +284,7 @@ public class EventResources {
         event.setDateString(createEventDTO.getDate());
         event.setTimeString(createEventDTO.getTime());
         User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
-        event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId() - 1).get()));
+        event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId()).get()));
         event.setCreator(user);
         event.setCapacity(createEventDTO.getCapacity());
         eventService.save(eventMapper.toDto(event));
@@ -365,7 +365,7 @@ public class EventResources {
         event.setPriceType(eventDTO.getPricing());
         if (eventDTO.getCustomTitle() == null || eventDTO.getCustomTitle().length() == 0) {
             event.status(EventStatus.APPROVED);
-            event.setTitle(titles.get(Integer.parseInt(eventDTO.getTitle()) - 1).getTitle());
+            event.setTitle(titles.get(Integer.parseInt(eventDTO.getTitle())).getTitle());
         } else {
             event.status(EventStatus.PENDING);
             event.setTitle(eventDTO.getCustomTitle());
