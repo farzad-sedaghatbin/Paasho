@@ -269,7 +269,7 @@ public class FarzadUserService {
 
     public ResponseEntity<HttpStatus> inviteFriend(@RequestBody String data) {
 
-        Long id = Long.valueOf(data.substring(4,data.length()-1));
+        Long id = Long.valueOf(data.substring(5,data.length()-1));
         id = (id - 5) / 10;
         Optional<User> u = userRepository.findById(id);
         if (u.isPresent()) {
