@@ -25,7 +25,6 @@ export interface IEventPaashoUpdateProps extends StateProps, DispatchProps, Rout
 export interface IEventPaashoUpdateState {
   isNew: boolean;
   idscategories: any[];
-  idsparticipants: any[];
   titlesId: string;
   creatorId: string;
 }
@@ -35,7 +34,6 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
     super(props);
     this.state = {
       idscategories: [],
-      idsparticipants: [],
       titlesId: '0',
       creatorId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
@@ -74,8 +72,7 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
       const entity = {
         ...eventEntity,
         ...values,
-        categories: mapIdList(values.categories),
-        participants: mapIdList(values.participants)
+        categories: mapIdList(values.categories)
       };
 
       if (this.state.isNew) {
@@ -167,9 +164,9 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                     name="priceType"
                     value={(!isNew && eventEntity.priceType) || 'FREE'}
                   >
-                    <option value="FREE">FREE</option>
-                    <option value="DUTCH">DUTCH</option>
-                    <option value="MONETARY">MONETARY</option>
+                    <option value="FREE">رایگان</option>
+                    <option value="DUTCH_TREAT">دنکی</option>
+                    <option value="NON_FREE">پولی</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
@@ -183,6 +180,8 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                   >
                     <option value="OPEN">OPEN</option>
                     <option value="CLOSE">CLOSE</option>
+                    <option value="APPROVED">APPROVED</option>
+                    <option value="PENDING">PENDING</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
@@ -301,7 +300,7 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                     {categories
                       ? categories.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.name}
                           </option>
                         ))
                       : null}
@@ -314,27 +313,7 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                     {titles
                       ? titles.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="users">Participants</Label>
-                  <AvInput
-                    id="event-paasho-participants"
-                    type="select"
-                    multiple
-                    className="form-control"
-                    name="participants"
-                    value={eventEntity.participants && eventEntity.participants.map(e => e.id)}
-                  >
-                    <option value="" key="0" />
-                    {users
-                      ? users.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.login}
+                            {otherEntity.title}
                           </option>
                         ))
                       : null}
