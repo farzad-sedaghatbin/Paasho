@@ -32,10 +32,6 @@ export const EntitiesMenu = props => (
       <FontAwesomeIcon icon="asterisk" fixedWidth />
       &nbsp;Category Paasho
     </DropdownItem>
-    <DropdownItem tag={Link} to="/entity/factor-paasho">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />
-      &nbsp;Factor Paasho
-    </DropdownItem>
     <DropdownItem tag={Link} to="/entity/notification-paasho">
       <FontAwesomeIcon icon="asterisk" fixedWidth />
       &nbsp;Notification Paasho

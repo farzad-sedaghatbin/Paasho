@@ -263,6 +263,8 @@ public class Event implements Serializable {
     }
 
     public Integer getVisitCount() {
+        if(visitCount==null)
+            return 0;
         return visitCount;
     }
 
