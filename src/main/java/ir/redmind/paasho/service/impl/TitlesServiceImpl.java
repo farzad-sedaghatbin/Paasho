@@ -100,9 +100,5 @@ public class TitlesServiceImpl implements TitlesService {
     public List<TitlesDTO> search(String query) {
         log.debug("Request to search Titles for query {}", query);
         return null;
-//        return StreamSupport
-//            .stream(titlesRepository.findAll(queryStringQuery(query)).spliterator(), false)
-//            .map(titlesMapper::toDto)
-//            .collect(Collectors.toList());
     }
 }

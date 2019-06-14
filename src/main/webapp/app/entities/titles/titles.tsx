@@ -49,7 +49,8 @@ export class Titles extends React.Component<ITitlesProps, ITitlesState> {
         <h2 id="titles-heading">
           Titles
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Titles
+            <FontAwesomeIcon icon="plus" />
+            &nbsp; Create new Titles
           </Link>
         </h2>
         <Row>
@@ -74,6 +75,8 @@ export class Titles extends React.Component<ITitlesProps, ITitlesState> {
             <thead>
               <tr>
                 <th>ID</th>
+                <th>Title</th>
+                <th>Category</th>
                 <th />
               </tr>
             </thead>
@@ -85,6 +88,8 @@ export class Titles extends React.Component<ITitlesProps, ITitlesState> {
                       {titles.id}
                     </Button>
                   </td>
+                  <td>{titles.title}</td>
+                  <td>{titles.categoryId ? <Link to={`category-paasho/${titles.categoryId}`}>{titles.categoryId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${titles.id}`} color="info" size="sm">

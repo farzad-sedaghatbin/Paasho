@@ -261,9 +261,8 @@ export class EventPaasho extends React.Component<IEventPaashoProps, IEventPaasho
                         <Button tag={Link} to={`${match.url}/${event.id}/delete`} color="danger" size="sm">
                           <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                         </Button>
-
-                        <Button tag={Link} to={`${match.url}/${event.id}/approved`} color="green" size="sm">
-                          <FontAwesomeIcon icon="check" /> <span className="d-none d-md-inline">Approved</span>
+                        <Button tag={Link} to={`${match.url}/${event.id}/approved`} color="success" size="sm">
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Approved</span>
                         </Button>
                       </div>
                     </td>

@@ -27,10 +27,18 @@ export class TitlesDetail extends React.Component<ITitlesDetailProps> {
           <h2>
             Titles [<b>{titlesEntity.id}</b>]
           </h2>
-          <dl className="jh-entity-details" />
+          <dl className="jh-entity-details">
+            <dt>
+              <span id="title">Title</span>
+            </dt>
+            <dd>{titlesEntity.title}</dd>
+            <dt>Category</dt>
+            <dd>{titlesEntity.categoryId ? titlesEntity.categoryId : ''}</dd>
+          </dl>
           <Button tag={Link} to="/entity/titles" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/titles/${titlesEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>

@@ -58,7 +58,7 @@ public class NotificationResources {
         Notification n = notificationMapper.toEntity(notificationService.findOne(Long.valueOf(requestId)).get());
         User user = userRepository.findById(n.getFrom().getId()).get();
 
-        user.setScore(user.getScore()+1);
+        user.setScore(user.getScore() + 1);
         userRepository.save(user);
         Event ev = eventService.findOne(n.getRelatedEvent().getId()).get();
         ev.addParticipants(n.getFrom());
@@ -93,7 +93,8 @@ public class NotificationResources {
         list.forEach(l -> {
             NotificationDTO notif = new NotificationDTO();
             notif.setRequestId(String.valueOf(l.getId()));
-            notif.setPending(true);
+            if (l.getStatus().equals(NotificationStatus.PENDING))
+                notif.setPending(true);
             notif.setText(l.getDescription());
             notif.setRelatedEventcode(String.valueOf(l.getRelatedEventId()));
             notif.setRelatedUserId(String.valueOf(l.getFromId()));

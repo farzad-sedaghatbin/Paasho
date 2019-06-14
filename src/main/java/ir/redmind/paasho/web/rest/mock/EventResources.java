@@ -2,11 +2,9 @@ package ir.redmind.paasho.web.rest.mock;
 
 
 import io.micrometer.core.annotation.Timed;
-import ir.redmind.paasho.domain.Event;
-import ir.redmind.paasho.domain.Media;
-import ir.redmind.paasho.domain.Notification;
-import ir.redmind.paasho.domain.User;
+import ir.redmind.paasho.domain.*;
 import ir.redmind.paasho.domain.enumeration.*;
+import ir.redmind.paasho.repository.TitlesRepository;
 import ir.redmind.paasho.repository.UserRepository;
 import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.*;
@@ -39,6 +37,7 @@ public class EventResources {
     private final MediaMapper mediaMapper;
     private final UserService userService;
     private final UserRepository userRepository;
+    private final TitlesRepository titlesRepository;
     private final CategoryService categoryService;
     private final NotificationService notificationService;
     private final NotificationMapper notificationMapper;
@@ -48,21 +47,14 @@ public class EventResources {
 
     @PersistenceContext
     private EntityManager em;
-    static List<titleDTO> titles = new ArrayList<>();
 
-    static {
-        titles.add(new titleDTO("پایه ای بریم فوتبال", 1l));
-        titles.add(new titleDTO("پایه ای بریم دورهمی", 2l));
-        titles.add(new titleDTO("پایه ای بریم سینما", 3l));
-        titles.add(new titleDTO("پایه ای بریم کوه", 4l));
-    }
-
-    public EventResources(EventService eventService, MediaService mediaService, MediaMapper mediaMapper, UserService userService, UserRepository userRepository, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper, UserMapper userMapper) {
+    public EventResources(EventService eventService, MediaService mediaService, MediaMapper mediaMapper, UserService userService, UserRepository userRepository, TitlesRepository titlesRepository, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper, UserMapper userMapper) {
         this.eventService = eventService;
         this.mediaService = mediaService;
         this.mediaMapper = mediaMapper;
         this.userService = userService;
         this.userRepository = userRepository;
+        this.titlesRepository = titlesRepository;
         this.categoryService = categoryService;
         this.notificationService = notificationService;
         this.notificationMapper = notificationMapper;
@@ -165,11 +157,14 @@ public class EventResources {
     @Timed
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<titleDTO>> getTitles(@PathVariable("category") String category) {
+
+        List<Titles> titleList = titlesRepository.findByCategory_Id(Long.valueOf(category));
+
         List<titleDTO> titles = new ArrayList<>();
-        titles.add(new titleDTO("پایه ای بریم فوتبال", 1l));
-        titles.add(new titleDTO("پایه ای بریم دورهمی", 2l));
-        titles.add(new titleDTO("پایه ای بریم سینما", 3l));
-        titles.add(new titleDTO("پایه ای بریم کوه", 4l));
+
+        titleList.forEach(t-> {
+            titles.add(new titleDTO(t.getTitle(), t.getId()));
+        });
         return ResponseEntity.ok(titles);
 
     }
@@ -270,7 +265,7 @@ public class EventResources {
         event.setDescription(createEventDTO.getDescription());
         if (createEventDTO.getCustomTitle() == null || createEventDTO.getCustomTitle().length() == 0) {
             event.status(EventStatus.APPROVED);
-            event.setTitle(titles.get(Integer.parseInt(createEventDTO.getTitle())).getTitle());
+            event.setTitle(titlesRepository.findById(Long.valueOf(createEventDTO.getTitle())).get().getTitle());
         } else {
             event.status(EventStatus.PENDING);
             event.setTitle(createEventDTO.getCustomTitle());
@@ -365,7 +360,7 @@ public class EventResources {
         event.setPriceType(eventDTO.getPricing());
         if (eventDTO.getCustomTitle() == null || eventDTO.getCustomTitle().length() == 0) {
             event.status(EventStatus.APPROVED);
-            event.setTitle(titles.get(Integer.parseInt(eventDTO.getTitle())).getTitle());
+            event.setTitle(titlesRepository.findById(Long.valueOf(eventDTO.getTitle())).get().getTitle());
         } else {
             event.status(EventStatus.PENDING);
             event.setTitle(eventDTO.getCustomTitle());
@@ -389,7 +384,7 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<MapEventDTO>> events(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude) {
 
-        String query = "SELECT  code,title,custom_Title,price_Type,date_String,time_String,latitude,longitude,visit_count FROM event e  WHERE  ((6371 * acos ( cos ( radians(?1) ) * cos( radians( cast(latitude as double precision) ) ) * cos( radians( cast(e.longitude as double precision) ) - radians(?3) ) +sin ( radians(?2) ) * sin( radians( cast(e.latitude as double precision) ) ))) < 5);  ";
+        String query = "SELECT  code,title,custom_Title,price_Type,date_String,time_String,latitude,longitude,visit_count FROM event e  WHERE  e.status='APPROVED' and ((6371 * acos ( cos ( radians(?1) ) * cos( radians( cast(latitude as double precision) ) ) * cos( radians( cast(e.longitude as double precision) ) - radians(?3) ) +sin ( radians(?2) ) * sin( radians( cast(e.latitude as double precision) ) ))) < 5);  ";
 //                                    System.out.println(a);
         javax.persistence.Query query2 = em.createNativeQuery(query);
         query2.setParameter(1, latitude);
