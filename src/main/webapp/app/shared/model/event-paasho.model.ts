@@ -8,13 +8,15 @@ import { ICommentPaasho } from 'app/shared/model/comment-paasho.model';
 
 export const enum PriceType {
   FREE = 'FREE',
-  DUTCH = 'DUTCH',
-  MONETARY = 'MONETARY'
+  DUTCH_TREAT = 'DUTCH_TREAT',
+  NON_FREE = 'NON_FREE'
 }
 
 export const enum EventStatus {
   OPEN = 'OPEN',
-  CLOSE = 'CLOSE'
+  CLOSE = 'CLOSE',
+  APPROVED = 'APPROVED',
+  PENDING = 'PENDING'
 }
 
 export interface IEventPaasho {

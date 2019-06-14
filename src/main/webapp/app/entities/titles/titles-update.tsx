@@ -104,7 +104,7 @@ export class TitlesUpdate extends React.Component<ITitlesUpdateProps, ITitlesUpd
                     {categories
                       ? categories.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.name}
                           </option>
                         ))
                       : null}
