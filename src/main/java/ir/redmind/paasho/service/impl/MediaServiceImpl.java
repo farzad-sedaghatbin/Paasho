@@ -1,6 +1,8 @@
 package ir.redmind.paasho.service.impl;
 
 import ir.redmind.paasho.domain.Event;
+import ir.redmind.paasho.domain.enumeration.MediaType;
+import ir.redmind.paasho.repository.CategoryRepository;
 import ir.redmind.paasho.service.MediaService;
 import ir.redmind.paasho.domain.Media;
 import ir.redmind.paasho.repository.MediaRepository;
@@ -16,7 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Service Implementation for managing Media.
@@ -28,12 +29,14 @@ public class MediaServiceImpl implements MediaService {
     private final Logger log = LoggerFactory.getLogger(MediaServiceImpl.class);
 
     private final MediaRepository mediaRepository;
+    private final CategoryRepository categoryRepository;
 
     private final MediaMapper mediaMapper;
 
 
-    public MediaServiceImpl(MediaRepository mediaRepository, MediaMapper mediaMapper) {
+    public MediaServiceImpl(MediaRepository mediaRepository, CategoryRepository categoryRepository, MediaMapper mediaMapper) {
         this.mediaRepository = mediaRepository;
+        this.categoryRepository = categoryRepository;
         this.mediaMapper = mediaMapper;
     }
 
@@ -64,6 +67,23 @@ public class MediaServiceImpl implements MediaService {
         return mediaRepository.findAll().stream()
             .map(mediaMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MediaDTO> findAvatar() {
+        log.debug("Request to get all Media");
+        return mediaRepository.findByType(MediaType.AVATAR).stream()
+            .map(mediaMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<String> findCategory(Long id) {
+        log.debug("Request to get all Media");
+        return categoryRepository.findById(id).get().getMedias().stream().map(Media::getPath).collect(Collectors.toList());
     }
 
 

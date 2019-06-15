@@ -84,6 +84,12 @@ public class MediaResource {
         return mediaService.findAll();
     }
 
+    @GetMapping("/media/avatar")
+    public List<MediaDTO> getAllMediaByType() {
+        log.debug("REST request to get all Media");
+        return mediaService.findAvatar();
+    }
+
     /**
      * GET  /media/:id : get the "id" media.
      *
@@ -95,6 +101,12 @@ public class MediaResource {
         log.debug("REST request to get Media : {}", id);
         Optional<MediaDTO> mediaDTO = mediaService.findOne(id);
         return ResponseUtil.wrapOrNotFound(mediaDTO);
+    }
+    @GetMapping("/media/category/{id}")
+    public ResponseEntity<List<String>> getCategoryMedia(@PathVariable Long id) {
+        log.debug("REST request to get Media : {}", id);
+        List<String> mediaDTO = mediaService.findCategory(id);
+        return ResponseUtil.wrapOrNotFound(Optional.of(mediaDTO));
     }
 
     /**

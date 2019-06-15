@@ -26,6 +26,8 @@ public interface MediaService {
      * @return the list of entities
      */
     List<MediaDTO> findAll();
+    List<MediaDTO> findAvatar();
+    List<String> findCategory(Long id);
 
 
     /**

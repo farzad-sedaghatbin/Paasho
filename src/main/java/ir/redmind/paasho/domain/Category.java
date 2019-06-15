@@ -40,6 +40,9 @@ public class Category implements Serializable {
     @JsonIgnore
     private Set<Event> events = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Media> medias = new HashSet<>();
+
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "category_users",
@@ -157,6 +160,14 @@ public class Category implements Serializable {
             return false;
         }
         return Objects.equals(getId(), category.getId());
+    }
+
+    public Set<Media> getMedias() {
+        return medias;
+    }
+
+    public void setMedias(Set<Media> medias) {
+        this.medias = medias;
     }
 
     @Override
