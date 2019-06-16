@@ -34,10 +34,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findOneByLogin(String login);
 
-    @EntityGraph(attributePaths = "authorities")
+    @EntityGraph(attributePaths = "authorities,rates")
     Optional<User> findOneWithAuthoritiesById(Long id);
 
-    @EntityGraph(attributePaths = "authorities")
+    @EntityGraph(attributePaths = "authorities,rates")
     @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
     Optional<User> findOneWithAuthoritiesByLogin(String login);
 
