@@ -23,7 +23,6 @@ import java.util.Collection;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
-@EnableDiscoveryClient
 public class PaashoApp {
 
     private static final Logger log = LoggerFactory.getLogger(PaashoApp.class);
