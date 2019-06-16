@@ -162,7 +162,7 @@ public class EventResources {
 
         List<titleDTO> titles = new ArrayList<>();
 
-        titleList.forEach(t-> {
+        titleList.forEach(t -> {
             titles.add(new titleDTO(t.getTitle(), t.getId()));
         });
         return ResponseEntity.ok(titles);
@@ -284,7 +284,7 @@ public class EventResources {
         event.setCapacity(createEventDTO.getCapacity());
         eventService.save(eventMapper.toDto(event));
 
-        user.setScore(user.getScore()+10);
+        user.setScore(user.getScore() + 10);
         userRepository.save(user);
         return ResponseEntity.ok(eventMapper.toDto(event));
     }
@@ -317,13 +317,19 @@ public class EventResources {
     public ResponseEntity<String> addUrlToEvent(@RequestParam("url") String url, @PathVariable String code) throws IOException {
         Event event = eventService.findByCode(code);
         //todo remove this code
-
+        Media media;
 //        mediaService.removeByEvent(event);
 //        event.setMedias(new HashSet<>());
 //        eventService.save(eventMapper.toDto(event));
-        String newUrl = url.replace("http://yekupload.ir/", "");
-        String prefix = "https://s4.yekupload.ir/images/direct/";
-        Media media = new Media(prefix + newUrl, MediaType.PHOTO, event);
+        if (!url.contains(".yekupload.ir/images/direct/")) {
+            String newUrl = url.replace("http://yekupload.ir/", "");
+            String prefix = "https://s4.yekupload.ir/images/direct/";
+            media = new Media(prefix + newUrl, MediaType.PHOTO, event);
+        } else {
+            media = new Media(url, MediaType.PHOTO, event);
+
+        }
+
         mediaService.save(mediaMapper.toDto(media));
         event.getMedias().add(media);
 

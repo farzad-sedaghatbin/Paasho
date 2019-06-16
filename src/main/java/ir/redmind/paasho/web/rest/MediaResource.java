@@ -1,5 +1,6 @@
 package ir.redmind.paasho.web.rest;
 import ir.redmind.paasho.service.MediaService;
+import ir.redmind.paasho.service.dto.PicDTO;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
 import ir.redmind.paasho.service.dto.MediaDTO;
@@ -14,6 +15,7 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
@@ -84,7 +86,7 @@ public class MediaResource {
         return mediaService.findAll();
     }
 
-    @GetMapping("/media/avatar")
+    @GetMapping("/v1/media/avatar")
     public List<MediaDTO> getAllMediaByType() {
         log.debug("REST request to get all Media");
         return mediaService.findAvatar();
@@ -102,10 +104,10 @@ public class MediaResource {
         Optional<MediaDTO> mediaDTO = mediaService.findOne(id);
         return ResponseUtil.wrapOrNotFound(mediaDTO);
     }
-    @GetMapping("/media/category/{id}")
-    public ResponseEntity<List<String>> getCategoryMedia(@PathVariable Long id) {
+    @GetMapping("/v1/media/category/{id}")
+    public ResponseEntity<List<PicDTO>> getCategoryMedia(@PathVariable int id) {
         log.debug("REST request to get Media : {}", id);
-        List<String> mediaDTO = mediaService.findCategory(id);
+        List<PicDTO> mediaDTO = mediaService.findCategory(Long.valueOf(id)).stream().map(PicDTO::new).collect(Collectors.toList());
         return ResponseUtil.wrapOrNotFound(Optional.of(mediaDTO));
     }
 
