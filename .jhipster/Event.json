@@ -1,5 +1,71 @@
 {
-    "name": "Event",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "media",
+            "otherEntityRelationshipName": "event",
+            "relationshipName": "medias",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "category",
+            "otherEntityRelationshipName": "events",
+            "relationshipName": "categories",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "rating",
+            "otherEntityRelationshipName": "event",
+            "relationshipName": "rates",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "factor",
+            "otherEntityRelationshipName": "event",
+            "relationshipName": "factors",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "titles",
+            "otherEntityName": "titles",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "event",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "participants",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "event",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "creator",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "event",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "comments",
+            "otherEntityName": "comment",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "event",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "eventTime",
@@ -71,60 +137,32 @@
         {
             "fieldName": "telegram",
             "fieldType": "String"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "user1",
-            "otherEntityRelationshipName": "event",
-            "relationshipName": "creator",
-            "otherEntityField": "id",
-            "ownerSide": true
         },
         {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "media",
-            "otherEntityRelationshipName": "event",
-            "relationshipName": "medias"
+            "fieldName": "capacity",
+            "fieldType": "Long"
         },
         {
-            "relationshipType": "many-to-many",
-            "otherEntityName": "user1",
-            "otherEntityRelationshipName": "events",
-            "relationshipName": "participants",
-            "otherEntityField": "id",
-            "ownerSide": true
+            "fieldName": "customTitle",
+            "fieldType": "String"
         },
         {
-            "relationshipType": "many-to-many",
-            "otherEntityName": "category",
-            "otherEntityRelationshipName": "events",
-            "relationshipName": "categories",
-            "otherEntityField": "id",
-            "ownerSide": true
+            "fieldName": "dateString",
+            "fieldType": "String",
+            "fieldValidateRules": []
         },
         {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "rating",
-            "otherEntityRelationshipName": "event",
-            "relationshipName": "rates"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "factor",
-            "otherEntityRelationshipName": "event",
-            "relationshipName": "factors"
+            "fieldName": "timeString",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20190416144501",
-    "entityTableName": "event",
     "dto": "mapstruct",
-    "pagination": "infinite-scroll",
+    "searchEngine": "elasticsearch",
     "service": "serviceImpl",
+    "entityTableName": "event",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*",
+    "pagination": "infinite-scroll",
     "angularJSSuffix": "paasho"
 }

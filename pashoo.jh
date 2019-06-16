@@ -19,12 +19,6 @@ entity Event {
     telegram String
 }
 
-entity User1 {
-	name String,
-    lastName String,
-    gender GenderType,
-    birthDate String,
-}
 
 entity Contact {
 	type ContactType,
@@ -91,26 +85,26 @@ enum FactorStatus{
 	PAID, INIT
 }
 relationship OneToMany{
-	User1 {contacts} to Contact{user},
-    Event {medias} to Media {event},
-    User1 {rates} to Rating {user},
-    Notification {users} to User1{notification},
-    User1 {comments} to Comment{user},
+	User {contacts} to Contact{user},
+    Event {medias} to Media {createdEvents},
+    User {rates} to Rating {user},
+    Notification {users} to User{notification},
+    User {comments} to Comment{user},
 
 }
 relationship ManyToOne {
-	Rating {event} to Event{rates},   
-    Factor{event} to Event{factors},
-    Factor{user} to User1{factors}
+	Rating {createdEvents} to Event{rates},
+    Factor{createdEvents} to Event{factors},
+    Factor{user} to User{factors}
 
 }
 
 relationship OneToOne{
-    Event {creator} to User1{event},
+    Event {creator} to User{createdEvents},
 }
 relationship ManyToMany{
-    Event {participants} to User1{events},
-	User1 {favorits} to Category{users},
+    Event {participants} to User{events},
+	User {favorits} to Category{users},
     Event{categories} to Category{events},
 }
 // Set pagination options

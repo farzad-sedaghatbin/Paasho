@@ -1,5 +1,34 @@
 {
-    "name": "Notification",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "users",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "notification",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "from",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "notification",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "relatedEvent",
+            "otherEntityName": "event",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "notification",
+            "otherEntityRelationshipNameUndefined": true
+        }
+    ],
     "fields": [
         {
             "fieldName": "description",
@@ -16,22 +45,13 @@
             "fieldValues": "READ"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "user1",
-            "otherEntityRelationshipName": "notification",
-            "relationshipName": "users"
-        }
-    ],
     "changelogDate": "20190416144505",
-    "entityTableName": "notification",
     "dto": "mapstruct",
-    "pagination": "no",
+    "searchEngine": "elasticsearch",
     "service": "serviceImpl",
+    "entityTableName": "notification",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*",
+    "pagination": "no",
     "angularJSSuffix": "paasho"
 }

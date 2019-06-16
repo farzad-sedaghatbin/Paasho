@@ -1,28 +1,38 @@
 {
-    "name": "Comment",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "comment",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "event",
+            "otherEntityName": "event",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "comment",
+            "otherEntityRelationshipNameUndefined": true
+        }
+    ],
     "fields": [
         {
             "fieldName": "description",
             "fieldType": "String"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "user1",
-            "otherEntityRelationshipName": "comments",
-            "relationshipName": "user",
-            "otherEntityField": "id"
-        }
-    ],
     "changelogDate": "20190416144508",
-    "entityTableName": "comment",
     "dto": "mapstruct",
-    "pagination": "no",
+    "searchEngine": "elasticsearch",
     "service": "serviceImpl",
+    "entityTableName": "comment",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*",
+    "pagination": "no",
     "angularJSSuffix": "paasho"
 }

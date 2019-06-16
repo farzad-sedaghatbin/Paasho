@@ -1,5 +1,17 @@
 {
-    "name": "Contact",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "contact",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "type",
@@ -11,23 +23,13 @@
             "fieldType": "String"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "user1",
-            "otherEntityRelationshipName": "contacts",
-            "relationshipName": "user",
-            "otherEntityField": "id"
-        }
-    ],
     "changelogDate": "20190416144503",
-    "entityTableName": "contact",
     "dto": "mapstruct",
-    "pagination": "no",
+    "searchEngine": "elasticsearch",
     "service": "serviceImpl",
+    "entityTableName": "contact",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*",
+    "pagination": "no",
     "angularJSSuffix": "paasho"
 }

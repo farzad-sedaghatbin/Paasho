@@ -1,5 +1,16 @@
 {
-    "name": "Factor",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "event",
+            "otherEntityRelationshipName": "factors",
+            "relationshipName": "event",
+            "otherEntityField": "id",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "price",
@@ -23,30 +34,13 @@
             "fieldType": "ZonedDateTime"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "event",
-            "otherEntityRelationshipName": "factors",
-            "relationshipName": "event",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "user1",
-            "otherEntityRelationshipName": "factors",
-            "relationshipName": "user",
-            "otherEntityField": "id"
-        }
-    ],
     "changelogDate": "20190416144507",
-    "entityTableName": "factor",
     "dto": "mapstruct",
-    "pagination": "no",
+    "searchEngine": "elasticsearch",
     "service": "serviceImpl",
+    "entityTableName": "factor",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*",
+    "pagination": "no",
     "angularJSSuffix": "paasho"
 }

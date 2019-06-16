@@ -1,35 +1,38 @@
 {
-    "name": "Rating",
-    "fields": [
-        {
-            "fieldName": "rate",
-            "fieldType": "Double"
-        }
-    ],
+    "fluentMethods": true,
+    "clientRootFolder": "",
     "relationships": [
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "event",
             "otherEntityRelationshipName": "rates",
             "relationshipName": "event",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipNameUndefined": false
         },
         {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "user1",
-            "otherEntityRelationshipName": "rates",
             "relationshipName": "user",
-            "otherEntityField": "id"
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "rating",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "rate",
+            "fieldType": "Double"
         }
     ],
     "changelogDate": "20190416144510",
-    "entityTableName": "rating",
     "dto": "mapstruct",
-    "pagination": "no",
+    "searchEngine": "elasticsearch",
     "service": "serviceImpl",
+    "entityTableName": "rating",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*",
+    "pagination": "no",
     "angularJSSuffix": "paasho"
 }
