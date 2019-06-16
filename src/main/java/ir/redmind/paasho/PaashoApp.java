@@ -1,10 +1,8 @@
 package ir.redmind.paasho;
 
+import io.github.jhipster.config.JHipsterConstants;
 import ir.redmind.paasho.config.ApplicationProperties;
 import ir.redmind.paasho.config.DefaultProfileUtil;
-
-import io.github.jhipster.config.JHipsterConstants;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
