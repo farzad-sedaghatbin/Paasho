@@ -31,7 +31,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneByResetKey(String resetKey);
 
     Optional<User> findOneByEmailIgnoreCase(String email);
-
+    @EntityGraph(attributePaths = {"authorities","rates","contacts"})
     User findOneByLogin(String login);
 
     @EntityGraph(attributePaths =  {"authorities","rates"})
