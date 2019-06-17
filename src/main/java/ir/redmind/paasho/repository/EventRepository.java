@@ -22,7 +22,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("select event from Event event where event.creator.login = ?#{principal.username}")
     List<Event> findByCreatorIsCurrentUser();
 
-    @EntityGraph(attributePaths = {"medias"})
+    @EntityGraph(attributePaths = {"medias,categories"})
     List<Event> findByStatus(EventStatus eventStatus);
 
     @Query(value = "select distinct event from Event event left join fetch event.categories left join fetch event.participants",
