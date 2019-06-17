@@ -122,7 +122,7 @@ public class Event implements Serializable {
     @JsonIgnoreProperties("events")
     private Titles titles;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "event_participants",
                joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
