@@ -38,6 +38,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -517,9 +518,7 @@ public class FarzadUserService {
             User u = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
             q.setParameter(1, u.getId());
             Object[] o = (Object[]) q.getSingleResult();
-
-
-            recordDTOS.rank = (int) o[1];
+            recordDTOS.rank = ((BigInteger) o[1]).bitCount();
             recordDTOS.score = u.getScore().intValue();
         } catch (Exception ex) {
             ex.printStackTrace();
