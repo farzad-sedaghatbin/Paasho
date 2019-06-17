@@ -35,7 +35,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("select event from Event event left join fetch event.categories left join fetch event.participants where event.id =:id")
     Optional<Event> findOneWithEagerRelationships(@Param("id") Long id);
 
-    @EntityGraph(attributePaths = {"medias","categories"})
+    @EntityGraph(attributePaths = {"medias","categories","participants"})
     Event findByCode(String code);
 
     List<Event> findByTitleIsContainingOrDescriptionContaining(String key,String key2);
