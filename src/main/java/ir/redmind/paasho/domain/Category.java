@@ -43,7 +43,7 @@ public class Category implements Serializable {
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Media> medias = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "category_users",
                joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
