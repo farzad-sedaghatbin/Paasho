@@ -102,7 +102,7 @@ public class Event implements Serializable {
     @Column(name = "time_string")
     private String timeString;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event",fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Media> medias = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER)
