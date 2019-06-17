@@ -100,7 +100,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "birth_date")
     private String birthDate;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Contact> contacts = new HashSet<>();
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
