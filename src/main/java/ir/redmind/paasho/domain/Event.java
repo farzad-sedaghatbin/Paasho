@@ -105,7 +105,7 @@ public class Event implements Serializable {
     @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Media> medias = new HashSet<>();
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "event_categories",
                joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
