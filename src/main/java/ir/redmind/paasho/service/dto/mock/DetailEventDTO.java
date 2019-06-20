@@ -33,6 +33,7 @@ public class DetailEventDTO {
     private String creator;
     private int capacity;
     private Long id;
+    private Long categoryId;
 
 
     public String getCode() {
@@ -226,5 +227,13 @@ public class DetailEventDTO {
 
     public void setPic(List<String> pic) {
         this.pic = pic;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

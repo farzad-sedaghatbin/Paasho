@@ -91,7 +91,9 @@ public class EventResources {
         eventDTO.setTime(event.getTimeString());
         eventDTO.setDate(event.getDateString());
         eventDTO.setAddress(event.getAddress());
-        eventDTO.setCategory(event.getCategories().iterator().next().getName());
+        Category cat = event.getCategories().iterator().next();
+        eventDTO.setCategory(cat.getName());
+        eventDTO.setCategoryId(cat.getId());
         eventDTO.setDescription(event.getDescription());
         eventDTO.setInstagram(event.getInstagram());
         eventDTO.setTel(event.getTel());

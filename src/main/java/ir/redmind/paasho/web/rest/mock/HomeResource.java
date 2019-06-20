@@ -38,7 +38,7 @@ public class HomeResource {
 
         List<MyEventDTO> myEventDTOS = new ArrayList<>();
 
-        events.forEach(event -> {
+        events.stream().filter(e->e.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get())).forEach(event -> {
             MyEventDTO event1 = new MyEventDTO();
             event1.setCode(event.getCode());
             event1.setTitle(event.getTitle());
