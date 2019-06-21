@@ -277,6 +277,8 @@ public class FarzadUserService {
             User user = u.get();
             user.setScore(user.getScore() + 30);
             userRepository.save(user);
+        }else{
+           return ResponseEntity.notFound().build();
         }
 
 
