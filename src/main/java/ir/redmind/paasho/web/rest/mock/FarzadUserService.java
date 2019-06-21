@@ -269,20 +269,24 @@ public class FarzadUserService {
     @CrossOrigin(origins = "*")
 
     public ResponseEntity<HttpStatus> inviteFriend(@RequestBody String data) {
+        try {
+            Long id = Long.valueOf(data.substring(5, data.length() - 1));
+            id = (id - 5) / 10;
+            Optional<User> u = userRepository.findById(id);
+            if (u.isPresent()) {
+                User user = u.get();
+                user.setScore(user.getScore() + 30);
+                userRepository.save(user);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
 
-        Long id = Long.valueOf(data.substring(5,data.length()-1));
-        id = (id - 5) / 10;
-        Optional<User> u = userRepository.findById(id);
-        if (u.isPresent()) {
-            User user = u.get();
-            user.setScore(user.getScore() + 30);
-            userRepository.save(user);
-        }else{
-           return ResponseEntity.notFound().build();
+
+            return ResponseEntity.ok(HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+
         }
-
-
-        return ResponseEntity.ok(HttpStatus.OK);
     }
 /*    @RequestMapping(value = "confirmReset", method = RequestMethod.POST)
     @Timed
@@ -496,7 +500,7 @@ public class FarzadUserService {
         Page<User> users = userRepository.findAll(new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "score")));
 
         RecordDTO recordDTOS = new RecordDTO();
-        recordDTOS.setHelp("با شرکت کردن در هر رویداد 10 امتیاز به شما تعلق میگیرد\n" + "با ایجاد کردن رویداد جدید به ازای هر شرکت کننده 10 امتیاز دریافت میکنید\n" +"در ازای دعوت کردن از هر یک از دوستان خود 50 امتیاز دریافت خواهید کرد\n" );
+        recordDTOS.setHelp("با شرکت کردن در هر رویداد 10 امتیاز به شما تعلق میگیرد\n" + "با ایجاد کردن رویداد جدید به ازای هر شرکت کننده 10 امتیاز دریافت میکنید\n" + "در ازای دعوت کردن از هر یک از دوستان خود 50 امتیاز دریافت خواهید کرد\n");
         recordDTOS.setPrizeDescription("هر هفته 200000 تومان به نفر اول پرداخت می شود");
         recordDTOS.users = new ArrayList<>();
         List<RecordDTO.User> userList = recordDTOS.users;
