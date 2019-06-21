@@ -1,20 +1,25 @@
 package ir.redmind.paasho.web.rest;
 
 import io.github.jhipster.web.util.ResponseUtil;
+import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.service.EventService;
 import ir.redmind.paasho.service.dto.EventDTO;
 import ir.redmind.paasho.service.mapper.EventMapper;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
+import ir.redmind.paasho.web.rest.util.FileUpload;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
 import ir.redmind.paasho.web.rest.util.PaginationUtil;
+import ir.redmind.paasho.web.rest.yeka.upload.Upload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -54,6 +59,13 @@ public class EventResource {
             throw new BadRequestAlertException("A new event cannot already have an ID", ENTITY_NAME, "idexists");
         }
         EventDTO result = eventService.save(eventDTO);
+        try {
+            String upl = FileUpload.uploadFile(new ByteArrayResource(eventDTO.getFiles()));
+            Event e = eventService.addUrl(upl, eventDTO.getCode());
+            eventService.save(eventMapper.toDto(e));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.created(new URI("/api/events/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,7 +95,7 @@ public class EventResource {
     /**
      * GET  /events : get all the events.
      *
-     * @param pageable the pagination information
+     * @param pageable  the pagination information
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of events in body
      */
@@ -109,7 +121,7 @@ public class EventResource {
     @GetMapping("/events/{id}")
     public ResponseEntity<EventDTO> getEvent(@PathVariable Long id) {
         log.debug("REST request to get Event : {}", id);
-        EventDTO eventDTO =eventMapper.toDto( eventService.findOne(id).get());
+        EventDTO eventDTO = eventMapper.toDto(eventService.findOne(id).get());
         return ResponseUtil.wrapOrNotFound(Optional.of(eventDTO));
     }
 
@@ -138,7 +150,7 @@ public class EventResource {
      * SEARCH  /_search/events?query=:query : search for the event corresponding
      * to the query.
      *
-     * @param query the query of the event search
+     * @param query    the query of the event search
      * @param pageable the pagination information
      * @return the result of the search
      */

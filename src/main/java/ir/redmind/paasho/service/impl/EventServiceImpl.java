@@ -1,11 +1,15 @@
 package ir.redmind.paasho.service.impl;
 
 import ir.redmind.paasho.domain.Event;
+import ir.redmind.paasho.domain.Media;
 import ir.redmind.paasho.domain.enumeration.EventStatus;
+import ir.redmind.paasho.domain.enumeration.MediaType;
 import ir.redmind.paasho.repository.EventRepository;
 import ir.redmind.paasho.service.EventService;
+import ir.redmind.paasho.service.MediaService;
 import ir.redmind.paasho.service.dto.EventDTO;
 import ir.redmind.paasho.service.mapper.EventMapper;
+import ir.redmind.paasho.service.mapper.MediaMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -28,11 +32,15 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
 
     private final EventMapper eventMapper;
+    private MediaService mediaService;
+    private MediaMapper mediaMapper;
 
 
-    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper) {
+    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, MediaService mediaService, MediaMapper mediaMapper) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
+        this.mediaService = mediaService;
+        this.mediaMapper = mediaMapper;
     }
 
     /**
@@ -136,5 +144,30 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event findByCode(String code) {
         return eventRepository.findByCode(code);
+    }
+
+    @Override
+    public Event addUrl(String url, String code) {
+        Media media;
+        Event event = findByCode(code);
+
+//        mediaService.removeByEvent(event);
+//        event.setMedias(new HashSet<>());
+//        eventService.save(eventMapper.toDto(event));
+        if (!url.contains(".yekupload.ir/images/direct/")) {
+            String newUrl = url.replace("http://yekupload.ir/", "");
+            String prefix = "https://s4.yekupload.ir/images/direct/";
+            media = new Media(prefix + newUrl, MediaType.PHOTO, event);
+        } else {
+            media = new Media(url, MediaType.PHOTO, event);
+
+        }
+
+        mediaService.save(mediaMapper.toDto(media));
+        event.getMedias().add(media);
+
+        save(eventMapper.toDto(event));
+
+        return event;
     }
 }

@@ -317,25 +317,8 @@ public class EventResources {
     @Timed
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> addUrlToEvent(@RequestParam("url") String url, @PathVariable String code) throws IOException {
-        Event event = eventService.findByCode(code);
         //todo remove this code
-        Media media;
-//        mediaService.removeByEvent(event);
-//        event.setMedias(new HashSet<>());
-//        eventService.save(eventMapper.toDto(event));
-        if (!url.contains(".yekupload.ir/images/direct/")) {
-            String newUrl = url.replace("http://yekupload.ir/", "");
-            String prefix = "https://s4.yekupload.ir/images/direct/";
-            media = new Media(prefix + newUrl, MediaType.PHOTO, event);
-        } else {
-            media = new Media(url, MediaType.PHOTO, event);
-
-        }
-
-        mediaService.save(mediaMapper.toDto(media));
-        event.getMedias().add(media);
-
-        eventService.save(eventMapper.toDto(event));
+        eventService.addUrl(url, code);
         return ResponseEntity.ok(url);
     }
 

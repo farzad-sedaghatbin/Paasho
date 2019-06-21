@@ -64,4 +64,6 @@ public interface EventService {
     Page<EventDTO> searchByBuilder(String query, Pageable pageable);
 
     Event findByCode(String code);
+
+    Event addUrl(String url, String code);
 }
