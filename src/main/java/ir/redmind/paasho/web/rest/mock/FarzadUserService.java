@@ -116,6 +116,7 @@ public class FarzadUserService {
             user.setFirstName("کاربر");
             user.setLastName("جدید");
             user.setBirthDate("1360");
+            user.setPoint(0d);
             user.setPassword(passwordEncoder.encode("123"));
             userRepository.save(user);
 
@@ -169,7 +170,7 @@ public class FarzadUserService {
         User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
         if (user.getAvatar() == null || user.getAvatar().length() == 0) {
 
-            user.setScore(user.getScore() + 10);
+            user.setPoint(user.getPoint() + 10);
         }
         user.setAvatar(data);
         userRepository.save(user);
@@ -275,7 +276,7 @@ public class FarzadUserService {
             Optional<User> u = userRepository.findById(id);
             if (u.isPresent()) {
                 User user = u.get();
-                user.setScore(user.getScore() + 50);
+                user.setPoint(user.getPoint() + 50);
                 userRepository.save(user);
             } else {
                 return ResponseEntity.notFound().build();
@@ -497,7 +498,7 @@ public class FarzadUserService {
     @CrossOrigin(origins = "*")
 
     public ResponseEntity<RecordDTO> topUsers(HttpServletResponse response) throws JsonProcessingException {
-        Page<User> users = userRepository.findAll(new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "score")));
+        Page<User> users = userRepository.findAll(new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "point")));
 
         RecordDTO recordDTOS = new RecordDTO();
         recordDTOS.setHelp("با شرکت کردن در هر رویداد 10 امتیاز به شما تعلق میگیرد\n" + "با ایجاد کردن رویداد جدید به ازای هر شرکت کننده 10 امتیاز دریافت میکنید\n" + "در ازای دعوت کردن از هر یک از دوستان خود 50 امتیاز دریافت خواهید کرد\n");
@@ -509,7 +510,7 @@ public class FarzadUserService {
         for (User objects : users.getContent()) {
             RecordDTO.User user = new RecordDTO.User();
             user.setUser(objects.getFirstName() + " " + objects.getLastName());
-            int s = objects.getScore().intValue();
+            int s = objects.getPoint().intValue();
 
             user.setScore(s);
             user.setIndex(i++);
@@ -520,7 +521,7 @@ public class FarzadUserService {
         try {
 
 
-            Query q = em.createNativeQuery("SELECT * FROM (SELECT id,rank() OVER (ORDER BY score DESC) FROM jhi_user ) as gr WHERE  id =?");
+            Query q = em.createNativeQuery("SELECT * FROM (SELECT id,rank() OVER (ORDER BY point DESC) FROM jhi_user ) as gr WHERE  id =?");
             User u = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
             q.setParameter(1, u.getId());
             Object[] o = (Object[]) q.getSingleResult();

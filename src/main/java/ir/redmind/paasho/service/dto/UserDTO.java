@@ -53,6 +53,7 @@ public class UserDTO {
 
     private Set<String> authorities;
     private Double score;
+    private Double point;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -72,6 +73,7 @@ public class UserDTO {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.score=user.getScore();
+        this.point=user.getPoint();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
@@ -187,6 +189,14 @@ public class UserDTO {
 
     public void setScore(Double score) {
         this.score = score;
+    }
+
+    public Double getPoint() {
+        return point;
+    }
+
+    public void setPoint(Double point) {
+        this.point = point;
     }
 
     @Override

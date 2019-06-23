@@ -7,6 +7,7 @@ import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.domain.enumeration.NotificationStatus;
 import ir.redmind.paasho.repository.UserRepository;
+import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.EventService;
 import ir.redmind.paasho.service.NotificationService;
 import ir.redmind.paasho.service.UserService;
@@ -58,8 +59,13 @@ public class NotificationResources {
         Notification n = notificationMapper.toEntity(notificationService.findOne(Long.valueOf(requestId)).get());
         User user = userRepository.findById(n.getFrom().getId()).get();
 
-        user.setScore(user.getScore() + 1);
+        user.setPoint(user.getPoint() + 1);
         userRepository.save(user);
+
+        User user1 = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+
+        user1.setPoint(user.getPoint() + 1);
+        userRepository.save(user1);
         Event ev = eventService.findOne(n.getRelatedEvent().getId()).get();
         ev.addParticipants(n.getFrom());
         n.setStatus(NotificationStatus.ACCEPTED);
@@ -95,6 +101,9 @@ public class NotificationResources {
             notif.setRequestId(String.valueOf(l.getId()));
             if (l.getStatus().equals(NotificationStatus.PENDING))
                 notif.setPending(true);
+            else{
+                notif.setPending(false);
+            }
             notif.setText(l.getDescription());
             notif.setRelatedEventcode(String.valueOf(l.getRelatedEventId()));
             notif.setRelatedUserId(String.valueOf(l.getFromId()));

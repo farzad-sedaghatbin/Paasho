@@ -100,10 +100,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "birth_date")
     private String birthDate;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Contact> contacts = new HashSet<>();
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Rating> rates = new HashSet<>();
     @OneToMany(mappedBy = "user")
@@ -134,9 +134,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Lob
     private String avatar;
     private Double score;
-
-
-
+    private Double point;
 
 
     public Long getId() {
@@ -362,14 +360,25 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public Double getScore() {
         OptionalDouble average = rates.stream().mapToDouble(Rating::getRate).average();
-        if(average.isPresent()){
+        if (average.isPresent()) {
             return average.getAsDouble();
-        }else {
+        } else {
             return 5d;
         }
     }
 
     public void setScore(Double score) {
         this.score = score;
+    }
+
+    public Double getPoint() {
+        if (point == null) {
+            return new Double(0d);
+        }
+        return point;
+    }
+
+    public void setPoint(Double point) {
+        this.point = point;
     }
 }

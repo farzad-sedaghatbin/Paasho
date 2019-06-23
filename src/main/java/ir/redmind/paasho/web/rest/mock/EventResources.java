@@ -286,7 +286,7 @@ public class EventResources {
         event.setCapacity(createEventDTO.getCapacity());
         eventService.save(eventMapper.toDto(event));
 
-        user.setScore(user.getScore() + 10);
+        user.setPoint(user.getPoint() + 10);
         userRepository.save(user);
         return ResponseEntity.ok(eventMapper.toDto(event));
     }
