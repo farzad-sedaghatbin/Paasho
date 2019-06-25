@@ -294,11 +294,11 @@ public class EventResources {
         return ResponseEntity.ok(eventMapper.toDto(event));
     }
 
-    @PostMapping(value = "/{code}/upload")
+    @PostMapping(value = "/upload")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile, @PathVariable String code) throws IOException {
-        Event event = eventService.findByCode(code);
+    public ResponseEntity<String> uploadFile(@RequestBody UploadDTO uploadDTO) throws IOException {
+        Event event = eventService.findByCode(uploadDTO.getCode());
 //        Path testFile = Files.createTempFile(UUID.randomUUID().toString(), "." + multipartFile.getOriginalFilename().split("\\.")[1]);
 //        System.out.println("Creating and Uploading Test File: " + testFile);
 //        //todo remove this code
@@ -308,11 +308,11 @@ public class EventResources {
 //        eventService.save(eventMapper.toDto(event));
 //        Files.write(testFile, multipartFile.getBytes());
 //        String url = FileUpload.uploadFile(new FileSystemResource(testFile.toFile()));
-        Media media = new Media(multipartFile.getBytes(), MediaType.PHOTO, event);
+        Media media = new Media(uploadDTO.getFile().getBytes(), MediaType.PHOTO, event);
         mediaService.save(mediaMapper.toDto(media));
         event.getMedias().add(media);
         eventService.save(eventMapper.toDto(event));
-        return ResponseEntity.ok(multipartFile.getOriginalFilename());
+        return ResponseEntity.ok(uploadDTO.getFile().getOriginalFilename());
     }
 
         @RequestMapping(path = "/download", method = RequestMethod.GET)
