@@ -8,13 +8,17 @@ import ir.redmind.paasho.repository.TitlesRepository;
 import ir.redmind.paasho.repository.UserRepository;
 import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.*;
+import ir.redmind.paasho.service.dto.MediaDTO;
 import ir.redmind.paasho.service.dto.mock.*;
 import ir.redmind.paasho.service.mapper.*;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
 import ir.redmind.paasho.web.rest.util.FileUpload;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -81,8 +85,7 @@ public class EventResources {
             Iterator<Media> it = event.getMedias().iterator();
             while (it.hasNext()) {
                 Media ss = it.next();
-                System.out.println(ss.getPath());
-                eventDTO.getPic().add(ss.getPath());
+                eventDTO.getPic().add(ss.getId());
             }
         }
         eventDTO.setTitle(event.getTitle());
@@ -142,7 +145,7 @@ public class EventResources {
         EventDTO event = new EventDTO();
         event.setCode(e.getCode());
         if (e.getMedias().iterator().hasNext())
-            event.setPic(e.getMedias().iterator().next().getPath());
+            event.setPic(e.getMedias().iterator().next().getId());
         event.setTitle(e.getTitle());
         event.setPricing(PriceType.FREE);
         event.setTime(e.getTimeString());
@@ -296,21 +299,40 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile, @PathVariable String code) throws IOException {
         Event event = eventService.findByCode(code);
-        Path testFile = Files.createTempFile(UUID.randomUUID().toString(), "." + multipartFile.getOriginalFilename().split("\\.")[1]);
-        System.out.println("Creating and Uploading Test File: " + testFile);
-        //todo remove this code
-
-        mediaService.removeByEvent(event);
-        event.setMedias(new HashSet<>());
-        eventService.save(eventMapper.toDto(event));
-        Files.write(testFile, multipartFile.getBytes());
-        String url = FileUpload.uploadFile(new FileSystemResource(testFile.toFile()));
-        Media media = new Media(url, MediaType.PHOTO, event);
+//        Path testFile = Files.createTempFile(UUID.randomUUID().toString(), "." + multipartFile.getOriginalFilename().split("\\.")[1]);
+//        System.out.println("Creating and Uploading Test File: " + testFile);
+//        //todo remove this code
+//
+//        mediaService.removeByEvent(event);
+//        event.setMedias(new HashSet<>());
+//        eventService.save(eventMapper.toDto(event));
+//        Files.write(testFile, multipartFile.getBytes());
+//        String url = FileUpload.uploadFile(new FileSystemResource(testFile.toFile()));
+        Media media = new Media(multipartFile.getBytes(), MediaType.PHOTO, event);
         mediaService.save(mediaMapper.toDto(media));
         event.getMedias().add(media);
         eventService.save(eventMapper.toDto(event));
         return ResponseEntity.ok(multipartFile.getOriginalFilename());
     }
+
+        @RequestMapping(path = "/download", method = RequestMethod.GET)
+        public ResponseEntity<Resource> download(@RequestParam("id") Long id) throws IOException {
+
+            MediaDTO media = mediaService.findOne(id).get();
+            HttpHeaders header = new HttpHeaders();
+            header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=img.jpg");
+            header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            header.add("Pragma", "no-cache");
+            header.add("Expires", "0");
+
+            ByteArrayResource resource = new ByteArrayResource(media.getContent());
+
+            return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(media.getContent().length)
+                .contentType(org.springframework.http.MediaType.IMAGE_JPEG)
+                .body(resource);
+        }
 
 
     @PutMapping(value = "/{code}/url")
@@ -337,6 +359,21 @@ public class EventResources {
         mediaService.delete(media.getId());
 
         return ResponseEntity.ok(url);
+    }
+    @DeleteMapping(value = "/{code}/media")
+    @Timed
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<String> removeUrlToEvent(@RequestParam("id") Long id, @PathVariable String code) throws IOException {
+        Event event = eventService.findByCode(code);
+        //todo remove this code
+
+        Media media = mediaMapper.toEntity(mediaService.findOne(id).orElse(new MediaDTO()));
+
+        event.getMedias().remove(event.getMedias().stream().filter(m -> m.getId().equals(media.getId())).findFirst().get());
+        eventService.save(eventMapper.toDto(event));
+        mediaService.delete(media.getId());
+
+        return ResponseEntity.ok(HttpStatus.OK.toString());
     }
 
     @PutMapping("")
@@ -398,7 +435,7 @@ public class EventResources {
             event1.setCategoryId(Math.toIntExact(ee.getCategories().iterator().next().getId()));
             event1.setEditable(ee.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
             if (ee.getMedias().iterator().hasNext())
-                event1.setPic(ee.getMedias().iterator().next().getPath());
+                event1.setPic(ee.getMedias().iterator().next().getId());
 
             event1.setScore(ee.getCreator().getScore().floatValue());
             event1.setDate(String.valueOf(e[4]));

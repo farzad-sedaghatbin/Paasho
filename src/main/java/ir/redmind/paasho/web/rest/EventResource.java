@@ -2,24 +2,24 @@ package ir.redmind.paasho.web.rest;
 
 import io.github.jhipster.web.util.ResponseUtil;
 import ir.redmind.paasho.domain.Event;
+import ir.redmind.paasho.domain.Media;
+import ir.redmind.paasho.domain.enumeration.MediaType;
 import ir.redmind.paasho.service.EventService;
+import ir.redmind.paasho.service.MediaService;
 import ir.redmind.paasho.service.dto.EventDTO;
 import ir.redmind.paasho.service.mapper.EventMapper;
+import ir.redmind.paasho.service.mapper.MediaMapper;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
-import ir.redmind.paasho.web.rest.util.FileUpload;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
 import ir.redmind.paasho.web.rest.util.PaginationUtil;
-import ir.redmind.paasho.web.rest.yeka.upload.Upload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -39,10 +39,14 @@ public class EventResource {
 
     private final EventService eventService;
     private final EventMapper eventMapper;
+    private MediaService mediaService;
+    private MediaMapper mediaMapper;
 
-    public EventResource(EventService eventService, EventMapper eventMapper) {
+    public EventResource(EventService eventService, EventMapper eventMapper, MediaService mediaService, MediaMapper mediaMapper) {
         this.eventService = eventService;
         this.eventMapper = eventMapper;
+        this.mediaService = mediaService;
+        this.mediaMapper = mediaMapper;
     }
 
     /**
@@ -59,13 +63,16 @@ public class EventResource {
             throw new BadRequestAlertException("A new event cannot already have an ID", ENTITY_NAME, "idexists");
         }
         EventDTO result = eventService.save(eventDTO);
-        try {
-            String upl = FileUpload.uploadFile(new ByteArrayResource(eventDTO.getFiles()));
-            Event e = eventService.addUrl(upl, eventDTO.getCode());
-            eventService.save(eventMapper.toDto(e));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            String upl = FileUpload.uploadFile(new ByteArrayResource(eventDTO.getFiles()));
+        Event e = eventMapper.toEntity(result);
+        Media media = new Media(eventDTO.getFiles(), MediaType.PHOTO,e);
+        mediaService.save(mediaMapper.toDto(media));
+        e.getMedias().add(media);
+        eventService.save(eventMapper.toDto(e));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return ResponseEntity.created(new URI("/api/events/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

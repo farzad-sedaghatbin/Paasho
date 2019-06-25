@@ -4,7 +4,7 @@ public class MyEventDTO {
     private String code;
     private String title;
     private float score;
-    private String pic;
+    private Long pic;
     private Long id;
     private boolean editable;
 
@@ -32,12 +32,16 @@ public class MyEventDTO {
         this.score = score;
     }
 
-    public String getPic() {
+    public Long getPic() {
         return pic;
     }
 
-    public void setPic(String pic) {
+    public void setPic(Long pic) {
         this.pic = pic;
+    }
+
+    public boolean isEditable() {
+        return editable;
     }
 
     public void setId(Long id) {

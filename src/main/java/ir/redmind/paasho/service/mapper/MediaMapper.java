@@ -1,6 +1,7 @@
 package ir.redmind.paasho.service.mapper;
 
 import ir.redmind.paasho.domain.*;
+import ir.redmind.paasho.domain.enumeration.MediaType;
 import ir.redmind.paasho.service.dto.MediaDTO;
 
 import org.mapstruct.*;

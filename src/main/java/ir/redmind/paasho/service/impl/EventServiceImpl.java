@@ -157,14 +157,14 @@ public class EventServiceImpl implements EventService {
         if (!url.contains(".yekupload.ir/images/direct/")) {
             String newUrl = url.replace("http://yekupload.ir/", "");
             String prefix = "https://s4.yekupload.ir/images/direct/";
-            media = new Media(prefix + newUrl, MediaType.PHOTO, event);
-        } else {
-            media = new Media(url, MediaType.PHOTO, event);
+//            media = new Media(prefix + newUrl, MediaType.PHOTO, event);
+//        } else {
+//            media = new Media(url, MediaType.PHOTO, event);
 
         }
 
-        mediaService.save(mediaMapper.toDto(media));
-        event.getMedias().add(media);
+//        mediaService.save(mediaMapper.toDto(media));
+//        event.getMedias().add(media);
 
         save(eventMapper.toDto(event));
 

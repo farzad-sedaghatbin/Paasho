@@ -7,7 +7,7 @@ public class EventDTO {
     private String title;
     private PriceType pricing;
     private float score;
-    private String pic;
+    private Long pic;
     private String date;
     private String time;
     private String creator;
@@ -65,11 +65,11 @@ public class EventDTO {
         this.score = score;
     }
 
-    public String getPic() {
+    public Long getPic() {
         return pic;
     }
 
-    public void setPic(String pic) {
+    public void setPic(Long pic) {
         this.pic = pic;
     }
 

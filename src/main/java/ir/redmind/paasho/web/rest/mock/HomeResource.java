@@ -46,7 +46,7 @@ public class HomeResource {
             event1.setScore(event.getCreator().getScore().floatValue());
             event1.setEditable(event.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
             if (event.getMedias().iterator().hasNext())
-                event1.setPic(event.getMedias().iterator().next().getPath());
+                event1.setPic(event.getMedias().iterator().next().getId());
             myEventDTOS.add(event1);
         });
         return ResponseEntity.ok(myEventDTOS);
@@ -63,7 +63,7 @@ public class HomeResource {
             EventDTO event1 = new EventDTO();
             event1.setCode(event.getCode());
             if (event.getMedias().iterator().hasNext())
-                event1.setPic(event.getMedias().iterator().next().getPath());
+                event1.setPic(event.getMedias().iterator().next().getId());
             event1.setTitle(event.getTitle());
             event1.setId(event.getId());
             event1.setPricing(PriceType.FREE);

@@ -12,7 +12,7 @@ public class DetailEventDTO {
     private String code;
     private String title;
     private String category;
-    private List<String> pic=new ArrayList<>();
+    private List<Long> pic=new ArrayList<>();
     private String date;
     private String time;
     private String description;
@@ -221,11 +221,11 @@ public class DetailEventDTO {
         return id;
     }
 
-    public List<String> getPic() {
+    public List<Long> getPic() {
         return pic;
     }
 
-    public void setPic(List<String> pic) {
+    public void setPic(List<Long> pic) {
         this.pic = pic;
     }
 

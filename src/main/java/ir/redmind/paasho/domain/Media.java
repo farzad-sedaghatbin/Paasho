@@ -30,6 +30,10 @@ public class Media implements Serializable {
     @Column(name = "path")
     private String path;
 
+    @Lob
+    @Column(name = "content")
+    private byte[] content;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "jhi_type")
     private MediaType type;
@@ -38,13 +42,16 @@ public class Media implements Serializable {
     @JsonIgnoreProperties("medias")
     private Event event;
 
-    public Media(String url, MediaType photo, Event event) {
-        this.path=url;
+
+
+    public Media(byte[] bytes, MediaType photo, Event event) {
         type=photo;
         this.event=event;
+        content=bytes;
     }
 
     public Media() {
+
 
     }
 
@@ -110,6 +117,14 @@ public class Media implements Serializable {
             return false;
         }
         return Objects.equals(getId(), media.getId());
+    }
+
+    public byte[] getContent() {
+        return content;
+    }
+
+    public void setContent(byte[] content) {
+        this.content = content;
     }
 
     @Override
