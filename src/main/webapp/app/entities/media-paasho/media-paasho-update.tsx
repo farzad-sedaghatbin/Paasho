@@ -109,6 +109,8 @@ export class MediaPaashoUpdate extends React.Component<IMediaPaashoUpdateProps, 
                     <option value="VIDEO">VIDEO</option>
                     <option value="PHOTO">PHOTO</option>
                     <option value="AUDIO">AUDIO</option>
+                    <option value="AVATAR">AVATAR</option>
+                    <option value="DEFAULT_CATEGORY">DEFAULT_CATEGORY</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>

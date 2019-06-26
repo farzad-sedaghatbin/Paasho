@@ -1,7 +1,9 @@
 export const enum MediaType {
   VIDEO = 'VIDEO',
   PHOTO = 'PHOTO',
-  AUDIO = 'AUDIO'
+  AUDIO = 'AUDIO',
+  AVATAR='AVATAR',
+  DEFAULT_CATEGORY='DEFAULT_CATEGORY'
 }
 
 export interface IMediaPaasho {
