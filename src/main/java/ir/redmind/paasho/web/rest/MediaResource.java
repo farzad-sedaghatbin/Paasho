@@ -107,7 +107,7 @@ public class MediaResource {
     @GetMapping("/v1/media/category/{id}")
     public ResponseEntity<List<PicDTO>> getCategoryMedia(@PathVariable int id) {
         log.debug("REST request to get Media : {}", id);
-        List<PicDTO> mediaDTO = mediaService.findCategory(Long.valueOf(id)).stream().map(PicDTO::new).collect(Collectors.toList());
+        List<PicDTO> mediaDTO = mediaService.findCategory(Long.valueOf(id));
         return ResponseUtil.wrapOrNotFound(Optional.of(mediaDTO));
     }
 

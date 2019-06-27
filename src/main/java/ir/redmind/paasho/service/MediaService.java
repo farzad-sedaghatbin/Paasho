@@ -3,6 +3,7 @@ package ir.redmind.paasho.service;
 import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.Media;
 import ir.redmind.paasho.service.dto.MediaDTO;
+import ir.redmind.paasho.service.dto.PicDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,7 @@ public interface MediaService {
      */
     List<MediaDTO> findAll();
     List<MediaDTO> findAvatar();
-    List<String> findCategory(Long id);
+    List<PicDTO> findCategory(Long id);
 
 
     /**

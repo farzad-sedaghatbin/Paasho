@@ -3,6 +3,7 @@ package ir.redmind.paasho.web.rest.mock;
 
 import io.micrometer.core.annotation.Timed;
 import ir.redmind.paasho.domain.*;
+import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.enumeration.*;
 import ir.redmind.paasho.repository.TitlesRepository;
 import ir.redmind.paasho.repository.UserRepository;
@@ -24,13 +25,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.awt.*;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/events/")
@@ -315,24 +323,53 @@ public class EventResources {
         return ResponseEntity.ok(uploadDTO.getFile().getOriginalFilename());
     }
 
-        @RequestMapping(path = "/download", method = RequestMethod.GET)
-        public ResponseEntity<Resource> download(@RequestParam("id") Long id) throws IOException {
+    @RequestMapping(path = "/download", method = RequestMethod.GET)
+    public ResponseEntity<Resource> download(@RequestParam("id") Long id) throws IOException {
 
-            MediaDTO media = mediaService.findOne(id).get();
-            HttpHeaders header = new HttpHeaders();
-            header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=img.jpg");
-            header.add("Cache-Control", "no-cache, no-store, must-revalidate");
-            header.add("Pragma", "no-cache");
-            header.add("Expires", "0");
+        MediaDTO media = mediaService.findOne(id).get();
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=img.jpg");
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+        ByteArrayResource resource =null;
+        if (media.getPath() == null) {
+            resource = new ByteArrayResource(media.getContent());
+        }else{
+            URL url = new URL(media.getPath());
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            URLConnection conn = url.openConnection();
+            conn.setRequestProperty("User-Agent", "Firefox");
 
-            ByteArrayResource resource = new ByteArrayResource(media.getContent());
+            try (InputStream inputStream = conn.getInputStream()) {
+                int n = 0;
+                byte[] buffer = new byte[1024];
+                while (-1 != (n = inputStream.read(buffer))) {
+                    output.write(buffer, 0, n);
+                }
+            }
+            byte[] img = output.toByteArray();
+            resource=new ByteArrayResource(img);
 
-            return ResponseEntity.ok()
-                .headers(header)
-                .contentLength(media.getContent().length)
-                .contentType(org.springframework.http.MediaType.IMAGE_JPEG)
-                .body(resource);
         }
+        return ResponseEntity.ok()
+            .headers(header)
+            .contentLength(media.getContent().length)
+            .contentType(org.springframework.http.MediaType.IMAGE_JPEG)
+            .body(resource);
+    }
+
+
+    @PutMapping(value = "/{code}/media")
+    @Timed
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<String> addUrlToEvent(@RequestParam("id") Long id, @PathVariable String code) throws IOException {
+        //todo remove this code
+        Optional<MediaDTO> m = mediaService.findOne(id);
+        Event e = eventService.findByCode(code);
+        e.addMedias(mediaMapper.toEntity(m.get()));
+        return ResponseEntity.ok(HttpStatus.OK.toString());
+    }
 
 
     @PutMapping(value = "/{code}/url")
@@ -360,6 +397,7 @@ public class EventResources {
 
         return ResponseEntity.ok(url);
     }
+
     @DeleteMapping(value = "/{code}/media")
     @Timed
     @CrossOrigin(origins = "*")

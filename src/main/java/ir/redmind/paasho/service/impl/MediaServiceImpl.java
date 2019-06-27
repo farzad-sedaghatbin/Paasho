@@ -7,6 +7,7 @@ import ir.redmind.paasho.service.MediaService;
 import ir.redmind.paasho.domain.Media;
 import ir.redmind.paasho.repository.MediaRepository;
 import ir.redmind.paasho.service.dto.MediaDTO;
+import ir.redmind.paasho.service.dto.PicDTO;
 import ir.redmind.paasho.service.mapper.MediaMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,9 +82,9 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<String> findCategory(Long id) {
+    public List<PicDTO> findCategory(Long id) {
         log.debug("Request to get all Media");
-        return categoryRepository.findById(id).get().getMedias().stream().map(Media::getPath).collect(Collectors.toList());
+        return categoryRepository.findById(id).get().getMedias().stream().map(m->new PicDTO(m.getPath(),m.getId())).collect(Collectors.toList());
     }
 
 
