@@ -368,6 +368,7 @@ public class EventResources {
         Optional<MediaDTO> m = mediaService.findOne(id);
         Event e = eventService.findByCode(code);
         e.addMedias(mediaMapper.toEntity(m.get()));
+        eventService.save(eventMapper.toDto(e));
         return ResponseEntity.ok(HttpStatus.OK.toString());
     }
 
