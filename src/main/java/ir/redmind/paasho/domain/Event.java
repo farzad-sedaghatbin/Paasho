@@ -444,7 +444,7 @@ public class Event implements Serializable {
 
     public Event addMedias(Media media) {
         this.medias.add(media);
-        media.setEvent(this);
+        media.getEvent().add(this);
         return this;
     }
 

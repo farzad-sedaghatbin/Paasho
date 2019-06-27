@@ -94,6 +94,8 @@ public class Media implements Serializable {
     }
 
     public List<Event> getEvent() {
+        if(event==null)
+            event= new ArrayList<>();
         return event;
     }
 
