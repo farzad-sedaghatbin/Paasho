@@ -8,6 +8,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import ir.redmind.paasho.domain.enumeration.MediaType;
@@ -38,15 +40,16 @@ public class Media implements Serializable {
     @Column(name = "jhi_type")
     private MediaType type;
 
-    @ManyToOne
+    @ManyToMany
     @JsonIgnoreProperties("medias")
-    private Event event;
+    private List<Event> event;
 
 
 
     public Media(byte[] bytes, MediaType photo, Event event) {
         type=photo;
-        this.event=event;
+        this.event=new ArrayList<>();
+        this.event.add(event);
         content=bytes;
     }
 
@@ -90,19 +93,13 @@ public class Media implements Serializable {
         this.type = type;
     }
 
-    public Event getEvent() {
+    public List<Event> getEvent() {
         return event;
     }
 
-    public Media event(Event event) {
-        this.event = event;
-        return this;
-    }
-
-    public void setEvent(Event event) {
+    public void setEvent(List<Event> event) {
         this.event = event;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
