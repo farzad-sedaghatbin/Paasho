@@ -8,7 +8,7 @@
         {
             "fieldName": "type",
             "fieldType": "MediaType",
-            "fieldValues": "VIDEO,PHOTO,AUDIO"
+            "fieldValues": "VIDEO,PHOTO,AUDIO,AVATAR,DEFAULT_CATEGORY"
         }
     ],
     "relationships": [
