@@ -335,6 +335,11 @@ public class EventResources {
         ByteArrayResource resource =null;
         if (media.getPath() == null) {
             resource = new ByteArrayResource(media.getContent());
+            return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(media.getContent().length)
+                .contentType(org.springframework.http.MediaType.IMAGE_JPEG)
+                .body(resource);
         }else{
             URL url = new URL(media.getPath());
             ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -350,13 +355,12 @@ public class EventResources {
             }
             byte[] img = output.toByteArray();
             resource=new ByteArrayResource(img);
-
+            return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(img.length)
+                .contentType(org.springframework.http.MediaType.IMAGE_JPEG)
+                .body(resource);
         }
-        return ResponseEntity.ok()
-            .headers(header)
-            .contentLength(media.getContent().length)
-            .contentType(org.springframework.http.MediaType.IMAGE_JPEG)
-            .body(resource);
     }
 
 
