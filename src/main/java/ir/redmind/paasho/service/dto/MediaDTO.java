@@ -17,8 +17,6 @@ public class MediaDTO implements Serializable {
     private MediaType type;
 
 
-    private Long eventId;
-
     public Long getId() {
         return id;
     }
@@ -41,14 +39,6 @@ public class MediaDTO implements Serializable {
 
     public void setType(MediaType type) {
         this.type = type;
-    }
-
-    public Long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
     }
 
     public byte[] getContent() {
@@ -86,7 +76,6 @@ public class MediaDTO implements Serializable {
             "id=" + getId() +
             ", path='" + getPath() + "'" +
             ", type='" + getType() + "'" +
-            ", event=" + getEventId() +
             "}";
     }
 }

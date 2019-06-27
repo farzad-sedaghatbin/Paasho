@@ -5,6 +5,7 @@ import io.micrometer.core.annotation.Timed;
 import ir.redmind.paasho.domain.*;
 import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.enumeration.*;
+import ir.redmind.paasho.repository.MediaRepository;
 import ir.redmind.paasho.repository.TitlesRepository;
 import ir.redmind.paasho.repository.UserRepository;
 import ir.redmind.paasho.security.SecurityUtils;
@@ -13,10 +14,8 @@ import ir.redmind.paasho.service.dto.MediaDTO;
 import ir.redmind.paasho.service.dto.mock.*;
 import ir.redmind.paasho.service.mapper.*;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
-import ir.redmind.paasho.web.rest.util.FileUpload;
 import ir.redmind.paasho.web.rest.util.HeaderUtil;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -25,18 +24,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
 
@@ -46,6 +41,7 @@ public class EventResources {
 
     private final EventService eventService;
     private final MediaService mediaService;
+    private final MediaRepository mediaRepository;
     private final MediaMapper mediaMapper;
     private final UserService userService;
     private final UserRepository userRepository;
@@ -60,9 +56,10 @@ public class EventResources {
     @PersistenceContext
     private EntityManager em;
 
-    public EventResources(EventService eventService, MediaService mediaService, MediaMapper mediaMapper, UserService userService, UserRepository userRepository, TitlesRepository titlesRepository, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper, UserMapper userMapper) {
+    public EventResources(EventService eventService, MediaService mediaService, MediaRepository mediaRepository, MediaMapper mediaMapper, UserService userService, UserRepository userRepository, TitlesRepository titlesRepository, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper, UserMapper userMapper) {
         this.eventService = eventService;
         this.mediaService = mediaService;
+        this.mediaRepository = mediaRepository;
         this.mediaMapper = mediaMapper;
         this.userService = userService;
         this.userRepository = userRepository;
@@ -317,7 +314,7 @@ public class EventResources {
 //        Files.write(testFile, multipartFile.getBytes());
 //        String url = FileUpload.uploadFile(new FileSystemResource(testFile.toFile()));
         Media media = new Media(multipartFile.getBytes(), MediaType.PHOTO, event);
-        mediaService.save(mediaMapper.toDto(media));
+        mediaRepository.save(media);
         event.getMedias().add(media);
         eventService.save(eventMapper.toDto(event));
         return ResponseEntity.ok(multipartFile.getOriginalFilename());
@@ -369,10 +366,12 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> addUrlToEvent(@RequestParam("id") Long id, @PathVariable String code) throws IOException {
         //todo remove this code
-        Optional<MediaDTO> m = mediaService.findOne(id);
+        MediaDTO m = mediaService.findOne(id).get();
         Event e = eventService.findByCode(code);
-        e.addMedias(mediaMapper.toEntity(m.get()));
+        Media m2 = mediaMapper.toEntity(m);
+        e.addMedias(m2);
         eventService.save(eventMapper.toDto(e));
+        mediaRepository.save(m2);
         return ResponseEntity.ok(HttpStatus.OK.toString());
     }
 
