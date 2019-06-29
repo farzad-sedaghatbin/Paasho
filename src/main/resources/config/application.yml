@@ -174,7 +174,7 @@ jhipster:
 security:
     require-ssl=true:
 #trust store location
-trust:
-    store: classpath:keystore/baeldung.p12
-    #trust store password
-        password: paasho
+#trust:
+#    store: classpath:keystore/baeldung.p12
+#    #trust store password
+#        password: paasho
