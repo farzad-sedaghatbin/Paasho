@@ -267,6 +267,19 @@ public class EventResources {
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
+    @PostMapping(value = "{code}/suspend")
+    @Timed
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<HttpStatus> cancel(@PathVariable("code") String code) {
+        Optional<User> user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get());
+        Event event = eventService.findByCode(code);
+        if(event.getCreator().getId()==user.get().getId()){
+            event.setStatus(EventStatus.SUSPEND);
+        }
+        eventService.save(eventMapper.toDto(event));
+        return ResponseEntity.ok(HttpStatus.OK);
+
+    }
 
 
     @PostMapping(value = "")
