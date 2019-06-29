@@ -59,12 +59,12 @@ public class NotificationResources {
         Notification n = notificationMapper.toEntity(notificationService.findOne(Long.valueOf(requestId)).get());
         User user = userRepository.findById(n.getFrom().getId()).get();
 
-        user.setPoint(user.getPoint() + 1);
+        user.setPoint(user.getPoint() + 10);
         userRepository.save(user);
 
         User user1 = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
 
-        user1.setPoint(user.getPoint() + 1);
+        user1.setPoint(user.getPoint() + 10);
         userRepository.save(user1);
         Event ev = eventService.findOne(n.getRelatedEvent().getId()).get();
         ev.addParticipants(n.getFrom());
