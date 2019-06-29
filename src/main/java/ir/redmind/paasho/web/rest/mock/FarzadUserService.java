@@ -372,11 +372,10 @@ public class FarzadUserService {
     @Timed
     @CrossOrigin(origins = "*")
 
-    public ResponseEntity<?> getProfileById(@PathVariable("userId") String UserId) throws JsonProcessingException {
+    public ResponseEntity<?> getProfileById(@PathVariable("userId") String userId) throws JsonProcessingException {
         ProfileDTO profileDTO = new ProfileDTO();
-        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        User user = userRepository.findById(Long.valueOf(userId)).get();
 
-        profileDTO.setAvatar(user.getAvatar());
         userToProfile(profileDTO, user);
 
         return ResponseEntity.ok(profileDTO);

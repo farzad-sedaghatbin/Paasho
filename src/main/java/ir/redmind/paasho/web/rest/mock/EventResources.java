@@ -34,6 +34,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/events/")
@@ -259,8 +260,10 @@ public class EventResources {
     public ResponseEntity<HttpStatus> refuse(@PathVariable("code") String code) {
         Optional<User> user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get());
         Event event = eventService.findByCode(code);
+        event.setParticipants(event.getParticipants().stream().filter(u->u.getId()==user.get().getId()).collect(Collectors.toSet()));
         Notification notif = notificationService.findByFromAndRelatedEvent(user, event);
         notificationService.delete(notif.getId());
+        eventService.save(eventMapper.toDto(event));
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
