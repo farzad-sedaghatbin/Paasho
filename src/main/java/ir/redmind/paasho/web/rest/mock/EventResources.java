@@ -419,7 +419,8 @@ public class EventResources {
 
         event.getMedias().remove(event.getMedias().stream().filter(m -> m.getId().equals(media.getId())).findFirst().get());
         eventService.save(eventMapper.toDto(event));
-        mediaService.delete(media.getId());
+        media.getEvent().remove(event);
+        mediaRepository.save(media);
 
         return ResponseEntity.ok(HttpStatus.OK.toString());
     }
