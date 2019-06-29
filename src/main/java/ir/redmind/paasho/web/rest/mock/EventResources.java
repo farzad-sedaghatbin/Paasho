@@ -257,7 +257,10 @@ public class EventResources {
     @Timed
     @CrossOrigin(origins = "*")
     public ResponseEntity<HttpStatus> refuse(@PathVariable("code") String code) {
-//todo delete notification
+        Optional<User> user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get());
+        Event event = eventService.findByCode(code);
+        Notification notif = notificationService.findByFromAndRelatedEvent(user, event);
+        notificationService.delete(notif.getId());
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
@@ -329,7 +332,7 @@ public class EventResources {
         header.add("Cache-Control", "no-cache, no-store, must-revalidate");
         header.add("Pragma", "no-cache");
         header.add("Expires", "0");
-        ByteArrayResource resource =null;
+        ByteArrayResource resource = null;
         if (media.getPath() == null) {
             resource = new ByteArrayResource(media.getContent());
             return ResponseEntity.ok()
@@ -337,7 +340,7 @@ public class EventResources {
                 .contentLength(media.getContent().length)
                 .contentType(org.springframework.http.MediaType.IMAGE_JPEG)
                 .body(resource);
-        }else{
+        } else {
             URL url = new URL(media.getPath());
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             URLConnection conn = url.openConnection();
@@ -351,7 +354,7 @@ public class EventResources {
                 }
             }
             byte[] img = output.toByteArray();
-            resource=new ByteArrayResource(img);
+            resource = new ByteArrayResource(img);
             return ResponseEntity.ok()
                 .headers(header)
                 .contentLength(img.length)
