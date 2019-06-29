@@ -166,7 +166,7 @@ server.ssl.key-store-type=PKCS12
     # The path to the keystore containing the certificate
 server.ssl.key-store=classpath:keystore/baeldung.p12
     # The password used to generate the certificate
-server.ssl.key-store-password=password
+server.ssl.key-store-password=paasho
     # The alias mapped to the certificate
 server.ssl.key-alias=baeldung
 security:
@@ -174,4 +174,4 @@ security:
 #trust store location
 trust.store=classpath:keystore/baeldung.p12
     #trust store password
-trust.store.password=password
+trust.store.password=paasho
