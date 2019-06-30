@@ -172,7 +172,7 @@ jhipster:
 # The format used for the keystore. It could be set to JKS in case it is a JKS file
 
 security:
-    require-ssl=true:
+    require-ssl=false
 #trust store location
 #trust:
 #    store: classpath:keystore/baeldung.p12
