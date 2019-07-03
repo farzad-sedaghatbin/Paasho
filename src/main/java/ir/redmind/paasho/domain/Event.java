@@ -136,6 +136,8 @@ public class Event implements Serializable {
     @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> comments = new HashSet<>();
+    private Long titleId;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -655,5 +657,14 @@ public class Event implements Serializable {
             ", dateString='" + getDateString() + "'" +
             ", timeString='" + getTimeString() + "'" +
             "}";
+    }
+
+    public void setTitleId(Long titleId) {
+
+        this.titleId = titleId;
+    }
+
+    public Long getTitleId() {
+        return titleId;
     }
 }

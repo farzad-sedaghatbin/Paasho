@@ -95,6 +95,7 @@ public class EventResources {
             }
         }
         eventDTO.setTitle(event.getTitle());
+        eventDTO.setTitleId(event.getTitleId());
         eventDTO.setPricing(event.getPriceType());
         eventDTO.setScore(event.getCreator().getScore().floatValue());
         eventDTO.setTime(event.getTimeString());
@@ -294,6 +295,7 @@ public class EventResources {
         event.setDescription(createEventDTO.getDescription());
         if (createEventDTO.getCustomTitle() == null || createEventDTO.getCustomTitle().length() == 0) {
             event.status(EventStatus.APPROVED);
+            event.setTitleId(Long.valueOf(createEventDTO.getTitle()));
             event.setTitle(titlesRepository.findById(Long.valueOf(createEventDTO.getTitle())).get().getTitle());
         } else {
             event.status(EventStatus.PENDING);

@@ -34,6 +34,7 @@ public class DetailEventDTO {
     private int capacity;
     private Long id;
     private Long categoryId;
+    private Long titleId;
 
 
     public String getCode() {
@@ -235,5 +236,13 @@ public class DetailEventDTO {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public void setTitleId(Long titleId) {
+        this.titleId = titleId;
+    }
+
+    public Long getTitleId() {
+        return titleId;
     }
 }
