@@ -113,14 +113,14 @@ server:
             cookie:
 
                 http-only: true
-    ssl:
-        key-store-type: PKCS12
-    # The path to the keystore containing the certificate
-        key-store: classpath:keystore/baeldung.p12
-    # The password used to generate the certificate
-        key-store-password: paasho
-    # The alias mapped to the certificate
-        key-alias: baeldung
+#    ssl:
+#        key-store-type: PKCS12
+#    # The path to the keystore containing the certificate
+#        key-store: classpath:keystore/baeldung.p12
+#    # The password used to generate the certificate
+#        key-store-password: paasho
+#    # The alias mapped to the certificate
+#        key-alias: baeldung
 # Properties to be exposed on the /info management endpoint
 info:
     # Comma separated list of profiles that will trigger the ribbon to show
@@ -171,8 +171,8 @@ jhipster:
 # application:
 # The format used for the keystore. It could be set to JKS in case it is a JKS file
 
-security:
-    require-ssl=true:
+#security:
+#    require-ssl=false
 #trust store location
 #trust:
 #    store: classpath:keystore/baeldung.p12
