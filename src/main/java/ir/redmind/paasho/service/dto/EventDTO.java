@@ -59,6 +59,8 @@ public class EventDTO implements Serializable {
 
     private String timeString;
 
+    private Long titleId;
+
 
     private Set<CategoryDTO> categories = new HashSet<>();
 
@@ -354,5 +356,13 @@ public class EventDTO implements Serializable {
             ", creator=" + getCreatorId() +
             ", creator='" + getCreatorLogin() + "'" +
             "}";
+    }
+
+    public Long getTitleId() {
+        return titleId;
+    }
+
+    public void setTitleId(Long titleId) {
+        this.titleId = titleId;
     }
 }

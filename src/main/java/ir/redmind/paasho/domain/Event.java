@@ -3,13 +3,16 @@ package ir.redmind.paasho.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ir.redmind.paasho.web.rest.util.JalaliCalendar;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -420,6 +423,8 @@ public class Event implements Serializable {
 
     public void setDateString(String dateString) {
         this.dateString = dateString;
+        String[] s = dateString.split("/");
+        setEventTime(ZonedDateTime.ofInstant(new JalaliCalendar(Integer.valueOf(s[0]),Integer.valueOf(s[1]),Integer.valueOf(s[2])).toGregorian().toInstant(), ZoneId.systemDefault()));
     }
 
     public String getTimeString() {

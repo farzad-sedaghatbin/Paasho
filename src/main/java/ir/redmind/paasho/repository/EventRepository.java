@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,12 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @EntityGraph(attributePaths = {"medias","categories"})
     List<Event> findByStatus(EventStatus eventStatus);
+
+    @EntityGraph(attributePaths = {"medias","categories"})
+    List<Event> findByStatusAndEventTime(EventStatus eventStatus, ZonedDateTime dateTime);
+
+    @EntityGraph(attributePaths = {"medias","categories"})
+    List<Event> findByStatusAndEventTimeIsBetween(EventStatus eventStatus, ZonedDateTime start,ZonedDateTime end);
 
     @Query(value = "select distinct event from Event event left join fetch event.categories left join fetch event.participants",
         countQuery = "select count(distinct event) from Event event")

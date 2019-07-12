@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class HomeResource {
 
         List<MyEventDTO> myEventDTOS = new ArrayList<>();
 
-        events.stream().filter(e->e.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get())).forEach(event -> {
+        events.stream().filter(e -> e.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get())).forEach(event -> {
             MyEventDTO event1 = new MyEventDTO();
             event1.setCode(event.getCode());
             event1.setTitle(event.getTitle());
@@ -58,7 +59,15 @@ public class HomeResource {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<EventDTO>> events(@RequestParam("type") EventType eventType, Pageable pageable) {
         List<EventDTO> eventDTOS = new ArrayList<>();
-        List<Event> events = eventRepository.findByStatus(EventStatus.APPROVED);
+        List<Event> events = new ArrayList<>();
+        if (eventType.equals(EventType.WEEK))
+            events = eventRepository.findByStatusAndEventTimeIsBetween(EventStatus.APPROVED, ZonedDateTime.now(), ZonedDateTime.now().plusDays(7));
+        else if (eventType.equals(EventType.TODAY))
+            events = eventRepository.findByStatusAndEventTime(EventStatus.APPROVED, ZonedDateTime.now());
+        else if (eventType.equals(EventType.POPULAR))
+            events = eventRepository.findByStatus(EventStatus.APPROVED);
+
+
         events.forEach(event -> {
             EventDTO event1 = new EventDTO();
             event1.setCode(event.getCode());
@@ -66,7 +75,7 @@ public class HomeResource {
                 event1.setPic(event.getMedias().iterator().next().getId());
             event1.setTitle(event.getTitle());
             event1.setId(event.getId());
-            event1.setPricing(PriceType.FREE);
+            event1.setPricing(event.getPriceType());
             event1.setScore(event.getCreator().getScore().floatValue());
             event1.setTime(event.getTimeString());
             event1.setDate(event.getDateString());

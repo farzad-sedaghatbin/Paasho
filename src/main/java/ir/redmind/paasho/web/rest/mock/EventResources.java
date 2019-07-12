@@ -124,8 +124,14 @@ public class EventResources {
         } else eventDTO.setJoinStatus(JoinStatus.NOT_JOINED);
         eventDTO.setLatitude(event.getLatitude());
         eventDTO.setLongitude(event.getLongitude());
-        eventDTO.setTelegram(event.getCreator().getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).findFirst().get().getValue());
-        eventDTO.setInstagram(event.getCreator().getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).findFirst().get().getValue());
+        if (event.getTelegram() == null)
+            eventDTO.setTelegram(event.getCreator().getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).findFirst().get().getValue());
+        else
+            eventDTO.setTelegram(event.getTelegram());
+        if (event.getInstagram() == null)
+            eventDTO.setInstagram(event.getCreator().getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).findFirst().get().getValue());
+        else
+            eventDTO.setInstagram(event.getInstagram());
         eventDTO.setCreator(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
         return eventDTO;
     }
@@ -261,20 +267,21 @@ public class EventResources {
     public ResponseEntity<HttpStatus> refuse(@PathVariable("code") String code) {
         Optional<User> user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get());
         Event event = eventService.findByCode(code);
-        event.setParticipants(event.getParticipants().stream().filter(u->u.getId()==user.get().getId()).collect(Collectors.toSet()));
+        event.setParticipants(event.getParticipants().stream().filter(u -> u.getId() == user.get().getId()).collect(Collectors.toSet()));
         Notification notif = notificationService.findByFromAndRelatedEvent(user, event);
         notificationService.delete(notif.getId());
         eventService.save(eventMapper.toDto(event));
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
+
     @PostMapping(value = "{code}/suspend")
     @Timed
     @CrossOrigin(origins = "*")
     public ResponseEntity<HttpStatus> cancel(@PathVariable("code") String code) {
         Optional<User> user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get());
         Event event = eventService.findByCode(code);
-        if(event.getCreator().getId()==user.get().getId()){
+        if (event.getCreator().getId() == user.get().getId()) {
             event.setStatus(EventStatus.SUSPEND);
         }
         eventService.save(eventMapper.toDto(event));
@@ -452,6 +459,7 @@ public class EventResources {
         event.setPriceType(eventDTO.getPricing());
         if (eventDTO.getCustomTitle() == null || eventDTO.getCustomTitle().length() == 0) {
             event.status(EventStatus.APPROVED);
+            event.setTitleId(Long.valueOf(eventDTO.getTitle()));
             event.setTitle(titlesRepository.findById(Long.valueOf(eventDTO.getTitle())).get().getTitle());
         } else {
             event.status(EventStatus.PENDING);
