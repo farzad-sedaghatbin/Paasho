@@ -35,7 +35,7 @@ public class HomeResource {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<MyEventDTO>> myEvents(Pageable pageable) {
 
-        List<Event> events = eventRepository.findByStatus(EventStatus.APPROVED);
+        List<Event> events = eventRepository.findTop10ByStatus(EventStatus.APPROVED);
 
         List<MyEventDTO> myEventDTOS = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class HomeResource {
         else if (eventType.equals(EventType.TODAY))
             events = eventRepository.findByStatusAndEventTime(EventStatus.APPROVED, ZonedDateTime.now());
         else if (eventType.equals(EventType.POPULAR))
-            events = eventRepository.findByStatus(EventStatus.APPROVED);
+            events = eventRepository.findTop10ByStatus(EventStatus.APPROVED);
 
 
         events.forEach(event -> {
