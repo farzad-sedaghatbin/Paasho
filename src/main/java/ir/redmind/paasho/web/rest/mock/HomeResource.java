@@ -4,13 +4,11 @@ package ir.redmind.paasho.web.rest.mock;
 import io.micrometer.core.annotation.Timed;
 import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.enumeration.EventStatus;
-import ir.redmind.paasho.domain.enumeration.PriceType;
 import ir.redmind.paasho.repository.EventRepository;
 import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.dto.mock.EventDTO;
 import ir.redmind.paasho.service.dto.mock.EventType;
 import ir.redmind.paasho.service.dto.mock.MyEventDTO;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +33,7 @@ public class HomeResource {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<MyEventDTO>> myEvents(Pageable pageable) {
 
-        List<Event> events = eventRepository.findTop10ByStatus(EventStatus.APPROVED);
+        List<Event> events = eventRepository.findTop1ByStatus(EventStatus.APPROVED);
 
         List<MyEventDTO> myEventDTOS = new ArrayList<>();
 
@@ -65,7 +63,7 @@ public class HomeResource {
         else if (eventType.equals(EventType.TODAY))
             events = eventRepository.findByStatusAndEventTime(EventStatus.APPROVED, ZonedDateTime.now());
         else if (eventType.equals(EventType.POPULAR))
-            events = eventRepository.findTop10ByStatus(EventStatus.APPROVED);
+            events = eventRepository.findTop1ByStatus(EventStatus.APPROVED);
 
 
         events.forEach(event -> {
