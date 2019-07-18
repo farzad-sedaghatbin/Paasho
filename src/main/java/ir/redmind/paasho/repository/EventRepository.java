@@ -24,7 +24,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByCreatorIsCurrentUser();
 
     @EntityGraph(attributePaths = {"medias","categories"})
-    List<Event> findByStatus(EventStatus eventStatus);
+    List<Event> findTop10ByStatus(EventStatus eventStatus);
 
     @EntityGraph(attributePaths = {"medias","categories"})
     List<Event> findByStatusAndEventTime(EventStatus eventStatus, ZonedDateTime dateTime);
