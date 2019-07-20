@@ -33,17 +33,17 @@ public class HomeResource {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<MyEventDTO>> myEvents(Pageable pageable) {
 
-        List<Event> events = eventRepository.findTop1ByStatus(EventStatus.APPROVED);
+        List<Event> events = eventRepository.findByStatusAndCreator_Login(EventStatus.APPROVED,SecurityUtils.getCurrentUserLogin().get());
 
         List<MyEventDTO> myEventDTOS = new ArrayList<>();
 
-        events.stream().filter(e -> e.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get())).forEach(event -> {
+        events.stream().forEach(event -> {
             MyEventDTO event1 = new MyEventDTO();
             event1.setCode(event.getCode());
             event1.setTitle(event.getTitle());
             event1.setId(event.getId());
             event1.setScore(event.getCreator().getScore().floatValue());
-            event1.setEditable(event.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
+            event1.setEditable(true);
             if (event.getMedias().iterator().hasNext())
                 event1.setPic(event.getMedias().iterator().next().getId());
             myEventDTOS.add(event1);
@@ -63,8 +63,10 @@ public class HomeResource {
         else if (eventType.equals(EventType.TODAY))
             events = eventRepository.findByStatusAndEventTime(EventStatus.APPROVED, ZonedDateTime.now());
         else if (eventType.equals(EventType.POPULAR))
-            events = eventRepository.findTop1ByStatus(EventStatus.APPROVED);
+            events = eventRepository.findByStatusAndEventTimeAfter(EventStatus.APPROVED,ZonedDateTime.now());
 
+
+        System.out.println(events.size());
 
         events.forEach(event -> {
             EventDTO event1 = new EventDTO();
