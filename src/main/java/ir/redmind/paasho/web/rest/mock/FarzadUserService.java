@@ -349,6 +349,8 @@ public class FarzadUserService {
         user.setEmail(profileDTO.getEmail());
         user.setBirthDate(String.valueOf(profileDTO.getBirthYear()));
         user.setGender(profileDTO.getGender());
+
+        user.setContacts(new HashSet<>());
         Contact contact = new Contact();
         contact.setType(ContactType.INSTAGRAM);
         contact.setUser(user);
