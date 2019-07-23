@@ -502,7 +502,9 @@ public class FarzadUserService {
         Page<User> users = userRepository.findAll(new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "point")));
 
         RecordDTO recordDTOS = new RecordDTO();
-        recordDTOS.setHelp("با شرکت کردن در هر رویداد 10 امتیاز به شما تعلق میگیرد\n" + "با ایجاد کردن رویداد جدید به ازای هر شرکت کننده 10 امتیاز دریافت میکنید\n" + "در ازای دعوت کردن از هر یک از دوستان خود 50 امتیاز دریافت خواهید کرد\n");
+        recordDTOS.setHelp(
+            "پاشو هر هغته با کسانی که بیشترین امتیاز را به دست آوردن، جهت هماهنگی اهدا جوایز تماس میگیره و برندگان هر هفته در سایت پاشو اعلام می شود\n"+
+            "با شرکت کردن در هر رویداد 10 امتیاز به شما تعلق میگیرد\n" + "با ایجاد کردن رویداد جدید به ازای هر شرکت کننده 10 امتیاز دریافت میکنید\n" + "در ازای دعوت کردن از هر یک از دوستان خود 50 امتیاز دریافت خواهید کرد\n");
         recordDTOS.setPrizeDescription("هر هفته 200000 تومان به نفر اول پرداخت می شود");
         recordDTOS.users = new ArrayList<>();
         List<RecordDTO.User> userList = recordDTOS.users;
