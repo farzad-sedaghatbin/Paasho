@@ -59,6 +59,7 @@ public class CacheConfiguration {
             cm.createCache(ir.redmind.paasho.domain.Comment.class.getName(), jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Media.class.getName(), jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Rating.class.getName(), jcacheConfiguration);
+            cm.createCache(ir.redmind.paasho.domain.Report.class.getName(), jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Event.class.getName() + ".events", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.User.class.getName() + ".users", jcacheConfiguration);
             cm.createCache(ir.redmind.paasho.domain.Category.class.getName() + ".categories", jcacheConfiguration);
