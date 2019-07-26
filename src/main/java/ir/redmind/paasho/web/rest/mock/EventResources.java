@@ -536,7 +536,7 @@ public class EventResources {
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
-    @PostMapping(value = "{code}/view")
+    @PostMapping(value = "{code}/report")
     @Timed
     @CrossOrigin(origins = "*")
     public ResponseEntity<HttpStatus> report(@PathVariable("code") String code,ReportDTO reportDTO) {
