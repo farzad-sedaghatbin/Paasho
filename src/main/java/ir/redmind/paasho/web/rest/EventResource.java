@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -110,6 +111,7 @@ public class EventResource {
     public ResponseEntity<List<EventDTO>> getAllEvents(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get a page of Events");
         Page<EventDTO> page;
+        pageable.getSortOr(Sort.by(Sort.Direction.DESC,"id"));
         if (eagerload) {
             page = eventService.findAllWithEagerRelationships(pageable);
         } else {

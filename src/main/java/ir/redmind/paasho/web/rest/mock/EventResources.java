@@ -6,6 +6,7 @@ import ir.redmind.paasho.domain.*;
 import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.enumeration.*;
 import ir.redmind.paasho.repository.MediaRepository;
+import ir.redmind.paasho.repository.ReportRepository;
 import ir.redmind.paasho.repository.TitlesRepository;
 import ir.redmind.paasho.repository.UserRepository;
 import ir.redmind.paasho.security.SecurityUtils;
@@ -53,11 +54,12 @@ public class EventResources {
     private final EventMapper eventMapper;
     private final CategoryMapper categoryMapper;
     private final UserMapper userMapper;
+    private final ReportRepository reportRepository;
 
     @PersistenceContext
     private EntityManager em;
 
-    public EventResources(EventService eventService, MediaService mediaService, MediaRepository mediaRepository, MediaMapper mediaMapper, UserService userService, UserRepository userRepository, TitlesRepository titlesRepository, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper, UserMapper userMapper) {
+    public EventResources(EventService eventService, MediaService mediaService, MediaRepository mediaRepository, MediaMapper mediaMapper, UserService userService, UserRepository userRepository, TitlesRepository titlesRepository, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper, UserMapper userMapper, ReportRepository reportRepository) {
         this.eventService = eventService;
         this.mediaService = mediaService;
         this.mediaRepository = mediaRepository;
@@ -71,6 +73,7 @@ public class EventResources {
         this.eventMapper = eventMapper;
         this.categoryMapper = categoryMapper;
         this.userMapper = userMapper;
+        this.reportRepository = reportRepository;
     }
 
     @GetMapping(value = "{code}/detail")
@@ -530,6 +533,21 @@ public class EventResources {
         Event ev = eventService.findByCode(code);
         ev.setVisitCount(ev.getVisitCount() + 1);
         eventService.save(eventMapper.toDto(ev));
+        return ResponseEntity.ok(HttpStatus.OK);
+
+    }
+    @PostMapping(value = "{code}/view")
+    @Timed
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<HttpStatus> report(@PathVariable("code") String code,ReportDTO reportDTO) {
+        Event ev = eventService.findByCode(code);
+        User user=userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+        Report report= new Report();
+        report.setDescription(reportDTO.getDescription());
+        report.setEvent(ev);
+        report.setReason(reportDTO.getReason());
+        report.setUser(user);
+        reportRepository.save(report);
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
