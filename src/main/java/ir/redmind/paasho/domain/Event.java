@@ -38,7 +38,7 @@ public class Event implements Serializable {
 
     @Column(name = "event_time")
     private ZonedDateTime eventTime;
-    @Column(name = "event_time")
+    @Column(name = "to_event_time")
     private ZonedDateTime toEventTime;
 
     @Column(name = "description")
