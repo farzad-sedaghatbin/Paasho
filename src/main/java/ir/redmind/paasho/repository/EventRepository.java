@@ -2,7 +2,6 @@ package ir.redmind.paasho.repository;
 
 import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.enumeration.EventStatus;
-import ir.redmind.paasho.service.dto.EventDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -50,5 +49,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     Event findByCode(String code);
 
     List<Event> findByTitleIsContainingOrDescriptionContaining(String key,String key2);
-    Page<Event> findByTitleIsContainingOrDescriptionContainingOrderByIdDesc(String key,String key2);
+    Page<Event> findByTitleIsContainingOrDescriptionContainingOrderByIdDesc(String key, String key2, Pageable pageable);
 }
