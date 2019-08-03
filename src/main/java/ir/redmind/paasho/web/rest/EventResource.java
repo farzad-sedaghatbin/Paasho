@@ -5,9 +5,11 @@ import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.Media;
 import ir.redmind.paasho.domain.enumeration.MediaType;
 import ir.redmind.paasho.repository.EventRepository;
+import ir.redmind.paasho.repository.MediaRepository;
 import ir.redmind.paasho.service.EventService;
 import ir.redmind.paasho.service.MediaService;
 import ir.redmind.paasho.service.dto.EventDTO;
+import ir.redmind.paasho.service.dto.MediaDTO;
 import ir.redmind.paasho.service.mapper.EventMapper;
 import ir.redmind.paasho.service.mapper.MediaMapper;
 import ir.redmind.paasho.web.rest.errors.BadRequestAlertException;
@@ -43,13 +45,15 @@ public class EventResource {
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
     private MediaService mediaService;
+    private MediaRepository mediaRepository;
     private MediaMapper mediaMapper;
 
-    public EventResource(EventService eventService, EventRepository eventRepository, EventMapper eventMapper, MediaService mediaService, MediaMapper mediaMapper) {
+    public EventResource(EventService eventService, EventRepository eventRepository, EventMapper eventMapper, MediaService mediaService, MediaRepository mediaRepository, MediaMapper mediaMapper) {
         this.eventService = eventService;
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
         this.mediaService = mediaService;
+        this.mediaRepository = mediaRepository;
         this.mediaMapper = mediaMapper;
     }
 
@@ -71,8 +75,8 @@ public class EventResource {
 //            String upl = FileUpload.uploadFile(new ByteArrayResource(eventDTO.getFiles()));
         Event e = eventMapper.toEntity(result);
         Media media = new Media(eventDTO.getFiles(), MediaType.PHOTO,e);
-        mediaService.save(mediaMapper.toDto(media));
-        e.getMedias().add(media);
+        Media m = mediaRepository.save(media);
+        e.getMedias().add(m);
         eventRepository.save(e);
 //        } catch (IOException e) {
 //            e.printStackTrace();
