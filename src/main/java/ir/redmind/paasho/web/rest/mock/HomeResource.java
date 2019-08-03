@@ -61,7 +61,7 @@ public class HomeResource {
         if (eventType.equals(EventType.WEEK))
             events = eventRepository.findByStatusAndEventTimeIsBetween(EventStatus.APPROVED, ZonedDateTime.now(), ZonedDateTime.now().plusDays(7));
         else if (eventType.equals(EventType.TODAY))
-            events = eventRepository.findByStatusAndEventTime(EventStatus.APPROVED, ZonedDateTime.now());
+            events = eventRepository.findByStatusAndEventTimeIsBetween(EventStatus.APPROVED, ZonedDateTime.now(),ZonedDateTime.now().plusDays(1));
         else if (eventType.equals(EventType.POPULAR))
             events = eventRepository.findByStatusAndEventTimeAfter(EventStatus.APPROVED,ZonedDateTime.now());
 
