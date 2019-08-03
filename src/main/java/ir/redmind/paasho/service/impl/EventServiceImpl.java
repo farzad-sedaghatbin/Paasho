@@ -131,9 +131,10 @@ public class EventServiceImpl implements EventService {
     @Transactional(readOnly = true)
     public Page<EventDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Events for query {}", query);
+        eventRepository.findByTitleIsContainingOrDescriptionContainingOrderByIdDesc(query,query);
 //        return eventSearchRepository.search(queryStringQuery(query), pageable)
 //            .map(eventMapper::toDto);
-        return null;
+        return eventRepository.findByTitleIsContainingOrDescriptionContainingOrderByIdDesc(query,query).map(eventMapper::toDto);
     }
 
     @Override

@@ -3,10 +3,38 @@ package ir.redmind.paasho.service.dto.mock;
 public class NotificationDTO {
     private String requestId;
     private String relatedUserId;
+    private String relatedUserTelegram;
+    private String relatedUserInstagram;
+    private String relatedUserName;
     private String relatedEventcode;
     private boolean pending;
     private String text;
     private String avatar;
+
+
+    public String getRelatedUserTelegram() {
+        return relatedUserTelegram;
+    }
+
+    public void setRelatedUserTelegram(String relatedUserTelegram) {
+        this.relatedUserTelegram = relatedUserTelegram;
+    }
+
+    public String getRelatedUserInstagram() {
+        return relatedUserInstagram;
+    }
+
+    public void setRelatedUserInstagram(String relatedUserInstagram) {
+        this.relatedUserInstagram = relatedUserInstagram;
+    }
+
+    public String getRelatedUserName() {
+        return relatedUserName;
+    }
+
+    public void setRelatedUserName(String relatedUserName) {
+        this.relatedUserName = relatedUserName;
+    }
 
     public String getRequestId() {
         return requestId;

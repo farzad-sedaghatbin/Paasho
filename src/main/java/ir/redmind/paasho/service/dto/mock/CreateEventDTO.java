@@ -12,6 +12,7 @@ public class CreateEventDTO {
     private PriceType pricing;
     private float score;
     private String date;
+    private String toDate;
     private String time;
     private double latitude;
     private double longitude;
@@ -166,5 +167,13 @@ public class CreateEventDTO {
 
     public void setCapacity(Long capacity) {
         this.capacity = capacity;
+    }
+
+    public String getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
     }
 }

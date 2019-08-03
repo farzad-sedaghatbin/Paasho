@@ -14,6 +14,7 @@ public class DetailEventDTO {
     private String category;
     private List<Long> pic=new ArrayList<>();
     private String date;
+    private String toDate;
     private String time;
     private String description;
     private String address;
@@ -240,6 +241,14 @@ public class DetailEventDTO {
 
     public void setTitleId(Long titleId) {
         this.titleId = titleId;
+    }
+
+    public String getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
     }
 
     public Long getTitleId() {

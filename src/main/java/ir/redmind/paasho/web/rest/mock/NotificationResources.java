@@ -2,9 +2,11 @@ package ir.redmind.paasho.web.rest.mock;
 
 
 import io.micrometer.core.annotation.Timed;
+import ir.redmind.paasho.domain.Contact;
 import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.Notification;
 import ir.redmind.paasho.domain.User;
+import ir.redmind.paasho.domain.enumeration.ContactType;
 import ir.redmind.paasho.domain.enumeration.NotificationStatus;
 import ir.redmind.paasho.repository.UserRepository;
 import ir.redmind.paasho.security.SecurityUtils;
@@ -23,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,7 +110,13 @@ public class NotificationResources {
             notif.setText(l.getDescription());
             notif.setRelatedEventcode(String.valueOf(l.getRelatedEventId()));
             notif.setRelatedUserId(String.valueOf(l.getFromId()));
-            notif.setAvatar(userService.getUserWithAuthorities(l.getFromId()).get().getAvatar());
+            User user = userService.getUserWithAuthorities(l.getFromId()).get();
+            notif.setAvatar(user.getAvatar());
+            if (user.getContacts().size() > 0) {
+                notif.setRelatedUserTelegram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).sorted(Comparator.comparingLong(Contact::getId)).findFirst().get().getValue());
+                notif.setRelatedUserInstagram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).sorted(Comparator.comparingLong(Contact::getId)).findFirst().get().getValue());
+            }
+            notif.setRelatedUserName(user.getFirstName()+" "+user.getLastName());
             notificationDTOS.add(notif);
         });
 

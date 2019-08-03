@@ -5,10 +5,7 @@ import io.micrometer.core.annotation.Timed;
 import ir.redmind.paasho.domain.*;
 import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.enumeration.*;
-import ir.redmind.paasho.repository.MediaRepository;
-import ir.redmind.paasho.repository.ReportRepository;
-import ir.redmind.paasho.repository.TitlesRepository;
-import ir.redmind.paasho.repository.UserRepository;
+import ir.redmind.paasho.repository.*;
 import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.*;
 import ir.redmind.paasho.service.dto.MediaDTO;
@@ -42,6 +39,7 @@ import java.util.stream.Collectors;
 public class EventResources {
 
     private final EventService eventService;
+    private final EventRepository eventRepository;
     private final MediaService mediaService;
     private final MediaRepository mediaRepository;
     private final MediaMapper mediaMapper;
@@ -59,8 +57,9 @@ public class EventResources {
     @PersistenceContext
     private EntityManager em;
 
-    public EventResources(EventService eventService, MediaService mediaService, MediaRepository mediaRepository, MediaMapper mediaMapper, UserService userService, UserRepository userRepository, TitlesRepository titlesRepository, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper, UserMapper userMapper, ReportRepository reportRepository) {
+    public EventResources(EventService eventService, EventRepository eventRepository, MediaService mediaService, MediaRepository mediaRepository, MediaMapper mediaMapper, UserService userService, UserRepository userRepository, TitlesRepository titlesRepository, CategoryService categoryService, NotificationService notificationService, NotificationMapper notificationMapper, EventMapper eventMapper, CategoryMapper categoryMapper, UserMapper userMapper, ReportRepository reportRepository) {
         this.eventService = eventService;
+        this.eventRepository = eventRepository;
         this.mediaService = mediaService;
         this.mediaRepository = mediaRepository;
         this.mediaMapper = mediaMapper;
@@ -103,6 +102,7 @@ public class EventResources {
         eventDTO.setScore(event.getCreator().getScore().floatValue());
         eventDTO.setTime(event.getTimeString());
         eventDTO.setDate(event.getDateString());
+        eventDTO.setToDate(event.getDateString());
         eventDTO.setAddress(event.getAddress());
         Category cat = event.getCategories().iterator().next();
         eventDTO.setCategory(cat.getName());
@@ -264,6 +264,19 @@ public class EventResources {
 
     }
 
+    @PostMapping(value = "{code}/join-fake")
+    @Timed
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<HttpStatus> join(@PathVariable("code") String code,@RequestParam("code") String mobile) {
+        Optional<User> user = userService.getUserWithAuthoritiesByLogin(mobile);
+        Notification notification = new Notification();
+        Event event = eventService.findByCode(code);
+        event.getParticipants().add(user.get());
+        eventRepository.save(event);
+        return ResponseEntity.ok(HttpStatus.OK);
+
+    }
+
     @PostMapping(value = "{code}/refuse")
     @Timed
     @CrossOrigin(origins = "*")
@@ -318,6 +331,7 @@ public class EventResources {
         event.setMaxAge(createEventDTO.getAgeLimitTo());
         event.setPriceType(createEventDTO.getPricing());
         event.setDateString(createEventDTO.getDate());
+        event.setToDateString(createEventDTO.getDate());
         event.setTimeString(createEventDTO.getTime());
         User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
         event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId()).get()));

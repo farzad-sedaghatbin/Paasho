@@ -50,4 +50,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     Event findByCode(String code);
 
     List<Event> findByTitleIsContainingOrDescriptionContaining(String key,String key2);
+    Page<Event> findByTitleIsContainingOrDescriptionContainingOrderByIdDesc(String key,String key2);
 }

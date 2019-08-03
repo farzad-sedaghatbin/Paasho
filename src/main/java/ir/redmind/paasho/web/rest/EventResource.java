@@ -4,6 +4,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.Media;
 import ir.redmind.paasho.domain.enumeration.MediaType;
+import ir.redmind.paasho.repository.EventRepository;
 import ir.redmind.paasho.service.EventService;
 import ir.redmind.paasho.service.MediaService;
 import ir.redmind.paasho.service.dto.EventDTO;
@@ -39,12 +40,14 @@ public class EventResource {
     private static final String ENTITY_NAME = "event";
 
     private final EventService eventService;
+    private final EventRepository eventRepository;
     private final EventMapper eventMapper;
     private MediaService mediaService;
     private MediaMapper mediaMapper;
 
-    public EventResource(EventService eventService, EventMapper eventMapper, MediaService mediaService, MediaMapper mediaMapper) {
+    public EventResource(EventService eventService, EventRepository eventRepository, EventMapper eventMapper, MediaService mediaService, MediaMapper mediaMapper) {
         this.eventService = eventService;
+        this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
         this.mediaService = mediaService;
         this.mediaMapper = mediaMapper;
@@ -70,7 +73,7 @@ public class EventResource {
         Media media = new Media(eventDTO.getFiles(), MediaType.PHOTO,e);
         mediaService.save(mediaMapper.toDto(media));
         e.getMedias().add(media);
-        eventService.save(eventMapper.toDto(e));
+        eventRepository.save(e);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }

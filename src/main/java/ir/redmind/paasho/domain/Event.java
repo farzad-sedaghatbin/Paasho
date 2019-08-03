@@ -38,6 +38,8 @@ public class Event implements Serializable {
 
     @Column(name = "event_time")
     private ZonedDateTime eventTime;
+    @Column(name = "event_time")
+    private ZonedDateTime toEventTime;
 
     @Column(name = "description")
     private String description;
@@ -101,6 +103,8 @@ public class Event implements Serializable {
 
     @Column(name = "date_string")
     private String dateString;
+    @Column(name = "to_date_string")
+    private String toDateString;
 
     @Column(name = "time_string")
     private String timeString;
@@ -183,6 +187,20 @@ public class Event implements Serializable {
     public Event code(String code) {
         this.code = code;
         return this;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getToDateString() {
+        return toDateString;
+    }
+
+    public void setToDateString(String toDateString) {
+        this.toDateString = toDateString;
+        String[] s = dateString.split("/");
+        setToEventTime(ZonedDateTime.ofInstant(new JalaliCalendar(Integer.valueOf(s[0]),Integer.valueOf(s[1]),Integer.valueOf(s[2])).toGregorian().toInstant(), ZoneId.systemDefault()));
     }
 
     public void setCode(String code) {
@@ -662,6 +680,14 @@ public class Event implements Serializable {
             ", dateString='" + getDateString() + "'" +
             ", timeString='" + getTimeString() + "'" +
             "}";
+    }
+
+    public ZonedDateTime getToEventTime() {
+        return toEventTime;
+    }
+
+    public void setToEventTime(ZonedDateTime toEventTime) {
+        this.toEventTime = toEventTime;
     }
 
     public void setTitleId(Long titleId) {
