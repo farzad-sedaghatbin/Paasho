@@ -123,6 +123,10 @@ public class NotificationResources {
 
         NotificationDTO notif1 = new NotificationDTO();
         notif1.setPending(false);
+        notif1.setAvatar("");
+        notif1.setRelatedUserInstagram("paasho_com");
+        notif1.setRelatedUserInstagram("paasho_com");
+        notif1.setRelatedUserId("4601");
         notif1.setText("به پاشو خوش آمدید");
         notificationDTOS.add(notif1);
 //        return ResponseEntity.ok(new PageImpl<>(notificationDTOS, new PageRequest(pageable.getPageNumber(), list.getSize() + 1), list.getTotalElements() + 1));

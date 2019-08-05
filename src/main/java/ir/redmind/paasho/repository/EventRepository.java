@@ -25,6 +25,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @EntityGraph(attributePaths = {"medias","categories"})
     List<Event> findByStatusAndEventTimeAfter(EventStatus eventStatus,ZonedDateTime dateTime);
 
+    @EntityGraph(attributePaths = {"medias","categories"})
+    Page<Event> findByStatusAndEventTimeAfter(EventStatus eventStatus,ZonedDateTime dateTime,Pageable pageable);
+
 
     @EntityGraph(attributePaths = {"medias","categories"})
     List<Event> findByStatusAndCreator_Login(EventStatus eventStatus,String login);
@@ -34,6 +37,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @EntityGraph(attributePaths = {"medias","categories"})
     List<Event> findByStatusAndEventTimeIsBetween(EventStatus eventStatus, ZonedDateTime start,ZonedDateTime end);
+
+    @EntityGraph(attributePaths = {"medias","categories"})
+    Page<Event> findByStatusAndEventTimeIsBetween(EventStatus eventStatus, ZonedDateTime start,ZonedDateTime end,Pageable pageable);
 
     @Query(value = "select distinct event from Event event left join fetch event.categories left join fetch event.participants",
         countQuery = "select count(distinct event) from Event event")
