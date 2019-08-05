@@ -115,7 +115,7 @@ public class FarzadUserService {
             user.setCreatedBy("system");
             user.setFirstName("کاربر");
             user.setLastName("جدید");
-            user.setBirthDate("1360");
+            user.setBirthDate("1370");
             user.setPoint(0d);
             user.setPassword(passwordEncoder.encode("123"));
             userRepository.save(user);

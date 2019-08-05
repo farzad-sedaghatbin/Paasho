@@ -63,7 +63,7 @@ public class HomeV2Resource {
             event1.setEditable(event.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
             eventDTOS.add(event1);
         });
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(events, null);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(events, "/api/v2/home/");
         return ResponseEntity.ok().headers(headers).body(eventDTOS);
 
     }

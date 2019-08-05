@@ -229,7 +229,7 @@ public class EventResources {
         ShareDTO shareDto = new ShareDTO();
         shareDto.setUser(user.getFirstName() + " " + user.getLastName());
         shareDto.setContent("میخواد با شما رویداد" + event.getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
-        shareDto.setAndroidMarketURL("https://cafebazaar.ir");
+        shareDto.setAndroidMarketURL("https://cafebazaar.ir/app/com.pasho");
         shareDto.setIosMarketURL("https://sibapp.com");
         return ResponseEntity.ok(shareDto);
 
@@ -267,9 +267,8 @@ public class EventResources {
     @PostMapping(value = "{code}/join-fake")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<HttpStatus> join(@PathVariable("code") String code,@RequestParam("code") String mobile) {
+    public ResponseEntity<HttpStatus> join(@PathVariable("code") String code,@RequestParam("mobile") String mobile) {
         Optional<User> user = userService.getUserWithAuthoritiesByLogin(mobile);
-        Notification notification = new Notification();
         Event event = eventService.findByCode(code);
         event.getParticipants().add(user.get());
         eventRepository.save(event);
