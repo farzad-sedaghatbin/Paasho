@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -530,6 +531,41 @@ public class EventResources {
             event1.setLatitude((Double) e[6]);
             event1.setLongitude((Double) e[7]);
             event1.setView(Long.valueOf((Integer) e[8]));
+
+            eventDTOS.add(event1);
+        }
+
+        return ResponseEntity.ok(eventDTOS);
+
+    }
+ @GetMapping(value = "map-all")
+    @Timed
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<List<MapEventDTO>> allMap( ) {
+
+
+     List<Event> l = eventRepository.findByStatusAndEventTimeAfter(EventStatus.APPROVED, ZonedDateTime.now());
+
+     List<MapEventDTO> eventDTOS= new ArrayList<>();
+     for (Event e : l) {
+            MapEventDTO event1 = new MapEventDTO();
+            event1.setCode(String.valueOf(e.getCode()));
+            if (e.getTitle() == null || e.getTitle() == "")
+                event1.setTitle(String.valueOf(e.getCustomTitle()));
+            else
+                event1.setTitle(String.valueOf(e.getTitle()));
+            event1.setPricing(e.getPriceType());
+            event1.setTime(e.getTimeString());
+            event1.setCategoryId(Math.toIntExact(e.getCategories().iterator().next().getId()));
+            event1.setEditable(e.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
+            if (e.getMedias().iterator().hasNext())
+                event1.setPic(e.getMedias().iterator().next().getId());
+
+            event1.setScore(e.getCreator().getScore().floatValue());
+            event1.setDate(String.valueOf(e.getDateString()));
+            event1.setLatitude(e.getLatitude());
+            event1.setLongitude(e.getLongitude());
+            event1.setView(e.getVisitCount().longValue());
 
             eventDTOS.add(event1);
         }
