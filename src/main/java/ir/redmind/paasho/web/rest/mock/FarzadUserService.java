@@ -410,8 +410,8 @@ public class FarzadUserService {
         profileDTO.setFirstName(user.getFirstName());
         profileDTO.setGender(user.getGender());
         if (user.getContacts().size() > 0) {
-            profileDTO.setTelegram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).sorted(Comparator.comparingLong(Contact::getId)).findFirst().get().getValue());
-            profileDTO.setInstagram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).sorted(Comparator.comparingLong(Contact::getId)).findFirst().get().getValue());
+            profileDTO.setTelegram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).sorted(Comparator.comparingLong(Contact::getId)).sorted(Collections.reverseOrder()).findFirst().get().getValue());
+            profileDTO.setInstagram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).sorted(Comparator.comparingLong(Contact::getId)).sorted(Collections.reverseOrder()).findFirst().get().getValue());
         }
         profileDTO.setLastName(user.getLastName());
         profileDTO.setAvatar(user.getAvatar());
