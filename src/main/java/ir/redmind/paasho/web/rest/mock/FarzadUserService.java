@@ -294,7 +294,10 @@ public class FarzadUserService {
             if (u.isPresent()) {
                 User user = u.get();
                 user.setPoint(user.getPoint() + 50);
+                User u2 = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+                u2.setPoint(u2.getPoint()+50);
                 userRepository.save(user);
+                userRepository.save(u2);
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -532,6 +535,7 @@ public class FarzadUserService {
             user.setUser(objects.getFirstName() + " " + objects.getLastName());
             int s = objects.getPoint().intValue();
 
+            user.setUserId(objects.getId());
             user.setScore(s);
             user.setIndex(i++);
             user.setAvatar(objects.getAvatar());

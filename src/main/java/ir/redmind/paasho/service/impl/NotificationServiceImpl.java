@@ -1,6 +1,5 @@
 package ir.redmind.paasho.service.impl;
 
-import com.google.common.collect.Lists;
 import ir.redmind.paasho.domain.Event;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.security.SecurityUtils;
@@ -88,7 +87,7 @@ public class NotificationServiceImpl implements NotificationService {
     public List<NotificationDTO> findAllForMe(Pageable pageable) {
         List<User> users = new ArrayList<>();
         users.add(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
-         return  notificationMapper.toDto( notificationRepository.findByUsersIn(users));
+         return  notificationMapper.toDto( notificationRepository.findByUsersInOrderByIdDesc(users));
     }
 
 

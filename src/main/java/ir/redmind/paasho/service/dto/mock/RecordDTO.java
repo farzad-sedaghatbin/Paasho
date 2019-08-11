@@ -34,6 +34,7 @@ public class RecordDTO {
         public long score;
         public int index;
         public String user;
+        public Long userId;
 
         public String getAvatar() {
             return avatar;
@@ -66,6 +67,14 @@ public class RecordDTO {
         public void setAvatar(String s) {
             this.avatar=s;
 
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Long userId) {
+            this.userId = userId;
         }
     }
 }

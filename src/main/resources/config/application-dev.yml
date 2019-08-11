@@ -15,9 +15,9 @@
 
 logging:
     level:
-        ROOT: DEBUG
-        io.github.jhipster: DEBUG
-        ir.redmind.paasho: DEBUG
+        ROOT: ERROR
+        io.github.jhipster: ERROR
+        ir.redmind.paasho: ERROR
 
 eureka:
     instance:

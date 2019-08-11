@@ -35,6 +35,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     Notification findByFromAndRelatedEvent(User user, Event event);
 
 
-    List<Notification> findByUsersIn(List<User> users);
+    List<Notification> findByUsersInOrderByIdDesc(List<User> users);
 
 }
