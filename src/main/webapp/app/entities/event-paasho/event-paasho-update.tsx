@@ -127,9 +127,9 @@ export class EventPaashoUpdate extends React.Component<IEventPaashoUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label id="descriptionLabel" for="description">
-                    Description
+                    توضیحات
                   </Label>
-                  <AvField id="event-paasho-description" type="text" name="description" />
+                  <AvField id="event-paasho-description" type="textarea" name="description" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="codeLabel" for="code">

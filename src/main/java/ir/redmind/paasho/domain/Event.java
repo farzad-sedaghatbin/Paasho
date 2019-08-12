@@ -3,6 +3,7 @@ package ir.redmind.paasho.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ir.redmind.paasho.domain.enumeration.GenderType;
 import ir.redmind.paasho.web.rest.util.JalaliCalendar;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -97,6 +98,10 @@ public class Event implements Serializable {
 
     @Column(name = "capacity")
     private Long capacity;
+
+
+    @Column(name = "gender")
+    private GenderType gender;
 
     @Column(name = "custom_title")
     private String customTitle;
@@ -289,6 +294,14 @@ public class Event implements Serializable {
         if(visitCount==null)
             return 0;
         return visitCount;
+    }
+
+    public GenderType getGender() {
+        return gender;
+    }
+
+    public void setGender(GenderType gender) {
+        this.gender = gender;
     }
 
     public Event visitCount(Integer visitCount) {

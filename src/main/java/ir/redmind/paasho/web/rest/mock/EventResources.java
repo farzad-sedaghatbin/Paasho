@@ -97,6 +97,7 @@ public class EventResources {
                 eventDTO.getPic().add(ss.getId());
             }
         }
+        eventDTO.setGender(event.getGender()==null?GenderType.NONE:event.getGender());
         eventDTO.setTitle(event.getTitle());
         eventDTO.setTitleId(event.getTitleId());
         eventDTO.setPricing(event.getPriceType());
@@ -167,6 +168,7 @@ public class EventResources {
         event.setPricing(PriceType.FREE);
         event.setTime(e.getTimeString());
         event.setDate(e.getDateString());
+        event.setView(e.getVisitCount());
         event.setCategoryId(Math.toIntExact(e.getCategories().iterator().next().getId()));
         User creator = userService.getUserWithAuthorities(e.getCreatorId()).get();
         event.setScore(creator.getScore().floatValue());
@@ -333,6 +335,7 @@ public class EventResources {
         event.setDateString(createEventDTO.getDate());
         event.setToDateString(createEventDTO.getDate());
         event.setTimeString(createEventDTO.getTime());
+        event.setGender(createEventDTO.getGender());
         User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
         event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId()).get()));
         event.setCreator(user);
