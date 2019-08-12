@@ -16,7 +16,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "contact")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Contact implements Serializable {
+public class Contact implements Serializable, Comparable<Contact> {
 
     private static final long serialVersionUID = 1L;
     
@@ -112,5 +112,10 @@ public class Contact implements Serializable {
             ", type='" + getType() + "'" +
             ", value='" + getValue() + "'" +
             "}";
+    }
+
+    @Override
+    public int compareTo(Contact o) {
+        return id > o.getId()?1:-1;
     }
 }
