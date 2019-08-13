@@ -165,10 +165,11 @@ public class EventResources {
         if (e.getMedias().iterator().hasNext())
             event.setPic(e.getMedias().iterator().next().getId());
         event.setTitle(e.getTitle());
-        event.setPricing(PriceType.FREE);
+        event.setPricing(e.getPriceType());
         event.setTime(e.getTimeString());
         event.setDate(e.getDateString());
         event.setView(e.getVisitCount());
+        event.setId(e.getId());
         event.setCategoryId(Math.toIntExact(e.getCategories().iterator().next().getId()));
         User creator = userService.getUserWithAuthorities(e.getCreatorId()).get();
         event.setScore(creator.getScore().floatValue());
@@ -474,6 +475,7 @@ public class EventResources {
         }
         Event event = eventService.findByCode(eventDTO.getCode());
         event.setDateString(eventDTO.getDate());
+        event.setToDateString(eventDTO.getToDate());
         event.setTimeString(eventDTO.getTime());
         event.setCapacity(eventDTO.getCapacity());
         event.setPriceType(eventDTO.getPricing());
