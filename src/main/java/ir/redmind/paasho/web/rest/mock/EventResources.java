@@ -218,8 +218,8 @@ public class EventResources {
         profileDTO.setFirstName(p.getFirstName());
         profileDTO.setGender(p.getGender());
         profileDTO.setId(p.getId());
-        profileDTO.setTelegram(p.getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).findFirst().get().getValue());
-        profileDTO.setInstagram(p.getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).findFirst().get().getValue());
+        profileDTO.setTelegram(p.getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).sorted(Comparator.comparingLong(Contact::getId)).sorted(Collections.reverseOrder()).findFirst().get().getValue());
+        profileDTO.setInstagram(p.getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).sorted(Comparator.comparingLong(Contact::getId)).sorted(Collections.reverseOrder()).findFirst().get().getValue());
         profileDTO.setLastName(p.getLastName());
         return profileDTO;
     }
@@ -495,10 +495,10 @@ public class EventResources {
         event.setLongitude(eventDTO.getLongitude());
         event.setMinAge(eventDTO.getAgeLimitFrom());
         event.setMaxAge(eventDTO.getAgeLimitTo());
-        ir.redmind.paasho.service.dto.EventDTO result = eventService.save(eventMapper.toDto(event));
+        Event result = eventRepository.save(event);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("EVENT", eventDTO.getId().toString()))
-            .body(result);
+            .body(eventMapper.toDto(result));
     }
 
     @GetMapping(value = "map")

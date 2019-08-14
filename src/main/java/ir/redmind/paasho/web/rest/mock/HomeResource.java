@@ -59,9 +59,9 @@ public class HomeResource {
         List<EventDTO> eventDTOS = new ArrayList<>();
         List<Event> events = new ArrayList<>();
         if (eventType.equals(EventType.WEEK))
-            events = eventRepository.findByStatusAndEventTimeIsBetween(EventStatus.APPROVED, ZonedDateTime.now(), ZonedDateTime.now().plusDays(7));
+            events = eventRepository.findByStatusAndEventTimeIsBetween(EventStatus.APPROVED, ZonedDateTime.now().minusDays(1), ZonedDateTime.now().plusDays(7));
         else if (eventType.equals(EventType.TODAY))
-            events = eventRepository.findByStatusAndEventTimeIsBetween(EventStatus.APPROVED, ZonedDateTime.now(),ZonedDateTime.now().plusDays(1));
+            events = eventRepository.findByStatusAndEventTimeIsBetween(EventStatus.APPROVED, ZonedDateTime.now().minusDays(1),ZonedDateTime.now().plusDays(1));
         else if (eventType.equals(EventType.POPULAR))
             events = eventRepository.findByStatusAndEventTimeAfter(EventStatus.APPROVED,ZonedDateTime.now());
 
