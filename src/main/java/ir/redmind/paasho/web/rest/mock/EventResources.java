@@ -549,7 +549,7 @@ public class EventResources {
     public ResponseEntity<List<MapEventDTO>> allMap( ) {
 
 
-     List<Event> l = eventRepository.findByStatusAndEventTimeAfter(EventStatus.APPROVED, ZonedDateTime.now());
+     List<Event> l = eventRepository.findByStatusAndEventTimeAfterOrderByIdDesc(EventStatus.APPROVED, ZonedDateTime.now());
 
      List<MapEventDTO> eventDTOS= new ArrayList<>();
      for (Event e : l) {
