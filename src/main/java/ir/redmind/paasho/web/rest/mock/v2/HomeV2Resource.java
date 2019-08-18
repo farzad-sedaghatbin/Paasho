@@ -38,9 +38,9 @@ public class HomeV2Resource {
         List<EventDTO> eventDTOS = new ArrayList<>();
         Page<Event> events = null;
         if (eventType.equals(EventType.WEEK))
-            events = eventRepository.findByStatusAndEventTimeIsBetween(EventStatus.APPROVED, ZonedDateTime.now(), ZonedDateTime.now().plusDays(7),pageable);
+            events = eventRepository.findByStatusAndEventTimeIsBetweenOrderByIdDesc(EventStatus.APPROVED, ZonedDateTime.now(), ZonedDateTime.now().plusDays(7),pageable);
         else if (eventType.equals(EventType.TODAY))
-            events = eventRepository.findByStatusAndEventTimeIsBetween(EventStatus.APPROVED, ZonedDateTime.now(),ZonedDateTime.now().plusDays(1),pageable);
+            events = eventRepository.findByStatusAndEventTimeIsBetweenOrderByIdDesc(EventStatus.APPROVED, ZonedDateTime.now(),ZonedDateTime.now().plusDays(1),pageable);
         else if (eventType.equals(EventType.POPULAR))
             events = eventRepository.findByStatusAndEventTimeAfter(EventStatus.APPROVED,ZonedDateTime.now(),pageable);
 
