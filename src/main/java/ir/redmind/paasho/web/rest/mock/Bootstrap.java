@@ -71,10 +71,14 @@ public class Bootstrap {
         List<User> users = userRepository.findAll();
         users.parallelStream().forEach(u -> {
             List<Contact> c = contactRepository.findByUser(u);
-            if ((u.getTelegram() == null || u.getTelegram().length() == 0 )&&(c!=null && c.size()>0))
-                u.setTelegram(c.stream().filter(c1 -> c1.getType().equals(ContactType.TELEGRAM)).findFirst().get().getValue());
+            Contact i=new Contact();
+            if ((u.getTelegram() == null || u.getTelegram().length() == 0 )&&(c!=null && c.size()>0)) {
+               i= c.stream().filter(c1 -> c1.getType().equals(ContactType.TELEGRAM)).findFirst().orElse(new Contact());
+                u.setTelegram(i.getValue());
+            }
             if ((u.getInstagram() == null || u.getInstagram().length() == 0)&&(c!=null && c.size()>0))
-                u.setInstagram(c.stream().filter(c1 -> c1.getType().equals(ContactType.INSTAGRAM)).findFirst().get().getValue());
+                i=c.stream().filter(c1 -> c1.getType().equals(ContactType.INSTAGRAM)).findFirst().orElse(new Contact());
+            u.setInstagram(i.getValue());
 
             userRepository.save(u);
 
