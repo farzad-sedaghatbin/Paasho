@@ -1,6 +1,7 @@
 package ir.redmind.paasho.repository;
 
 import ir.redmind.paasho.domain.Contact;
+import ir.redmind.paasho.domain.User;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,6 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
 
     @Query("select contact from Contact contact where contact.user.login = ?#{principal.username}")
     List<Contact> findByUserIsCurrentUser();
+    List<Contact> findByUser(User user);
 
 }
