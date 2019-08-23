@@ -67,7 +67,7 @@ public class NotificationResources {
 
         User user1 = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
 
-        user1.setPoint(user.getPoint() + 10);
+        user1.setPoint(user1.getPoint() + 10);
         userRepository.save(user1);
         Event ev = eventService.findOne(n.getRelatedEvent().getId()).get();
         ev.addParticipants(n.getFrom());

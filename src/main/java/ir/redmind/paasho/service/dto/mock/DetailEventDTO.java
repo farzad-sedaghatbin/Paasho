@@ -36,6 +36,7 @@ public class DetailEventDTO {
     private Long id;
     private Long categoryId;
     private Long titleId;
+    private Long creatorId;
 
 
     public String getCode() {
@@ -253,5 +254,13 @@ public class DetailEventDTO {
 
     public Long getTitleId() {
         return titleId;
+    }
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
     }
 }
