@@ -130,11 +130,11 @@ public class EventResources {
         eventDTO.setLatitude(event.getLatitude());
         eventDTO.setLongitude(event.getLongitude());
         if (event.getTelegram() == null)
-            eventDTO.setTelegram(event.getCreator().getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).findFirst().get().getValue());
+            eventDTO.setTelegram(event.getCreator().getTelegram());
         else
             eventDTO.setTelegram(event.getTelegram());
         if (event.getInstagram() == null)
-            eventDTO.setInstagram(event.getCreator().getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).findFirst().get().getValue());
+            eventDTO.setInstagram(event.getCreator().getInstagram());
         else
             eventDTO.setInstagram(event.getInstagram());
         eventDTO.setCreator(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
@@ -219,8 +219,8 @@ public class EventResources {
         profileDTO.setFirstName(p.getFirstName());
         profileDTO.setGender(p.getGender());
         profileDTO.setId(p.getId());
-        profileDTO.setTelegram(p.getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).sorted(Comparator.comparingLong(Contact::getId)).sorted(Collections.reverseOrder()).findFirst().get().getValue());
-        profileDTO.setInstagram(p.getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).sorted(Comparator.comparingLong(Contact::getId)).sorted(Collections.reverseOrder()).findFirst().get().getValue());
+        profileDTO.setTelegram(p.getTelegram());
+        profileDTO.setInstagram(p.getInstagram());
         profileDTO.setLastName(p.getLastName());
         return profileDTO;
     }

@@ -56,6 +56,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
 //    @Size(min = 5, max = 254)
 //    @Column(length = 254, unique = true)
     private String email;
+    private String instagram;
+    private String telegram;
+
 
     @NotNull
     @Column(nullable = false)
@@ -379,5 +382,21 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setPoint(Double point) {
         this.point = point;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getTelegram() {
+        return telegram;
+    }
+
+    public void setTelegram(String telegram) {
+        this.telegram = telegram;
     }
 }

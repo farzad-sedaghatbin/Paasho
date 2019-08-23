@@ -370,21 +370,19 @@ public class FarzadUserService {
         user.setBirthDate(String.valueOf(profileDTO.getBirthYear()));
         user.setGender(profileDTO.getGender());
 
-        user.setContacts(new HashSet<>());
-        Contact contact = new Contact();
-        contact.setType(ContactType.INSTAGRAM);
-        contact.setUser(user);
-        contact.setValue(profileDTO.getInstagram());
+//        user.setContacts(new HashSet<>());
+//        Contact contact = new Contact();
+//        contact.setType(ContactType.INSTAGRAM);
+//        contact.setUser(user);
+//        contact.setValue(profileDTO.getInstagram());
+//
+//        Contact contact1 = new Contact();
+//        contact1.setType(ContactType.TELEGRAM);
+//        contact1.setUser(user);
+//        contact1.setValue(profileDTO.getTelegram());
 
-        Contact contact1 = new Contact();
-        contact1.setType(ContactType.TELEGRAM);
-        contact1.setUser(user);
-        contact1.setValue(profileDTO.getTelegram());
-
-        contactRepository.save(contact);
-        contactRepository.save(contact1);
-        user.getContacts().add(contact);
-        user.getContacts().add(contact1);
+        user.setInstagram(profileDTO.getInstagram());
+        user.setTelegram(profileDTO.getTelegram());
         userRepository.save(user);
         return ResponseEntity.ok(profileDTO);
 
@@ -409,10 +407,8 @@ public class FarzadUserService {
         profileDTO.setEmail(user.getEmail());
         profileDTO.setFirstName(user.getFirstName());
         profileDTO.setGender(user.getGender());
-        if (user.getContacts().size() > 0) {
-            profileDTO.setTelegram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.TELEGRAM)).sorted(Comparator.comparingLong(Contact::getId)).sorted(Collections.reverseOrder()).findFirst().get().getValue());
-            profileDTO.setInstagram(user.getContacts().stream().filter(c -> c.getType().equals(ContactType.INSTAGRAM)).sorted(Comparator.comparingLong(Contact::getId)).sorted(Collections.reverseOrder()).findFirst().get().getValue());
-        }
+            profileDTO.setTelegram(user.getTelegram());
+            profileDTO.setInstagram(user.getInstagram());
         profileDTO.setLastName(user.getLastName());
         profileDTO.setAvatar(user.getAvatar());
         profileDTO.setBirthYear(Integer.parseInt(user.getBirthDate()));
