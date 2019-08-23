@@ -138,6 +138,7 @@ public class EventResources {
         else
             eventDTO.setInstagram(event.getInstagram());
         eventDTO.setCreator(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
+        eventDTO.setCreatorId(event.getCreator().getId());
         return eventDTO;
     }
 
