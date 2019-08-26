@@ -79,6 +79,7 @@ public class HomeResource {
             event1.setScore(event.getCreator().getScore().floatValue());
             event1.setTime(event.getTimeString());
             event1.setDate(event.getDateString());
+            if(event.getCategories().size()>0)
             event1.setCategoryId(event.getCategories().iterator().next().getId().intValue());
             event1.setCreator(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
             event1.setEditable(event.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
