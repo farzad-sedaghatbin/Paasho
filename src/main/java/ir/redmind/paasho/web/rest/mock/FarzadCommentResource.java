@@ -73,14 +73,16 @@ public class FarzadCommentResource {
         commentService.save(c);
 
 
-        Notification notification = new Notification();
-        notification.setDescription(user.getFirstName() + " " + user.getLastName() + " پیام در رویداد : " + event.getTitle());
-        notification.addUsers(event.getCreator());
-        notification.setRelatedEvent(event);
-        notification.setFrom(user);
-        notification.setStatus(NotificationStatus.ACCEPTED);
-        notification.setType(NotificationType.NEWS);
-        notificationService.save(notificationMapper.toDto(notification));
+        if(c.getUserId()!=event.getCreator().getId()) {
+            Notification notification = new Notification();
+            notification.setDescription(user.getFirstName() + " " + user.getLastName() + " پیام در رویداد : " + event.getTitle());
+            notification.addUsers(event.getCreator());
+            notification.setRelatedEvent(event);
+            notification.setFrom(user);
+            notification.setStatus(NotificationStatus.ACCEPTED);
+            notification.setType(NotificationType.NEWS);
+            notificationService.save(notificationMapper.toDto(notification));
+        }
         return ResponseEntity.ok(HttpStatus.OK);
 
     }

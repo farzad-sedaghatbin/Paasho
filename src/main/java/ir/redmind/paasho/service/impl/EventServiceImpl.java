@@ -116,7 +116,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> searchByTitleOrDescription(String key) {
-        return eventRepository.findByTitleIsContainingOrDescriptionContaining(key,key);
+        return eventRepository.findByTitleIsContainingOrDescriptionContainingOrCreator_FirstNameContainingOrCreator_LastNameContaining(key,key,key,key);
     }
 
     /**
@@ -130,10 +130,9 @@ public class EventServiceImpl implements EventService {
     @Transactional(readOnly = true)
     public Page<EventDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Events for query {}", query);
-        eventRepository.findByTitleIsContainingOrDescriptionContainingOrderByIdDesc(query,query,pageable);
 //        return eventSearchRepository.search(queryStringQuery(query), pageable)
 //            .map(eventMapper::toDto);
-        return eventRepository.findByTitleIsContainingOrDescriptionContainingOrderByIdDesc(query,query, pageable).map(eventMapper::toDto);
+        return eventRepository.findByTitleIsContainingOrDescriptionContainingOrCreator_FirstNameContainingOrCreator_LastNameContainingOrderByIdDesc(query,query,query,query, pageable).map(eventMapper::toDto);
     }
 
     @Override

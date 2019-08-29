@@ -37,4 +37,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     List<Notification> findByUsersInOrderByIdDesc(List<User> users);
 
+
+    Page<Notification> findAllByUsersInOrderByIdDesc(List<User> users,Pageable pageable);
+
 }

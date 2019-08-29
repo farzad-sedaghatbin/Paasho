@@ -54,6 +54,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @EntityGraph(attributePaths = {"medias","categories","participants"})
     Event findByCode(String code);
 
-    List<Event> findByTitleIsContainingOrDescriptionContaining(String key,String key2);
-    Page<Event> findByTitleIsContainingOrDescriptionContainingOrderByIdDesc(String key, String key2, Pageable pageable);
+    List<Event> findByTitleIsContainingOrDescriptionContainingOrCreator_FirstNameContainingOrCreator_LastNameContaining(String key, String key2, String key3, String key4);
+    Page<Event> findByTitleIsContainingOrDescriptionContainingOrCreator_FirstNameContainingOrCreator_LastNameContainingOrderByIdDesc(String key, String key2, String key3, String key4, Pageable pageable);
 }

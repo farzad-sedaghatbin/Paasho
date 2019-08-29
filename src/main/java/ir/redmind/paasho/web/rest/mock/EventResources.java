@@ -301,7 +301,7 @@ public class EventResources {
     public ResponseEntity<HttpStatus> cancel(@PathVariable("code") String code) {
         Optional<User> user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get());
         Event event = eventService.findByCode(code);
-        if (event.getCreator().getId() == user.get().getId()) {
+        if (event.getCreator().getId().equals(user.get().getId())) {
             event.setStatus(EventStatus.SUSPEND);
         }
         eventService.save(eventMapper.toDto(event));
@@ -587,7 +587,7 @@ public class EventResources {
     public ResponseEntity<HttpStatus> view(@PathVariable("code") String code) {
         Event ev = eventService.findByCode(code);
         ev.setVisitCount(ev.getVisitCount() + 1);
-        eventService.save(eventMapper.toDto(ev));
+        eventRepository.save(ev);
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
