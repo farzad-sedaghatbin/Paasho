@@ -12,6 +12,7 @@ public class EventDTO {
     private String time;
     private String creator;
     private boolean editable;
+    private boolean expire;
     private int categoryId;
     private int view=0;
     private Long id;
@@ -115,5 +116,13 @@ public class EventDTO {
 
     public Long getId() {
         return id;
+    }
+
+    public boolean isExpire() {
+        return expire;
+    }
+
+    public void setExpire(boolean expire) {
+        this.expire = expire;
     }
 }

@@ -175,6 +175,7 @@ public class EventResources {
         User creator = userService.getUserWithAuthorities(e.getCreatorId()).get();
         event.setScore(creator.getScore().floatValue());
         event.setCreator(creator.getFirstName() + " " + creator.getLastName());
+        event.setExpire(e.getEventTime().isAfter(ZonedDateTime.now()));
         event.setEditable(creator.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
         return event;
     }
