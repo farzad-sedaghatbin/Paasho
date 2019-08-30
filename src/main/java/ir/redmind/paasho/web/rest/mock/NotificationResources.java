@@ -127,7 +127,7 @@ public class NotificationResources {
             notif.setText(l.getDescription());
             notif.setRelatedEventcode(String.valueOf(l.getRelatedEventId()));
             notif.setRelatedUserId(String.valueOf(l.getFromId()));
-            User user = userService.getUserWithAuthorities(l.getFromId()).get();
+            User user = userRepository.getOne(l.getFromId());
             notif.setAvatar(user.getAvatar());
             if (user.getContacts().size() > 0) {
                 notif.setRelatedUserTelegram(user.getTelegram());
