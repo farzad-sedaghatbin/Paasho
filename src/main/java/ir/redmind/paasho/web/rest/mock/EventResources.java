@@ -305,7 +305,7 @@ public class EventResources {
         if (event.getCreator().getId().equals(user.get().getId())) {
             event.setStatus(EventStatus.SUSPEND);
         }
-        eventService.save(eventMapper.toDto(event));
+        eventRepository.save(event);
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
@@ -343,7 +343,7 @@ public class EventResources {
         event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) createEventDTO.getCategoryId()).get()));
         event.setCreator(user);
         event.setCapacity(createEventDTO.getCapacity());
-        eventService.save(eventMapper.toDto(event));
+        eventRepository.save(event);
 
         user.setPoint(user.getPoint() + 10);
         userRepository.save(user);
@@ -489,10 +489,12 @@ public class EventResources {
             event.status(EventStatus.PENDING);
             event.setTitle(eventDTO.getCustomTitle());
         }
+
         event.setCategories(new HashSet<>());
         event.addCategories(categoryMapper.toEntity(categoryService.findOne((long) eventDTO.getCategoryId()).get()));
         event.setDescription(eventDTO.getDescription());
         event.setTel(eventDTO.getTel());
+        event.setGender(eventDTO.getGender());
         event.setLatitude(eventDTO.getLatitude());
         event.setLongitude(eventDTO.getLongitude());
         event.setMinAge(eventDTO.getAgeLimitFrom());
