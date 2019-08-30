@@ -172,7 +172,7 @@ public class EventResources {
         event.setView(e.getVisitCount());
         event.setId(e.getId());
         event.setCategoryId(Math.toIntExact(e.getCategories().iterator().next().getId()));
-        User creator = userRepository.getOne(e.getCreatorId());
+        User creator = userRepository.findById(e.getCreatorId()).get();
         event.setScore(creator.getScore().floatValue());
         event.setCreator(creator.getFirstName() + " " + creator.getLastName());
         event.setExpire(e.getEventTime().isAfter(ZonedDateTime.now()));
