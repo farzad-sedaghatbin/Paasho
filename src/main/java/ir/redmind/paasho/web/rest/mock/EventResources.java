@@ -531,6 +531,7 @@ public class EventResources {
             event1.setPricing(PriceType.valueOf(String.valueOf(e[3])));
             event1.setTime(String.valueOf(e[5]));
             Event ee = eventService.findByCode(event1.getCode());
+            if(ee.getCategories() !=null && ee.getCategories().size()>0)
             event1.setCategoryId(Math.toIntExact(ee.getCategories().iterator().next().getId()));
             event1.setEditable(ee.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
             if (ee.getMedias().iterator().hasNext())
