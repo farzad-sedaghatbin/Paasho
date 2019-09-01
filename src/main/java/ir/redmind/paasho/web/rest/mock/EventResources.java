@@ -368,6 +368,7 @@ public class EventResources {
         Media media = new Media(multipartFile.getBytes(), MediaType.PHOTO, event);
         mediaRepository.save(media);
         event.getMedias().add(media);
+        event.setStatus(EventStatus.PENDING);
         eventService.save(eventMapper.toDto(event));
         return ResponseEntity.ok(multipartFile.getOriginalFilename());
     }
