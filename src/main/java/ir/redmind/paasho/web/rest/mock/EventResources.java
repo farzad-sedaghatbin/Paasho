@@ -234,9 +234,9 @@ public class EventResources {
         User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
         ShareDTO shareDto = new ShareDTO();
         shareDto.setUser(user.getFirstName() + " " + user.getLastName());
-        shareDto.setContent("میخواد با شما رویداد" + event.getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
+        shareDto.setContent("میخواد با شما رویداد " + event.getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
         shareDto.setAndroidMarketURL("https://cafebazaar.ir/app/com.pasho");
-        shareDto.setIosMarketURL("https://sibapp.com");
+        shareDto.setIosMarketURL("http://paasho.com/app/paasho.apk");
         return ResponseEntity.ok(shareDto);
 
     }
