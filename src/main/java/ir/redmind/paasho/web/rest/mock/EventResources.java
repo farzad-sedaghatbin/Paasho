@@ -512,7 +512,7 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<MapEventDTO>> events(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude) {
 
-        String query = "SELECT  code,title,custom_Title,price_Type,date_String,time_String,latitude,longitude,visit_count FROM event e  WHERE  e.status='APPROVED' and ((6371 * acos ( cos ( radians(?1) ) * cos( radians( cast(latitude as double precision) ) ) * cos( radians( cast(e.longitude as double precision) ) - radians(?3) ) +sin ( radians(?2) ) * sin( radians( cast(e.latitude as double precision) ) ))) < 3);  ";
+        String query = "SELECT  code,title,custom_Title,price_Type,date_String,time_String,latitude,longitude,visit_count FROM event e  WHERE  e.status='APPROVED' and ((6371 * acos ( cos ( radians(?1) ) * cos( radians( cast(latitude as double precision) ) ) * cos( radians( cast(e.longitude as double precision) ) - radians(?3) ) +sin ( radians(?2) ) * sin( radians( cast(e.latitude as double precision) ) ))) < 1);  ";
 //                                    System.out.println(a);
         javax.persistence.Query query2 = em.createNativeQuery(query);
         query2.setParameter(1, latitude);
