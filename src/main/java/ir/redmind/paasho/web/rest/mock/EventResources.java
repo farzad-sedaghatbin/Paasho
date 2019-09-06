@@ -522,7 +522,8 @@ public class EventResources {
         List<Object[]> l = query2.getResultList();
         List<MapEventDTO> eventDTOS = new ArrayList<>();
 
-        for (Object[] e : l) {
+
+        l.parallelStream().forEach(e->{
             MapEventDTO event1 = new MapEventDTO();
             event1.setCode(String.valueOf(e[0]));
             if (e[1] == null || e[1] == "")
@@ -542,7 +543,7 @@ public class EventResources {
             event1.setView(Long.valueOf((Integer) e[8]));
 
             eventDTOS.add(event1);
-        }
+        });
 
         return ResponseEntity.ok(eventDTOS);
 
