@@ -534,7 +534,7 @@ public class EventResources {
             event1.setPricing(PriceType.valueOf(String.valueOf(e[3])));
             event1.setTime(String.valueOf(e[5]));
             event1.setCategoryId(((BigInteger) e[9]).intValue());
-            event1.setEditable(String.valueOf(e[5]).equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
+            event1.setEditable(String.valueOf(e[11]).equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
             if(e[10]!=null)
             event1.setPic(((BigInteger) e[10]).longValue());
 
