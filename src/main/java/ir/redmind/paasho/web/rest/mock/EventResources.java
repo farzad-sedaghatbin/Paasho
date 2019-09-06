@@ -536,7 +536,7 @@ public class EventResources {
             event1.setCategoryId(((BigInteger) e[9]).intValue());
             event1.setEditable(String.valueOf(e[5]).equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
             if(e[10]!=null)
-            event1.setPic((Long) e[10]);
+            event1.setPic(((BigInteger) e[10]).longValue());
 
 //            event1.setScore(ee.getCreator().getScore().floatValue());
             event1.setDate(String.valueOf(e[4]));
