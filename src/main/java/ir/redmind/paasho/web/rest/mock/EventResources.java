@@ -97,7 +97,7 @@ public class EventResources {
                 eventDTO.getPic().add(ss.getId());
             }
         }
-        eventDTO.setGender(event.getGender()==null?GenderType.NONE:event.getGender());
+        eventDTO.setGender(event.getGender() == null ? GenderType.NONE : event.getGender());
         eventDTO.setTitle(event.getTitle());
         eventDTO.setTitleId(event.getTitleId());
         eventDTO.setPricing(event.getPriceType());
@@ -273,7 +273,7 @@ public class EventResources {
     @PostMapping(value = "{code}/join-fake")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<HttpStatus> join(@PathVariable("code") String code,@RequestParam("mobile") String mobile) {
+    public ResponseEntity<HttpStatus> join(@PathVariable("code") String code, @RequestParam("mobile") String mobile) {
         Optional<User> user = userService.getUserWithAuthoritiesByLogin(mobile);
         Event event = eventService.findByCode(code);
         event.getParticipants().add(user.get());
@@ -512,7 +512,7 @@ public class EventResources {
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<MapEventDTO>> events(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude) {
 
-        String query = "SELECT  code,title,custom_Title,price_Type,date_String,time_String,latitude,longitude,visit_count FROM event e  WHERE  e.status='APPROVED' and ((6371 * acos ( cos ( radians(?1) ) * cos( radians( cast(latitude as double precision) ) ) * cos( radians( cast(e.longitude as double precision) ) - radians(?3) ) +sin ( radians(?2) ) * sin( radians( cast(e.latitude as double precision) ) ))) < 1);  ";
+        String query = "SELECT  DISTINCT on(e.id)  code,title,custom_Title,price_Type,date_String,time_String,latitude,longitude,visit_count, ec.categories_id,em.medias_id,ju.login FROM event e  left join event_categories ec on e.id = ec.event_id left join category c on ec.categories_id = c.id LEFT JOIN media_event em ON e.id = em.event_id LEFT JOIN media m ON eM.medias_id=M.id LEFT JOIN jhi_user ju on e.creator_id = ju.id   WHERE  e.status='APPROVED' and ((6371 * acos ( cos ( radians(?1) ) * cos( radians( cast(latitude as double precision) ) ) * cos( radians( cast(e.longitude as double precision) ) - radians(?3) ) +sin ( radians(?2) ) * sin( radians( cast(e.latitude as double precision) ) ))) < 1);  ";
 //                                    System.out.println(a);
         javax.persistence.Query query2 = em.createNativeQuery(query);
         query2.setParameter(1, latitude);
@@ -531,14 +531,11 @@ public class EventResources {
                 event1.setTitle(String.valueOf(e[1]));
             event1.setPricing(PriceType.valueOf(String.valueOf(e[3])));
             event1.setTime(String.valueOf(e[5]));
-            Event ee = eventService.findByCode(event1.getCode());
-            if(ee.getCategories() !=null && ee.getCategories().size()>0)
-            event1.setCategoryId(Math.toIntExact(ee.getCategories().iterator().next().getId()));
-            event1.setEditable(ee.getCreator().getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
-            if (ee.getMedias().iterator().hasNext())
-                event1.setPic(ee.getMedias().iterator().next().getId());
+            event1.setCategoryId((Integer) e[9]);
+            event1.setEditable(String.valueOf(e[5]).equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
+            event1.setPic((Long) e[10]);
 
-            event1.setScore(ee.getCreator().getScore().floatValue());
+//            event1.setScore(ee.getCreator().getScore().floatValue());
             event1.setDate(String.valueOf(e[4]));
             event1.setLatitude((Double) e[6]);
             event1.setLongitude((Double) e[7]);
@@ -550,16 +547,17 @@ public class EventResources {
         return ResponseEntity.ok(eventDTOS);
 
     }
- @GetMapping(value = "map-all")
+
+    @GetMapping(value = "map-all")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<List<MapEventDTO>> allMap( ) {
+    public ResponseEntity<List<MapEventDTO>> allMap() {
 
 
-     List<Event> l = eventRepository.findByStatusAndEventTimeAfterOrderByIdDesc(EventStatus.APPROVED, ZonedDateTime.now());
+        List<Event> l = eventRepository.findByStatusAndEventTimeAfterOrderByIdDesc(EventStatus.APPROVED, ZonedDateTime.now());
 
-     List<MapEventDTO> eventDTOS= new ArrayList<>();
-     for (Event e : l) {
+        List<MapEventDTO> eventDTOS = new ArrayList<>();
+        for (Event e : l) {
             MapEventDTO event1 = new MapEventDTO();
             event1.setCode(String.valueOf(e.getCode()));
             if (e.getTitle() == null || e.getTitle() == "")
@@ -597,13 +595,14 @@ public class EventResources {
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
+
     @PostMapping(value = "{code}/report")
     @Timed
     @CrossOrigin(origins = "*")
-    public ResponseEntity<HttpStatus> report(@PathVariable("code") String code,ReportDTO reportDTO) {
+    public ResponseEntity<HttpStatus> report(@PathVariable("code") String code, ReportDTO reportDTO) {
         Event ev = eventService.findByCode(code);
-        User user=userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
-        Report report= new Report();
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+        Report report = new Report();
         report.setDescription(reportDTO.getDescription());
         report.setEvent(ev);
         report.setReason(reportDTO.getReason());
