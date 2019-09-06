@@ -27,6 +27,7 @@ import javax.persistence.PersistenceContext;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -532,8 +533,9 @@ public class EventResources {
                 event1.setTitle(String.valueOf(e[1]));
             event1.setPricing(PriceType.valueOf(String.valueOf(e[3])));
             event1.setTime(String.valueOf(e[5]));
-            event1.setCategoryId((Integer) e[9]);
+            event1.setCategoryId(((BigInteger) e[9]).intValue());
             event1.setEditable(String.valueOf(e[5]).equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()));
+            if(e[10]!=null)
             event1.setPic((Long) e[10]);
 
 //            event1.setScore(ee.getCreator().getScore().floatValue());
