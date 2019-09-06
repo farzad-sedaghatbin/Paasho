@@ -524,7 +524,7 @@ public class EventResources {
         List<MapEventDTO> eventDTOS = new ArrayList<>();
 
 
-        l.parallelStream().forEach(e->{
+        l.parallelStream().forEach(e -> {
             MapEventDTO event1 = new MapEventDTO();
             event1.setCode(String.valueOf(e[0]));
             if (e[1] == null || e[1] == "")
@@ -533,10 +533,13 @@ public class EventResources {
                 event1.setTitle(String.valueOf(e[1]));
             event1.setPricing(PriceType.valueOf(String.valueOf(e[3])));
             event1.setTime(String.valueOf(e[5]));
-            event1.setCategoryId(((BigInteger) e[9]).intValue());
+            if (e[9] == null)
+                event1.setCategoryId(1);
+            else
+                event1.setCategoryId(((BigInteger) e[9]).intValue());
             event1.setEditable(false);
-            if(e[10]!=null)
-            event1.setPic(((BigInteger) e[10]).longValue());
+            if (e[10] != null)
+                event1.setPic(((BigInteger) e[10]).longValue());
 
 //            event1.setScore(ee.getCreator().getScore().floatValue());
             event1.setDate(String.valueOf(e[4]));
