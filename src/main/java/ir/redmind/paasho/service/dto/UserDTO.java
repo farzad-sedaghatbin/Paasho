@@ -48,6 +48,8 @@ public class UserDTO {
     private Instant createdDate;
 
     private String lastModifiedBy;
+    private String telegram;
+    private String instagram;
 
     private Instant lastModifiedDate;
 
@@ -74,6 +76,8 @@ public class UserDTO {
         this.lastModifiedDate = user.getLastModifiedDate();
         this.score=user.getScore();
         this.point=user.getPoint();
+        this.instagram=user.getInstagram();
+        this.telegram=user.getTelegram();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
@@ -197,6 +201,23 @@ public class UserDTO {
 
     public void setPoint(Double point) {
         this.point = point;
+    }
+
+
+    public String getTelegram() {
+        return telegram;
+    }
+
+    public void setTelegram(String telegram) {
+        this.telegram = telegram;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
     }
 
     @Override

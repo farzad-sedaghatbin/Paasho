@@ -25,7 +25,7 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     @Query("select c.first,c.second from Chat c where c.first.login=:first or c.second.login=:first group by c.first,c.second ")
     List<Chat> searchChats(@Param("first") String first);
 
-    @Query("select count(id) from Chat c where (c.first.login=:first and c.firstRead is false) or (c.second.login=:first and c.second is false )  ")
+    @Query("select count(id) from Chat c where ((c.first.login=:first and c.firstRead is false ) or (c.second.login=:first and c.secondRead is false ))  ")
     Long unread(@Param("first") String first);
 
 }
