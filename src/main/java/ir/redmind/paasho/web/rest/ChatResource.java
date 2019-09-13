@@ -24,7 +24,7 @@ import java.util.Optional;
  * REST controller for managing Chat.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class ChatResource {
 
     private final Logger log = LoggerFactory.getLogger(ChatResource.class);
