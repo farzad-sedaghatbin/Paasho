@@ -22,10 +22,10 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
 
     Page<Chat> findByFirst_IdOrSecond_Id(Long first, Long second, Pageable pageable);
 
-    @Query("select c.first,c.first from Chat c where c.first.login=:first or c.second.login=:first group by c.first,c.second ")
+    @Query("select c.first,c.second from Chat c where c.first.login=:first or c.second.login=:first group by c.first,c.second ")
     List<Chat> searchChats(@Param("first") String first);
 
-    @Query("select count(id) from Chat c where (c.first.login=:first and c.firstRead=0) or (c.second.login=:first and c.second=0)  ")
+    @Query("select count(id) from Chat c where (c.first.login=:first and c.firstRead is false) or (c.second.login=:first and c.second is false )  ")
     Long unread(@Param("first") String first);
 
 }
