@@ -51,9 +51,7 @@ public class ChatResource {
             throw new BadRequestAlertException("A new chat cannot already have an ID", ENTITY_NAME, "idexists");
         }
         ChatDTO result = chatService.save(chatDTO);
-        return ResponseEntity.created(new URI("/api/chats/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok(result);
     }
 
     /**
