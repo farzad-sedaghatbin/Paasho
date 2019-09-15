@@ -85,7 +85,7 @@ public class ChatServiceImpl implements ChatService {
     public List<ChatMinimizeDTO> chatList(String id) {
         log.debug("Request to get all Chats");
         User user = userService.getUserWithAuthoritiesByLogin(id).get();
-        Query q = entityManager.createNativeQuery("select c.first_id,c.second_id from Chat c where c.first.login= ? or c.second.login= ? group by c.first_id,c.second_id ");
+        Query q = entityManager.createNativeQuery("select c.first_id,c.second_id from Chat c where c.first_id= ? or c.second_id= ? group by c.first_id,c.second_id ");
         q.setParameter(1, user.getLogin());
         q.setParameter(2, user.getLogin());
         List<Object[]> result=q.getResultList();
