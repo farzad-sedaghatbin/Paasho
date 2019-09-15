@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -17,6 +18,7 @@ public class ChatDTO implements Serializable {
     private String firstAvatar;
     private String secondAvatar;
     private Long secondId;
+    private Date createDate;
 
     private String text;
 
@@ -86,5 +88,13 @@ public class ChatDTO implements Serializable {
 
     public void setFirstAvatar(String firstAvatar) {
         this.firstAvatar = firstAvatar;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }
