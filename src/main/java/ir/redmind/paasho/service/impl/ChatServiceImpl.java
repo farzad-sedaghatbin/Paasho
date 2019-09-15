@@ -4,6 +4,7 @@ import ir.redmind.paasho.domain.Chat;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.repository.ChatRepository;
 import ir.redmind.paasho.repository.UserRepository;
+import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.ChatService;
 import ir.redmind.paasho.service.UserService;
 import ir.redmind.paasho.service.dto.ChatDTO;
@@ -60,6 +61,7 @@ public class ChatServiceImpl implements ChatService {
     public ChatDTO save(ChatDTO chatDTO) {
         log.debug("Request to save Chat : {}", chatDTO);
         Chat chat = chatMapper.toEntity(chatDTO);
+        chat.setFirst(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()));
         chat.setCreateDate(new Date());
         chat = chatRepository.save(chat);
         ChatDTO result = chatMapper.toDto(chat);
