@@ -411,6 +411,7 @@ public class FarzadUserService {
             profileDTO.setInstagram(user.getInstagram());
         profileDTO.setLastName(user.getLastName());
         profileDTO.setAvatar(user.getAvatar());
+        profileDTO.setId(user.getId());
         profileDTO.setBirthYear(Integer.parseInt(user.getBirthDate()));
         profileDTO.setGender(user.getGender());
         profileDTO.setCode("psh" + (user.getId() * 10 + 5));
