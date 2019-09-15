@@ -9,7 +9,6 @@ import ir.redmind.paasho.service.UserService;
 import ir.redmind.paasho.service.dto.ChatDTO;
 import ir.redmind.paasho.service.dto.ChatMinimizeDTO;
 import ir.redmind.paasho.service.mapper.ChatMapper;
-import ir.redmind.paasho.web.rest.yeka.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;

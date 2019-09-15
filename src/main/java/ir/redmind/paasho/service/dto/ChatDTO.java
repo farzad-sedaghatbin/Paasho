@@ -1,12 +1,7 @@
 package ir.redmind.paasho.service.dto;
-import ir.redmind.paasho.domain.User;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * A DTO for the Comment entity.
