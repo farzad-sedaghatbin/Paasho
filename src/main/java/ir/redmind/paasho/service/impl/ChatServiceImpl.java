@@ -60,7 +60,7 @@ public class ChatServiceImpl implements ChatService {
     public ChatDTO save(ChatDTO chatDTO) {
         log.debug("Request to save Chat : {}", chatDTO);
         Chat chat = chatMapper.toEntity(chatDTO);
-        chat.setCreateDate(new Data());
+        chat.setCreateDate(new Date());
         chat = chatRepository.save(chat);
         ChatDTO result = chatMapper.toDto(chat);
         return result;
