@@ -3,6 +3,8 @@ package ir.redmind.paasho.service.impl;
 import ir.redmind.paasho.domain.Chat;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.repository.ChatRepository;
+import ir.redmind.paasho.repository.UserRepository;
+import ir.redmind.paasho.security.SecurityUtils;
 import ir.redmind.paasho.service.ChatService;
 import ir.redmind.paasho.service.dto.ChatDTO;
 import ir.redmind.paasho.service.dto.ChatMinimizeDTO;
@@ -12,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,11 +32,13 @@ public class ChatServiceImpl implements ChatService {
     private final ChatRepository chatRepository;
 
     private final ChatMapper chatMapper;
+    private final UserRepository userRepository;
 
 
-    public ChatServiceImpl(ChatRepository chatRepository, ChatMapper chatMapper) {
+    public ChatServiceImpl(ChatRepository chatRepository, ChatMapper chatMapper, UserRepository userRepository) {
         this.chatRepository = chatRepository;
         this.chatMapper = chatMapper;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -48,6 +51,7 @@ public class ChatServiceImpl implements ChatService {
     public ChatDTO save(ChatDTO chatDTO) {
         log.debug("Request to save Chat : {}", chatDTO);
         Chat chat = chatMapper.toEntity(chatDTO);
+        chat.setFirst(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()));
         chat = chatRepository.save(chat);
         ChatDTO result = chatMapper.toDto(chat);
         return result;
