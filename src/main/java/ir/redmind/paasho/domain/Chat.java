@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 public class Chat implements Serializable {
@@ -25,7 +26,7 @@ public class Chat implements Serializable {
 
     private boolean firstRead;
     private boolean secondRead;
-    private Data createDate;
+    private Date createDate;
 
 
     public Long getId() {
@@ -76,11 +77,11 @@ public class Chat implements Serializable {
         this.secondRead = secondRead;
     }
 
-    public Data getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Data createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 }
