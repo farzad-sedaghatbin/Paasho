@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -89,9 +90,9 @@ public class ChatServiceImpl implements ChatService {
         q.setParameter(2, user.getId());
         List<Object[]> result=q.getResultList();
 //        List<Chat> result = chatRepository.searchChats(id);
-        Set<Long> usersId = result.stream().map(o->(Long)o[0]).collect(Collectors.toSet());
-        usersId.addAll(result.stream().map(o->(Long)o[1]).collect(Collectors.toSet()));
-        List<User> users=usersId.stream().map(u->userRepository.findById(u).get()).collect(Collectors.toList());
+        Set<BigInteger> usersId = result.stream().map(o->(BigInteger)o[0]).collect(Collectors.toSet());
+        usersId.addAll(result.stream().map(o->(BigInteger)o[1]).collect(Collectors.toSet()));
+        List<User> users=usersId.stream().map(u->userRepository.findById(u.longValue()).get()).collect(Collectors.toList());
         return users.stream().map(u -> new ChatMinimizeDTO(u.getAvatar(), u.getId(), u.getFirstName() + " " + u.getLastName(), false)).collect(Collectors.toList());
     }
 
