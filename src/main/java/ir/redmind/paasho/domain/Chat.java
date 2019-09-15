@@ -1,5 +1,6 @@
 package ir.redmind.paasho.domain;
 
+import ir.redmind.paasho.web.rest.yeka.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Chat implements Serializable {
 
     private boolean firstRead;
     private boolean secondRead;
+    private Data createDate;
 
 
     public Long getId() {
@@ -72,5 +74,13 @@ public class Chat implements Serializable {
 
     public void setSecondRead(boolean secondRead) {
         this.secondRead = secondRead;
+    }
+
+    public Data getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Data createDate) {
+        this.createDate = createDate;
     }
 }

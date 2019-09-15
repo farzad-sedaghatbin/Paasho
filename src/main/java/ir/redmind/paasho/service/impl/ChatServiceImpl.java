@@ -3,19 +3,24 @@ package ir.redmind.paasho.service.impl;
 import ir.redmind.paasho.domain.Chat;
 import ir.redmind.paasho.domain.User;
 import ir.redmind.paasho.repository.ChatRepository;
+import ir.redmind.paasho.repository.UserRepository;
 import ir.redmind.paasho.service.ChatService;
+import ir.redmind.paasho.service.UserService;
 import ir.redmind.paasho.service.dto.ChatDTO;
 import ir.redmind.paasho.service.dto.ChatMinimizeDTO;
 import ir.redmind.paasho.service.mapper.ChatMapper;
+import ir.redmind.paasho.web.rest.yeka.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,12 +34,19 @@ public class ChatServiceImpl implements ChatService {
     private final Logger log = LoggerFactory.getLogger(ChatServiceImpl.class);
 
     private final ChatRepository chatRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
 
     private final ChatMapper chatMapper;
 
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    public ChatServiceImpl(ChatRepository chatRepository, ChatMapper chatMapper) {
+
+    public ChatServiceImpl(ChatRepository chatRepository, UserService userService, UserRepository userRepository, ChatMapper chatMapper) {
         this.chatRepository = chatRepository;
+        this.userService = userService;
+        this.userRepository = userRepository;
         this.chatMapper = chatMapper;
     }
 
@@ -48,6 +60,7 @@ public class ChatServiceImpl implements ChatService {
     public ChatDTO save(ChatDTO chatDTO) {
         log.debug("Request to save Chat : {}", chatDTO);
         Chat chat = chatMapper.toEntity(chatDTO);
+        chat.setCreateDate(new Data());
         chat = chatRepository.save(chat);
         ChatDTO result = chatMapper.toDto(chat);
         return result;
@@ -71,9 +84,15 @@ public class ChatServiceImpl implements ChatService {
     @Transactional(readOnly = true)
     public List<ChatMinimizeDTO> chatList(String id) {
         log.debug("Request to get all Chats");
-        List<Chat> result = chatRepository.searchChats(id);
-        Set<User> users = result.stream().map(Chat::getFirst).collect(Collectors.toSet());
-        users.addAll(result.stream().map(Chat::getSecond).collect(Collectors.toSet()));
+        User user = userService.getUserWithAuthoritiesByLogin(id).get();
+        Query q = entityManager.createNativeQuery("select c.first_id,c.second_id from Chat c where c.first.login= ? or c.second.login=:? group by c.first_id,c.second_id ");
+        q.setParameter(1, user.getLogin());
+        q.setParameter(2, user.getLogin());
+        List<Object[]> result=q.getResultList();
+//        List<Chat> result = chatRepository.searchChats(id);
+        Set<Long> usersId = result.stream().map(o->(Long)o[0]).collect(Collectors.toSet());
+        usersId.addAll(result.stream().map(o->(Long)o[1]).collect(Collectors.toSet()));
+        List<User> users=usersId.stream().map(u->userRepository.findById(u).get()).collect(Collectors.toList());
         return users.stream().map(u -> new ChatMinimizeDTO(u.getAvatar(), u.getId(), u.getFirstName() + " " + u.getLastName(), false)).collect(Collectors.toList());
     }
 
