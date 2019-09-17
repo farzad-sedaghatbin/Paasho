@@ -12,9 +12,7 @@ import ir.redmind.paasho.service.dto.ChatMinimizeDTO;
 import ir.redmind.paasho.service.mapper.ChatMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,6 +92,7 @@ public class ChatServiceImpl implements ChatService {
 //        List<Chat> result = chatRepository.searchChats(id);
         Set<BigInteger> usersId = result.stream().map(o->(BigInteger)o[0]).collect(Collectors.toSet());
         usersId.addAll(result.stream().map(o->(BigInteger)o[1]).collect(Collectors.toSet()));
+        usersId.remove(user.getId());
         List<User> users=usersId.stream().map(u->userRepository.findById(u.longValue()).get()).collect(Collectors.toList());
         return users.stream().map(u -> new ChatMinimizeDTO(u.getAvatar(), u.getId(), u.getFirstName() + " " + u.getLastName(), false)).collect(Collectors.toList());
     }
@@ -102,7 +101,8 @@ public class ChatServiceImpl implements ChatService {
     @Transactional(readOnly = true)
     public Page<ChatDTO> findAllChatWithUser(Long id, Pageable pageable) {
         log.debug("Request to get all Chats");
-        Page<Chat> result = chatRepository.findByFirst_IdOrSecond_Id(id, id, pageable);
+        Long myid = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()).getId();
+        Page<Chat> result = chatRepository.findByFirst_IdOrSecond_Id(myid, id, PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),new Sort(Sort.Direction.DESC,"id")));
         return new PageImpl<>(result.getContent().stream()
             .map(chatMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new)), result.getPageable(), result.getTotalElements());
