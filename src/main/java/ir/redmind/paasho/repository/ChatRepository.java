@@ -20,7 +20,7 @@ import java.util.List;
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
 
-    @Query("select c.first,c.second from Chat c where (c.first.login=:first and c.second.login=:second) or (c.first.login=:second and c.second.login=:firs) group by c.first,c.second ")
+    @Query("select c.first,c.second from Chat c where (c.first.id=:first and c.second.id=:second) or (c.first.id=:second and c.second.id=:first) group by c.first,c.second ")
     Page<Chat> findByFirst_IdOrSecond_Id(@Param("first")Long first,@Param("second") Long second, Pageable pageable);
 
     @Query("select c.first,c.second from Chat c where c.first.login=:first or c.second.login=:first group by c.first,c.second ")
