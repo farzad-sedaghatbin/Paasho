@@ -103,7 +103,7 @@ public class ChatServiceImpl implements ChatService {
         log.debug("Request to get all Chats");
         Long myid = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()).getId();
         Page<Chat> result = chatRepository.findByFirst_IdOrSecond_Id(myid, id, PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),new Sort(Sort.Direction.DESC,"id")));
-        return new PageImpl<>(result.getContent().stream()
+        return new PageImpl<>(result.getContent().stream().sorted(Comparator.comparing(Chat::getId))
             .map(chatMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new)), result.getPageable(), result.getTotalElements());
     }
