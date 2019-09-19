@@ -11,13 +11,15 @@ public class ChatMinimizeDTO implements Serializable {
     private Long id;
     private String name;
     private boolean online;
+    private boolean unread;
 
 
-    public ChatMinimizeDTO(String avatar, Long id, String name, boolean online) {
+    public ChatMinimizeDTO(String avatar, Long id, String name, boolean online, Long aLong) {
         this.avatar = avatar;
         this.id = id;
         this.name = name;
         this.online = online;
+        this.unread = aLong > 0;
     }
 
     public String getAvatar() {
@@ -50,5 +52,13 @@ public class ChatMinimizeDTO implements Serializable {
 
     public void setOnline(boolean online) {
         this.online = online;
+    }
+
+    public boolean isUnread() {
+        return unread;
+    }
+
+    public void setUnread(boolean unread) {
+        this.unread = unread;
     }
 }
