@@ -61,6 +61,8 @@ public class ChatServiceImpl implements ChatService {
         Chat chat = chatMapper.toEntity(chatDTO);
         chat.setFirst(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()));
         chat.setCreateDate(new Date());
+        chat.setFirstRead(false);
+        chat.setSecondRead(false);
         chat = chatRepository.save(chat);
         ChatDTO result = chatMapper.toDto(chat);
         return result;
@@ -103,7 +105,15 @@ public class ChatServiceImpl implements ChatService {
         log.debug("Request to get all Chats");
         Long myid = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()).getId();
 
+
         Page<Chat> result = chatRepository.findByFirst_IdOrSecond_Id(myid, id, PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),new Sort(Sort.Direction.DESC,"id")));
+        result.getContent().forEach(c->{
+            if(c.getFirst().getId().equals(myid))
+                c.setFirstRead(true);
+            else c.setSecondRead(true);
+
+        });
+        chatRepository.saveAll(result.getContent());
         return new PageImpl<>(result.getContent().stream().sorted(Comparator.comparing(Chat::getId))
             .map(chatMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new)), result.getPageable(), result.getTotalElements());
