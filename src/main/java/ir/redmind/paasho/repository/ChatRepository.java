@@ -29,7 +29,7 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     @Query("select count(id) from Chat c where ((c.first.login=:first and c.firstRead is false ) or (c.second.login=:first and c.secondRead is false ))  ")
     Long unread(@Param("first") String first);
 
-    @Query("select count(id) from Chat c where c.first.id= :first and c.second.id= :second and c.second_read=false")
+    @Query("select count(id) from Chat c where c.first.id= :first and c.second.id= :second and c.secondRead=false")
     Long unreadWithUser(@Param("first") Long first,@Param("second") Long second);
 
 }
