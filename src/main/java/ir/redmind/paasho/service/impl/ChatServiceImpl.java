@@ -90,30 +90,34 @@ public class ChatServiceImpl implements ChatService {
         Query q = entityManager.createNativeQuery("select c.first_id,c.second_id from Chat c where c.first_id= ? or c.second_id= ? group by c.first_id,c.second_id ");
         q.setParameter(1, user.getId());
         q.setParameter(2, user.getId());
-        List<Object[]> result=q.getResultList();
+        List<Object[]> result = q.getResultList();
 //        List<Chat> result = chatRepository.searchChats(id);
-        Set<BigInteger> usersId = result.stream().map(o->(BigInteger)o[0]).collect(Collectors.toSet());
-        usersId.addAll(result.stream().map(o->(BigInteger)o[1]).collect(Collectors.toSet()));
+        Set<BigInteger> usersId = result.stream().map(o -> (BigInteger) o[0]).collect(Collectors.toSet());
+        usersId.addAll(result.stream().map(o -> (BigInteger) o[1]).collect(Collectors.toSet()));
         usersId.remove(user.getId());
-        List<User> users=usersId.stream().map(u->userRepository.findById(u.longValue()).get()).collect(Collectors.toList());
-        return users.stream().map(u -> new ChatMinimizeDTO(u.getAvatar(), u.getId(), u.getFirstName() + " " + u.getLastName(), false,chatRepository.unreadWithUser(user.getId(), user.getId()))).collect(Collectors.toList());
+        List<User> users = usersId.stream().map(u -> userRepository.findById(u.longValue()).get()).collect(Collectors.toList());
+        return users.stream().map(u -> new ChatMinimizeDTO(u.getAvatar(), u.getId(), u.getFirstName() + " " + u.getLastName(), false, chatRepository.unreadWithUser(user.getId(), user.getId()))).collect(Collectors.toList());
     }
 
     @Override
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public Page<ChatDTO> findAllChatWithUser(Long id, Pageable pageable) {
         log.debug("Request to get all Chats");
         Long myid = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()).getId();
 
 
-        Page<Chat> result = chatRepository.findByFirst_IdOrSecond_Id(myid, id, PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),new Sort(Sort.Direction.DESC,"id")));
-        result.getContent().forEach(c->{
-            if(c.getFirst().getId().equals(myid))
+        Page<Chat> result = chatRepository.findByFirst_IdOrSecond_Id(myid, id, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), new Sort(Sort.Direction.DESC, "id")));
+        List<Chat> list = new ArrayList<>(result.getContent());
+        list.forEach(c -> {
+            if (c.getFirst().getId().equals(myid) && !c.isFirstRead()) {
                 c.setFirstRead(true);
-            else c.setSecondRead(true);
+                chatRepository.save(c);
+            }else if (c.getSecond().getId().equals(myid) && !c.isSecondRead()) {
+                c.setSecondRead(true);
+                chatRepository.save(c);
 
+            }
         });
-        chatRepository.saveAll(result.getContent());
         return new PageImpl<>(result.getContent().stream().sorted(Comparator.comparing(Chat::getId))
             .map(chatMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new)), result.getPageable(), result.getTotalElements());
