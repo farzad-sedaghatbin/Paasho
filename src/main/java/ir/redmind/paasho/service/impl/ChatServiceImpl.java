@@ -96,7 +96,7 @@ public class ChatServiceImpl implements ChatService {
         usersId.addAll(result.stream().map(o -> (BigInteger) o[1]).collect(Collectors.toSet()));
         usersId.remove(user.getId());
         List<User> users = usersId.stream().map(u -> userRepository.findById(u.longValue()).get()).collect(Collectors.toList());
-        return users.stream().map(u -> new ChatMinimizeDTO(u.getAvatar(), u.getId(), u.getFirstName() + " " + u.getLastName(), false, chatRepository.unreadWithUser(user.getId(), user.getId()))).collect(Collectors.toList());
+        return users.stream().map(u -> new ChatMinimizeDTO(u.getAvatar(), u.getId(), u.getFirstName() + " " + u.getLastName(), false, chatRepository.unreadWithUser(u.getId(), user.getId()))).collect(Collectors.toList());
     }
 
     @Override
