@@ -170,7 +170,7 @@ public class FarzadUserService {
         User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
         if (user.getAvatar() == null || user.getAvatar().length() == 0) {
 
-            user.setPoint(user.getPoint() + 10);
+            user.setPoint(user.getPoint() + 5);
         }
         user.setAvatar(data);
         userRepository.save(user);
@@ -521,8 +521,8 @@ public class FarzadUserService {
         RecordDTO recordDTOS = new RecordDTO();
         recordDTOS.setHelp(
             "پاشو هر هفته با کسانی که بیشترین امتیاز را به دست آوردن، جهت هماهنگی اهدا جوایز تماس میگیره و برندگان هر هفته در سایت پاشو اعلام می شود\n"+
-            "با شرکت کردن در هر رویداد 10 امتیاز به شما تعلق میگیرد\n" + "با ایجاد کردن رویداد جدید به ازای هر شرکت کننده 10 امتیاز دریافت میکنید\n" + "در ازای دعوت کردن از هر یک از دوستان خود 50 امتیاز دریافت خواهید کرد\n");
-        recordDTOS.setPrizeDescription("هر هفته 200000 تومان به نفر اول پرداخت می شود");
+            "با شرکت کردن در هر رویداد ۵ امتیاز به شما تعلق میگیرد\n" + "با ایجاد کردن رویداد جدید به ازای هر شرکت کننده ۵ امتیاز دریافت میکنید\n" + "در ازای دعوت کردن از هر یک از دوستان خود ۵۰ امتیاز دریافت خواهید کرد\n");
+        recordDTOS.setPrizeDescription("هر هفته ۲۰۰۰۰۰ تومان به نفر اول پرداخت می شود");
         recordDTOS.users = new ArrayList<>();
         List<RecordDTO.User> userList = recordDTOS.users;
         int i = 1;
