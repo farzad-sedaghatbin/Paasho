@@ -77,13 +77,14 @@ public class NotificationResources {
         ev.addParticipants(n.getFrom());
         n.setStatus(NotificationStatus.ACCEPTED);
         eventService.save(eventMapper.toDto(ev));
-        notificationService.save(notificationMapper.toDto(n));
+
+
 
 
 
 
         Notification notification = new Notification();
-        notification.setDescription("درخواست شرکت در رویداد : "+ notification.getRelatedEvent().getTitle() + " پذیرفته شد");
+        notification.setDescription("درخواست شرکت در رویداد : "+ notification.getRelatedEvent().getTitle() + " پذیرفته شد برای اطلاعات بیشتر به برگزار کننده پیام دهید " );
         notification.addUsers(user);
         notification.setRelatedEvent(notification.getRelatedEvent());
         notification.setFrom(user1);
