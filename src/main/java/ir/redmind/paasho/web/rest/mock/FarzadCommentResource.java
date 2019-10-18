@@ -73,7 +73,7 @@ public class FarzadCommentResource {
         commentService.save(c);
 
 
-        if(c.getUserId()!=event.getCreator().getId()) {
+        if(!c.getUserId().equals(event.getCreator().getId())) {
             Notification notification = new Notification();
             notification.setDescription(user.getFirstName() + " " + user.getLastName() + " پیام در رویداد : " + event.getTitle());
             notification.addUsers(event.getCreator());

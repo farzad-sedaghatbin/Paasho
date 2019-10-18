@@ -238,6 +238,7 @@ public class EventResources {
         shareDto.setContent("میخواد با شما رویداد " + event.getTitle() + " را به اشتراک بگذارد دریافت پاشو از ");
         shareDto.setAndroidMarketURL("https://cafebazaar.ir/app/com.pasho");
         shareDto.setIosMarketURL("http://paasho.com/app/paasho.apk");
+        shareDto.setDirect("http://paasho.com/app/paasho.apk");
         return ResponseEntity.ok(shareDto);
 
     }

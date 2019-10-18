@@ -6,6 +6,7 @@ public class ShareDTO {
     private String content;
     private String androidMarketURL;
     private String iosMarketURL;
+    private String direct;
 
     public String getUser() {
         return user;
@@ -37,5 +38,13 @@ public class ShareDTO {
 
     public void setIosMarketURL(String iosMarketURL) {
         this.iosMarketURL = iosMarketURL;
+    }
+
+    public String getDirect() {
+        return direct;
+    }
+
+    public void setDirect(String direct) {
+        this.direct = direct;
     }
 }
