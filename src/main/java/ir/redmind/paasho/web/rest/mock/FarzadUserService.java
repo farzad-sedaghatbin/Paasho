@@ -181,7 +181,7 @@ public class FarzadUserService {
     @Timed
     @CrossOrigin(origins = "*")
 
-    public ResponseEntity<?> changeAvatar(@Valid @RequestParam("avatar") String data,@RequestParam("mobile") String mobile) {
+    public ResponseEntity<?> changeAvatar(@Valid @RequestParam("avatar") String data, @RequestParam("mobile") String mobile) {
 
 //        String[] s = data.split(",");
         User user = userRepository.findOneByLogin(mobile);
@@ -291,11 +291,11 @@ public class FarzadUserService {
             Long id = Long.valueOf(data.substring(4, data.length() - 1));
             id = (id - 5) / 10;
             Optional<User> u = userRepository.findById(id);
-            if (u.isPresent()) {
+            if (u.isPresent() && !u.get().getId().equals(id)) {
                 User user = u.get();
                 user.setPoint(user.getPoint() + 50);
                 User u2 = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
-                u2.setPoint(u2.getPoint()+50);
+                u2.setPoint(u2.getPoint() + 50);
                 userRepository.save(user);
                 userRepository.save(u2);
             } else {
@@ -407,8 +407,8 @@ public class FarzadUserService {
         profileDTO.setEmail(user.getEmail());
         profileDTO.setFirstName(user.getFirstName());
         profileDTO.setGender(user.getGender());
-            profileDTO.setTelegram(user.getTelegram());
-            profileDTO.setInstagram(user.getInstagram());
+        profileDTO.setTelegram(user.getTelegram());
+        profileDTO.setInstagram(user.getInstagram());
         profileDTO.setLastName(user.getLastName());
         profileDTO.setAvatar(user.getAvatar());
         profileDTO.setId(user.getId());
@@ -520,8 +520,8 @@ public class FarzadUserService {
 
         RecordDTO recordDTOS = new RecordDTO();
         recordDTOS.setHelp(
-            "پاشو هر هفته با کسانی که بیشترین امتیاز را به دست آوردن، جهت هماهنگی اهدا جوایز تماس میگیره و برندگان هر هفته در سایت پاشو اعلام می شود\n"+
-            "با شرکت کردن در هر رویداد ۵ امتیاز به شما تعلق میگیرد\n" + "با ایجاد کردن رویداد جدید به ازای هر شرکت کننده ۵ امتیاز دریافت میکنید\n" + "در ازای دعوت کردن از هر یک از دوستان خود ۵۰ امتیاز دریافت خواهید کرد\n");
+            "پاشو هر هفته با کسانی که بیشترین امتیاز را به دست آوردن، جهت هماهنگی اهدا جوایز تماس میگیره و برندگان هر هفته در سایت پاشو اعلام می شود\n" +
+                "با شرکت کردن در هر رویداد ۵ امتیاز به شما تعلق میگیرد\n" + "با ایجاد کردن رویداد جدید به ازای هر شرکت کننده ۵ امتیاز دریافت میکنید\n" + "در ازای دعوت کردن از هر یک از دوستان خود ۵۰ امتیاز دریافت خواهید کرد\n");
         recordDTOS.setPrizeDescription("هر هفته ۲۰۰۰۰۰ تومان به نفر اول پرداخت می شود");
         recordDTOS.users = new ArrayList<>();
         List<RecordDTO.User> userList = recordDTOS.users;
