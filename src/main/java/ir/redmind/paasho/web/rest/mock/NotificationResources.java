@@ -77,14 +77,11 @@ public class NotificationResources {
         ev.addParticipants(n.getFrom());
         n.setStatus(NotificationStatus.ACCEPTED);
         eventService.save(eventMapper.toDto(ev));
-
-
-
-
+        notificationRepository.save(n);
 
 
         Notification notification = new Notification();
-        notification.setDescription("درخواست شرکت در رویداد : "+ n.getRelatedEvent().getTitle() + " پذیرفته شد برای اطلاعات بیشتر به برگزار کننده پیام دهید " );
+        notification.setDescription("درخواست شرکت در رویداد : " + " پذیرفته شد برای اطلاعات بیشتر به برگزار کننده پیام دهید ");
         notification.addUsers(user);
         notification.setRelatedEvent(n.getRelatedEvent());
         notification.setFrom(user1);
@@ -122,7 +119,7 @@ public class NotificationResources {
             notif.setRequestId(String.valueOf(l.getId()));
             if (l.getStatus().equals(NotificationStatus.PENDING))
                 notif.setPending(true);
-            else{
+            else {
                 notif.setPending(false);
             }
             notif.setText(l.getDescription());
@@ -134,7 +131,7 @@ public class NotificationResources {
                 notif.setRelatedUserTelegram(user.getTelegram());
                 notif.setRelatedUserInstagram(user.getInstagram());
             }
-            notif.setRelatedUserName(user.getFirstName()+" "+user.getLastName());
+            notif.setRelatedUserName(user.getFirstName() + " " + user.getLastName());
             notificationDTOS.add(notif);
         });
 
@@ -152,7 +149,6 @@ public class NotificationResources {
     }
 
 
-
     @GetMapping(value = "/pageable")
     @Timed
     @CrossOrigin(origins = "*")
@@ -161,14 +157,14 @@ public class NotificationResources {
         //todo list notifications
         List<User> users = new ArrayList<>();
         users.add(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get());
-        Page<Notification> list = (notificationRepository.findAllByUsersInOrderByIdDesc(users,pageable));
+        Page<Notification> list = (notificationRepository.findAllByUsersInOrderByIdDesc(users, pageable));
         List<NotificationDTO> notificationDTOS = new ArrayList<>();
         list.forEach(l -> {
             NotificationDTO notif = new NotificationDTO();
             notif.setRequestId(String.valueOf(l.getId()));
             if (l.getStatus().equals(NotificationStatus.PENDING))
                 notif.setPending(true);
-            else{
+            else {
                 notif.setPending(false);
             }
             notif.setText(l.getDescription());
@@ -180,7 +176,7 @@ public class NotificationResources {
                 notif.setRelatedUserTelegram(user.getTelegram());
                 notif.setRelatedUserInstagram(user.getInstagram());
             }
-            notif.setRelatedUserName(user.getFirstName()+" "+user.getLastName());
+            notif.setRelatedUserName(user.getFirstName() + " " + user.getLastName());
             notificationDTOS.add(notif);
         });
 
@@ -194,7 +190,7 @@ public class NotificationResources {
         notif1.setText("به پاشو خوش آمدید");
         notificationDTOS.add(notif1);
 //        return ResponseEntity.ok(new PageImpl<>(notificationDTOS, new PageRequest(pageable.getPageNumber(), list.getSize() + 1), list.getTotalElements() + 1));
-        return ResponseEntity.ok(new PageImpl<>(notificationDTOS,list.getPageable(),list.getTotalElements()));
+        return ResponseEntity.ok(new PageImpl<>(notificationDTOS, list.getPageable(), list.getTotalElements()));
     }
 
 
