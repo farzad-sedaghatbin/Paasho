@@ -84,9 +84,9 @@ public class NotificationResources {
 
 
         Notification notification = new Notification();
-        notification.setDescription("درخواست شرکت در رویداد : "+ notification.getRelatedEvent().getTitle() + " پذیرفته شد برای اطلاعات بیشتر به برگزار کننده پیام دهید " );
+        notification.setDescription("درخواست شرکت در رویداد : "+ n.getRelatedEvent().getTitle() + " پذیرفته شد برای اطلاعات بیشتر به برگزار کننده پیام دهید " );
         notification.addUsers(user);
-        notification.setRelatedEvent(notification.getRelatedEvent());
+        notification.setRelatedEvent(n.getRelatedEvent());
         notification.setFrom(user1);
         notification.setStatus(NotificationStatus.ACCEPTED);
         notification.setType(NotificationType.NEWS);
